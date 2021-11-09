@@ -1,0 +1,25 @@
+$primary-color: #3a215d;
+$secondary-color: #18e1e3;
+$body-color: #f4ede3;
+$textcolor: darken($body-color,45%);
+$tag-color: darken($body-color,25%);
+$card-radius: 2px;
+$padding_sizes: (
+	('tiny',0.8),
+    ('small', 2),
+    ('medium', 4),
+    ('big', 7),
+    ('huge', 10),
+);
+$padding_positions: (
+    'top','bottom'
+);
+
+//Bulma css variables override
+$container-max-width: 1800px;
+$breakpoint-1800: 1800px;
+$content-heading-color: $primary-color;
+
+
+
+

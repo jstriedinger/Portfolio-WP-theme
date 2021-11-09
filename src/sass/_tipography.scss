@@ -1,0 +1,74 @@
+@font-face {
+    font-family: 'Lyon Display Web';
+    src: url('fonts/ldw-regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/ldw-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('fonts/ldw-regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('fonts/ldw-regular.woff') format('woff'), /* Pretty Modern Browsers */
+            url('fonts/ldw-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Lyon Display Web';
+    src: url('fonts/ldw-medium.eot'); /* IE9 Compat Modes */
+    src: url('fonts/ldw-medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('fonts/ldw-medium.woff2') format('woff2'), /* Super Modern Browsers */
+            url('fonts/ldw-medium.woff') format('woff'), /* Pretty Modern Browsers */
+            url('fonts/ldw-medium.ttf')  format('truetype'); /* Safari, Android, iOS */
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Lyon Display Web';
+    src: url('fonts/ldw-black.eot'); /* IE9 Compat Modes */
+    src: url('fonts/ldw-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('fonts/ldw-black.woff2') format('woff2'), /* Super Modern Browsers */
+            url('fonts/ldw-black.woff') format('woff'), /* Pretty Modern Browsers */
+            url('fonts/ldw-black.ttf')  format('truetype'); /* Safari, Android, iOS */
+    font-weight: 700;
+}
+
+h1,h2,h3 {
+    font-family: 'Lyon Display Web';
+    font-feature-settings: "kern" 1;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased; /* Chrome, Safari */
+    -moz-osx-font-smoothing: grayscale; /* Firefox */
+    letter-spacing: 0.015em;
+    color: $primary-color;
+    line-height: 1.2;
+    font-weight: 400;
+    strong {
+        color: $primary-color;
+    }
+}
+h1.main_title {
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    /*@include tablet {
+        font-size: 4rem;
+    }
+    @include desktop {
+        font-size: 5rem;
+    }
+    @include widescreen {
+        font-size: 6rem;
+    }
+    @include fullhd {
+        font-size: 7rem;
+    }*/
+    font-size: calc(100vw / 900 * 65);
+    @media (min-width: $breakpoint-1800) {
+        font-size: 8rem;
+    }
+    
+    span:first-child{
+        font-weight: 300;
+    }
+    span:last-child {
+        font-weight: 700;
+    }
+    
+}
+p {
+    color: $textcolor;
+}
+

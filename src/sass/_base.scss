@@ -1,0 +1,134 @@
+html, body {
+    background: $body-color;
+}
+
+body{
+    @include tablet {
+        .container  {
+            height: 88%;
+        }
+    }
+    @include desktop {
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .container {
+            width: 100%;
+            flex: 1;
+            
+            > .columns:not(.front-page) > .column
+            {
+                display: flex;
+                flex-direction: column;
+                .header{
+                    flex: 0;
+                }
+                .content, .projects-grid{
+                    flex:1;
+                    
+                }
+            }
+        }
+        footer {
+            min-height: 100px;
+            flex: 0;
+        }
+        .container > .columns {
+            height: 100%;
+            margin: 0 !important;
+            > .column {
+                height: 100%;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+                
+                position: relative;
+                
+
+                
+                &.is-vcentered {
+                    display: flex;
+                    align-content: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    > * {
+                        flex: 0 0 100%;
+                    }
+                }
+            }
+        }
+    }
+    @media screen and ( min-height: 1023px )
+    {
+        .container {
+            max-height: 1024px;
+        }
+    }
+}
+
+.container {
+    max-width: $container-max-width !important;
+    padding: 1rem;
+}
+.columns 
+{
+    &.is-variable-in-desktop
+	{
+		.columns{
+			margin: 0;
+		}
+		&.is-6
+		{
+			@include customGap(1.5);
+		}
+		&.is-8{
+			@include customGap(1.6);
+		}
+		&.is-10 {
+			@include customGap(2);
+		}
+	}
+    .infinite
+    {
+        overflow-y: scroll;
+    }
+}
+
+.projects-grid
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
+    grid-auto-rows: 14rem;
+    &:not(.small)
+    {
+        grid-auto-rows: 11rem;
+        @include widescreen {
+            grid-auto-rows: 13rem;
+        }
+        @include fullhd {
+            grid-auto-rows: 14rem;
+        }
+
+    }
+
+    @include desktop {
+        
+        grid-template-columns: repeat((2,1fr));
+    }
+
+}
+
+footer.footer {
+    background: transparent;
+    padding: 1rem;
+    padding-top: 0;
+    @include desktop {
+        padding-left: 3rem;
+        width: 100%;
+        max-width: $container-max-width;
+        margin: 0 auto;
+    }
+    
+}

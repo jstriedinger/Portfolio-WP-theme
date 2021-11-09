@@ -1,0 +1,18 @@
+{% extends "base.twig" %}
+{% block content %}
+    <div class="columns is-vcentered is-variable-in-desktop is-10 front-page">
+        <div class="column is-half is-vcentered">
+            <h1 class="main_title"><span>Jose Rafael</span><br><span>Striedinger</span></h1>
+            <p class="is-size-5 is-size-4-fullhd">{{post.content}}</p>
+            <h3 class="is-size-3 has-small-padding-top"><a href="{{site.link}}/about-me" class="link arrow">Read More</a></h3>
+            
+        </div>
+        <div class="column is-half infinite">
+            <div class="projects-grid">
+                {% for project in projects %}
+                    {% include 'partials/project-card.twig' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

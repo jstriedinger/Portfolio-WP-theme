@@ -1,0 +1,79 @@
+
+@import "variables";
+
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/layout/_all";
+@import "~bulma/sass/helpers/_all";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/title";
+@import "~bulma/sass/elements/content";
+@import "~bulma/sass/grid/columns";
+
+@import "functions";
+@import "tipography";
+@import "elements";
+@import "base";
+
+a {
+    color: $primary-color;
+    text-decoration: underline;
+    opacity: 0.7;
+    transition: opacity 0.25s;
+    &:hover {
+        opacity: 1;
+        color: $primary-color;
+    }
+    &.link
+    {
+        font-family: 'Lyon Display Web';
+        position: relative;
+        font-weight: 700;
+        text-decoration: none;
+        &:after {
+            content: "\27F6";
+            position: relative;
+            margin-left:0.5rem;
+            font-family: sans-serif;
+            //vertical-align: middle;
+            font-size: 90%;
+        }
+        &.left {
+            &:after {
+                content: none;
+            }
+            &:before {
+                content: "\27F5";
+                position: relative;
+                margin-right:0.5rem;
+                font-family: sans-serif;
+                //vertical-align: middle;
+                font-size: 90%;
+            }
+        }
+
+    }
+    &.social {
+        text-decoration: none;
+        color: $tag-color;
+        margin-left: 0.5rem;
+        i.icon {
+            height: 45px;
+            width: 45px;
+            display: inline-block;
+            border-radius: 100%;
+            border: 1px solid $tag-color;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &:hover, &:focus {
+            color: $body-color;
+            i.icon {
+                background: $tag-color;
+            }
+        }
+
+    }
+}
