@@ -33,7 +33,7 @@
         top: 12px;
         padding: 1rem;
         z-index: 2;
-        h2,h3 {
+        h2,h3, h4,p {
             color: white;
         }
         a {
@@ -78,6 +78,16 @@
         &.vertical
         {
             grid-row-end: span 2;
+        }
+    }
+
+    &.selected {
+        &:before {
+            background: rgba(darken($secondary-color,15%),0.85) !important;
+        }
+        .card-content{
+            opacity: 1;
+            top: 0;
         }
     }
 }

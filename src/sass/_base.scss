@@ -56,6 +56,16 @@ body{
                         flex: 0 0 100%;
                     }
                 }
+                
+                &:after {
+                    position: absolute;
+                    bottom: 2rem;
+                    content: " ";
+                    left: 0;
+                    width: 100%;
+                    height: 4rem;
+                    background:linear-gradient(to top, $body-color, transparent);
+                }
             }
         }
     }
@@ -88,10 +98,19 @@ body{
 		&.is-10 {
 			@include customGap(2);
 		}
+        @include desktop {
+            .column {
+                padding: 0;
+            }
+        }
 	}
     .infinite
     {
         overflow-y: scroll;
+        position: relative;
+       @include desktop {
+           padding-bottom: 2rem;
+       }
     }
 }
 

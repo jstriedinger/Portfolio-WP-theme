@@ -21,7 +21,8 @@
         </div>
         <div class="projects-grid infinite small">
             {% for project in projects %}
-                {% include 'partials/project-card.twig' %}
+
+                {% include 'partials/project-card.twig' with {'selected': project.id == post.id ? true : false}%}
             {% endfor %}
         </div>
     </div>
