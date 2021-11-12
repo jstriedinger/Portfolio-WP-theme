@@ -7,8 +7,8 @@
             <h3 class="is-size-5 is-size-3-desktop has-small-padding-top"><a href="{{site.link}}/about-me" class="link arrow">Read More</a></h3>
             
         </div>
-        <div class="column is-half infinite">
-            <div class="projects-grid">
+        <div class="column is-half">
+            <div class="projects-grid infinite">
                 {% for project in projects %}
                     {% include 'partials/project-card.twig' %}
                 {% endfor %}

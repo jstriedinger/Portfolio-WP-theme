@@ -126,10 +126,7 @@
             height: 120px;
             width: 120px;
             border-radius: 100%;
-            @include widescreen {
-                height: 150px;
-                width: 150px;
-            }
+            
         }
         h1 {
             flex: 1;
