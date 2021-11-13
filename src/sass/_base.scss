@@ -18,17 +18,16 @@ body{
             width: 100%;
             flex: 1;
             
-            > .columns:not(.front-page) > .column
+            > .columns > .column:not(.main-title)
             {
                 display: flex;
                 flex-direction: column;
-                .header{
-                    flex: 0;
-                }
-                .content, .projects-grid{
-                    flex:1;
-                    
-                }
+            }
+            .header{
+                flex: 0;
+            }
+            .content, .projects-grid{
+                flex:1;
             }
         }
         footer {
@@ -154,8 +153,8 @@ footer.footer {
 }
 
 .content figure:not(.wp-block-embed) {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 
