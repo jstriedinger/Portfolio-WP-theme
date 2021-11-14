@@ -3,6 +3,7 @@ html, body {
 }
 
 body{
+    color: $textcolor;
     @include tablet {
         .container  {
             height: 88%;
@@ -175,4 +176,8 @@ footer.footer {
     .wp-block-embed__wrapper
     {
     }
+}
+
+figcaption {
+    font-size: 14px;
 }
