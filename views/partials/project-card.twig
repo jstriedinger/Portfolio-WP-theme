@@ -3,7 +3,7 @@
         {% if selected %}
             <p class="is size-4 has-text-weight-bold has-tiny-padding-bottom">You are reading:</p>
         {% endif %}
-        <h3 class="is-size-4">{{project.title}}</h3>
+        <h3 class="is-size-4 {{project.grid_dir == "horizontal" ? 'is-size-3-widescreen' : ''}}">{{project.title}}</h3>
         {% if selected == false %}
         <a href="{{project.link}}" title="{{project.title}}" class="link arrow has-tiny-padding-top">Read more</a>
         {% endif %}
