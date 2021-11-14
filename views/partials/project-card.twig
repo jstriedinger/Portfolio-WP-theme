@@ -2,13 +2,6 @@
     <div class="card-content">
         {% if selected %}
             <p class="is size-4 has-text-weight-bold has-tiny-padding-bottom">You are reading:</p>
-        {% else %}
-        
-            <div class="tags">
-            {% for tag in project.tags %}
-                <div class="tag">{{tag.name}}</div>
-            {% endfor %}
-            </div>
         {% endif %}
         <h3 class="is-size-4">{{project.title}}</h3>
         {% if selected == false %}
