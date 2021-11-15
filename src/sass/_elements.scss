@@ -69,7 +69,7 @@ a.has-card {
         }
     }
     
-    @include desktop {
+    @include widescreen {
         &.horizontal
         {
             grid-column: 1 / span 2;

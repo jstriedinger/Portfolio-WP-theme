@@ -132,7 +132,7 @@ body{
 
     }
 
-    @include desktop {
+    @include widescreen {
         
         grid-template-columns: repeat((2,1fr));
         height: 100%;
@@ -176,6 +176,12 @@ footer.footer {
     .wp-block-embed__wrapper
     {
     }
+}
+.wp-block-image
+{
+    a{
+        opacity: 1 !important;
+    } 
 }
 
 figcaption {
