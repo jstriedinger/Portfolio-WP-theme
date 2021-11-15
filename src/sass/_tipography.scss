@@ -43,18 +43,7 @@ h1,h2,h3 {
 h1.main_title {
     line-height: 1;
     margin-bottom: 1.2rem;
-    /*@include tablet {
-        font-size: 4rem;
-    }
-    @include desktop {
-        font-size: 5rem;
-    }
-    @include widescreen {
-        font-size: 6rem;
-    }
-    @include fullhd {
-        font-size: 7rem;
-    }*/
+   
     @include tablet {
         font-size: calc(100vw / 900 * 65);
     }
