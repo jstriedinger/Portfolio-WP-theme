@@ -32,7 +32,7 @@ body{
             }
         }
         footer {
-            min-height: 100px;
+            min-height: 60px;
             flex: 0;
         }
         .container > .columns {
@@ -40,12 +40,7 @@ body{
             margin: 0 !important;
             > .column {
                 height: 100%;
-                padding-top: 2rem;
-                padding-bottom: 2rem;
-                
                 position: relative;
-                
-
                 
                 &.is-vcentered {
                     display: flex;
@@ -59,7 +54,6 @@ body{
                 
                 &:after {
                     position: absolute;
-                    bottom: 2rem;
                     content: " ";
                     left: 0;
                     width: 100%;
@@ -100,13 +94,17 @@ body{
 		}
         @include desktop {
             .column {
-                padding: 0;
+                padding-top: 0;
+                padding-bottom: 0;
             }
         }
 	}
     .infinite
     {
         overflow-y: scroll;
+        &::-webkit-scrollbar { width: 0 !important; display: none !important }
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
         position: relative;
        @include desktop {
            padding-bottom: 2rem;
@@ -149,6 +147,7 @@ footer.footer {
         width: 100%;
         max-width: $container-max-width;
         margin: 0 auto;
+        margin-top: auto;
     }
     
 }

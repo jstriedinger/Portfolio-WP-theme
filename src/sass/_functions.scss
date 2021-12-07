@@ -72,22 +72,27 @@
 @mixin customGap($val: 1.6)
 {
 	@include tablet {
-		$columngap: $val + rem;
-		> .column {
-		    padding: $val + rem;
-		}
+		
 		
 		
 	}
 	@include desktop
 	{
+		$columngap: $val + rem;
 		> .column
 		{
+			
 			&:first-child {
 				padding-right: $val*1.5 + rem;
+				padding-bottom: $val*0.5 + rem;
 			}
 			&:last-child {
 				padding-right: $val*1.5 + rem;
+				padding-bottom: $val*0.5 + rem;
+			}
+			&:after 
+			{
+				bottom: $val*0.5 + rem;
 			}
 		}
 	}
@@ -107,9 +112,15 @@
 		{
 			&:first-child {
 				padding-right: $val*2.5 + rem;
+				padding-bottom: $val + rem;
 			}
 			&:last-child {
 				padding-right: $val*2.5 + rem;
+				padding-bottom: $val + rem;
+			}
+			&:after 
+			{
+				bottom: $val + rem;
 			}
 		}
 	}

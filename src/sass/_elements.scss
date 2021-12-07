@@ -130,9 +130,13 @@ a.has-card {
         margin-top:1rem;
         img {
             flex: 0;
-            height: 120px;
-            width: 120px;
+            height: 100px;
+            width: 100px;
             border-radius: 100%;
+            @include fullhd {
+                height: 125px;
+                width: 125px;
+            }
             
         }
         h1 {

@@ -45,7 +45,10 @@ h1.main_title {
     margin-bottom: 1.2rem;
    
     @include tablet {
-        font-size: calc(100vw / 900 * 65);
+        font-size: calc(100vw / 900 * 55);
+    }
+    @include fullhd {
+        font-size: calc(100vw / 900 * 60);
     }
     @media (min-width: $breakpoint-1800) {
         font-size: 8rem;
