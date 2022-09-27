@@ -16,7 +16,7 @@ module.exports = merge(common, {
         ],
         host: 'localhost',
         port: 3000,
-        proxy: 'http://localhost/jrsp',
+        proxy: 'http://portfolio.local:52265/',
         logPrefix: 'webpack',
         logLevel: 'debug',
         ghostMode: false

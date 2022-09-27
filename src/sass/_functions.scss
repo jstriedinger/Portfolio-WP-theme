@@ -88,12 +88,9 @@
 			}
 			&:last-child {
 				padding-right: $val*1.5 + rem;
-				padding-bottom: $val*0.5 + rem;
+				//padding-bottom: $val*0.5 + rem;
 			}
-			&:after 
-			{
-				bottom: $val*0.5 + rem;
-			}
+			
 		}
 	}
 	@include widescreen {
@@ -103,7 +100,7 @@
 				padding-right: $val*2 + rem;
 			}
 			&:last-child {
-				padding-right: $val*2 + rem;
+				//padding-right: $val*2 + rem;
 			}
 		}
 	}
@@ -115,13 +112,10 @@
 				padding-bottom: $val + rem;
 			}
 			&:last-child {
-				padding-right: $val*2.5 + rem;
+				//padding-right: $val*2.5 + rem;
 				padding-bottom: $val + rem;
 			}
-			&:after 
-			{
-				bottom: $val + rem;
-			}
+			
 		}
 	}
 }

@@ -12,4 +12,11 @@ $args = array (
 );
 $context['projects'] = Timber::get_posts( $args );
 
+$args = array(
+		'type' => get_post_type(),
+		'orderby' => 'name',
+		'order' => 'ASC'
+);
+$context['tags'] = get_terms('post_tag');
+
 Timber::render( $templates, $context );

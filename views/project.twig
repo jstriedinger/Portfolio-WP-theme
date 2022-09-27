@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 {% block content %}
-<div class="columns is-vcentered is-variable-in-desktop is-10">
-    <div class="column is-three-fifths">
+<div class="columns is-vcentered is-variable is-8-widescreen">
+    <div class="column is-9">
         <div class="header has-small-padding-bottom">
             <a href="{{site.link}}" class="link arrow left">Go back</a>
             <br>
@@ -14,10 +14,10 @@
         {{post.content}}
         </div>
     </div>
-    <div class="column is-two-fifths ">
+    <div class="column">
         <div class="header with-divider right has-small-padding-bottom">
             <span></span>
-            <h2 class="is-size-3">Portfolio work</h2>
+            <h2 class="is-size-4">Portfolio work</h2>
         </div>
         <div class="projects-grid infinite small">
             {% for project in projects %}

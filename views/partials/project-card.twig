@@ -1,12 +1,15 @@
-<article class="card project {{project.grid_dir}} {{selected ? 'selected' : ''}}" style="background-image: url({{project.thumbnail.src}})">
+<a href="{{project.link}}" title="{{project.title}}" class="has-card {{project.grid_dir}} {{selected ? 'selected' : ''}}">
+<article class="card project " style="background-image: url({{project.thumbnail.src}})" data-categories='[{% for tag in project.tags %}
+		                {{tag.slug ~ (loop.last ? '' : ',')}}{% endfor %}]'>
+
+
+
     <div class="card-content">
-        {% if selected %}
-            <p class="is size-4 has-text-weight-bold has-tiny-padding-bottom">You are reading:</p>
-        {% endif %}
-        <h3 class="is-size-4 {{project.grid_dir == "horizontal" ? 'is-size-3-widescreen' : ''}}">{{project.title}}</h3>
+        <h3 class="is-size-5 {{project.grid_dir == "horizontal" ? 'is-size-3-widescreen' : ''}}">{{project.title}}</h3>
         {% if selected == false %}
-        <a href="{{project.link}}" title="{{project.title}}" class="link arrow has-tiny-padding-top is-size-5">Read more</a>
+				<p class="link is-size-7 has-tiny-margin-top is-hidden-desktop">Read more</p>
         {% endif %}
     </div>
 
 </article>
+</a>

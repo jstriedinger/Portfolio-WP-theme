@@ -50,8 +50,8 @@ h1.main_title {
     @include fullhd {
         font-size: calc(100vw / 900 * 60);
     }
-    @media (min-width: $breakpoint-1800) {
-        font-size: 8rem;
+    @media (min-width: $breakpoint-1600) {
+        font-size: 7rem;
     }
     
     span:first-child{
