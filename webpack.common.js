@@ -17,7 +17,7 @@ const config = {
     path.join(dirStyles,'index.scss'),
   ],
   output: {
-    path: path.join(__dirname,'dist')
+    path: path.join(__dirname,'assets')
   },
   resolve: {
     modules: [
@@ -29,7 +29,7 @@ const config = {
   output: {
     filename: './js/[name].js',
     // Output path using nodeJs path module
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'assets')
   },
   // Adding jQuery as external library
   externals: {
@@ -67,7 +67,7 @@ const config = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/fonts', to: 'fonts' }
+        { from: 'src/fonts', to: 'webfonts' }
       ],
     })  
   ]

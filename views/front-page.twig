@@ -23,6 +23,7 @@
 								<div class="level-item">
 									<div class="select" id="project-categories">
 										<select>
+											<option value="0" selected>All my work</option>
 											{% for tag in tags %}
 												<option value="{{tag.slug}}">{{tag.name}}</option>
 											{% endfor %}
@@ -32,7 +33,7 @@
 							</div>
 						</div>
 
-            <div class="projects-grid infinite">
+            <div class="projects-grid infinite" id="projects-grid">
                 {% for project in projects %}
                     {% include 'partials/project-card.twig' %}
                 {% endfor %}

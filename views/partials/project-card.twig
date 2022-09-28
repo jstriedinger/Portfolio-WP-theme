@@ -1,9 +1,5 @@
-<a href="{{project.link}}" title="{{project.title}}" class="has-card {{project.grid_dir}} {{selected ? 'selected' : ''}}">
-<article class="card project " style="background-image: url({{project.thumbnail.src}})" data-categories='[{% for tag in project.tags %}
-		                {{tag.slug ~ (loop.last ? '' : ',')}}{% endfor %}]'>
-
-
-
+<a href="{{project.link}}" title="{{project.title}}" class="has-card {{selected ? 'selected' : ''}}">
+<article class="card project " style="background-image: url({{project.thumbnail.src}})" >
     <div class="card-content">
         <h3 class="is-size-5 {{project.grid_dir == "horizontal" ? 'is-size-3-widescreen' : ''}}">{{project.title}}</h3>
         {% if selected == false %}

@@ -1,28 +1,28 @@
 @font-face {
     font-family: 'Lyon Display Web';
-    src: url('fonts/ldw-regular.eot'); /* IE9 Compat Modes */
-    src: url('fonts/ldw-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('fonts/ldw-regular.woff2') format('woff2'), /* Super Modern Browsers */
-            url('fonts/ldw-regular.woff') format('woff'), /* Pretty Modern Browsers */
-            url('fonts/ldw-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
+    src: url('./webfonts/ldw-regular.eot'); /* IE9 Compat Modes */
+    src: url('./webfonts/ldw-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./webfonts/ldw-regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./webfonts/ldw-regular.woff') format('woff'), /* Pretty Modern Browsers */
+            url('./webfonts/ldw-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
     font-weight: 300;
 }
 @font-face {
     font-family: 'Lyon Display Web';
-    src: url('fonts/ldw-medium.eot'); /* IE9 Compat Modes */
-    src: url('fonts/ldw-medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('fonts/ldw-medium.woff2') format('woff2'), /* Super Modern Browsers */
-            url('fonts/ldw-medium.woff') format('woff'), /* Pretty Modern Browsers */
-            url('fonts/ldw-medium.ttf')  format('truetype'); /* Safari, Android, iOS */
+    src: url('./webfonts/ldw-medium.eot'); /* IE9 Compat Modes */
+    src: url('./webfonts/ldw-medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./webfonts/ldw-medium.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./webfonts/ldw-medium.woff') format('woff'), /* Pretty Modern Browsers */
+            url('./webfonts/ldw-medium.ttf')  format('truetype'); /* Safari, Android, iOS */
     font-weight: 400;
 }
 @font-face {
     font-family: 'Lyon Display Web';
-    src: url('fonts/ldw-black.eot'); /* IE9 Compat Modes */
-    src: url('fonts/ldw-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('fonts/ldw-black.woff2') format('woff2'), /* Super Modern Browsers */
-            url('fonts/ldw-black.woff') format('woff'), /* Pretty Modern Browsers */
-            url('fonts/ldw-black.ttf')  format('truetype'); /* Safari, Android, iOS */
+    src: url('./webfonts/ldw-black.eot'); /* IE9 Compat Modes */
+    src: url('./webfonts/ldw-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('./webfonts/ldw-black.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./webfonts/ldw-black.woff') format('woff'), /* Pretty Modern Browsers */
+            url('./webfonts/ldw-black.ttf')  format('truetype'); /* Safari, Android, iOS */
     font-weight: 700;
 }
 

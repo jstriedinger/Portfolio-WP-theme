@@ -68,14 +68,71 @@ add_filter( 'show_admin_bar', '__return_false' );
  */
 function jrsp_scripts() {
 
-	wp_enqueue_style( 'main-css', get_template_directory_uri() . '/dist/main.css');
+	wp_enqueue_style( 'main-css', get_template_directory_uri() . '/assets/main.css');
 
 	// Deregister the jquery version bundled with WordPress.
 	wp_deregister_script( 'jquery' );
 
 	// CDN hosted jQuery placed in the header, as some plugins require that jQuery is loaded in the header.
 	wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), '3.2.1', false );
-	wp_enqueue_script( 'app', get_template_directory_uri() . '/dist/js/main.js' );
+	wp_enqueue_script( 'jrsp-js', get_template_directory_uri() . '/assets/js/main.js' );
+	wp_localize_script(
+		'jrsp-js',
+		'jrsp_ajax',
+		array(
+			'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php',
+			'nonce'   => wp_create_nonce( 'ajax-jrsp-nonce' ),
+		)
+	);
 
 }
 add_action( 'wp_enqueue_scripts', 'jrsp_scripts' );
+
+function get_projects() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'ajax-jrsp-nonce' ) ) {
+		wp_send_json_error( 'Failed nonce check', 403 ); // received by JS as 'string'
+	}
+	if ( ! isset( $_POST['category'] ) ) {
+		wp_send_json_error( 'Category can not be empty', 403 );
+	}
+
+	$category = sanitize_text_field($_POST['category']);
+
+	$args = array(
+		'post_type' => 'project',
+		'posts_per_page' => -1
+	);
+	if($category !== "0") {
+		$args['tag'] = $category;
+	}
+
+	$loop = new WP_Query( $args );
+	$projects_info = array();
+	$success = false;
+
+	if ( $loop->have_posts() ) {
+		$success = true;
+		while ( $loop->have_posts() ) {
+			$loop->the_post();
+			
+			$project_info = array();
+			$project_info['permalink'] = get_permalink();
+			$project_info['id'] = get_the_ID();
+			$project_info['name'] = get_the_title();
+			$project_info['image'] = get_the_post_thumbnail_url(get_the_ID(),'full');
+			$project_info['grid_dir'] =  get_field('grid_dir');
+			array_push($projects_info, $project_info);
+		}
+	}
+	wp_reset_postdata();
+	echo wp_json_encode(
+		array(
+			'success' => $success,
+			'data'   => $projects_info
+		)
+	);
+	wp_die();
+}
+
+add_action( 'wp_ajax_nopriv_get_projects', 'get_projects' );
+add_action( 'wp_ajax_get_projects', 'get_projects' );
