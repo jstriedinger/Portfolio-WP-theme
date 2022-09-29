@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 {% block content %}
     <div class="columns is-vcentered is-variable is-8-desktop front-page">
-        <div class="column is-two-fifths is-half-fullhd is-vcentered main-title">
+        <div class="column is-three-fifths is-half-fullhd is-vcentered main-title">
             <h1 class="is-size-1-mobile main_title"><span>Jose Rafael</span><br><span>Striedinger</span></h1>
             <p class="is-size-5 is-size-4-fullhd ">{{post.content|striptags}}</p>
 
@@ -9,13 +9,12 @@
             <h3 class="is-size-5 is-size-3-desktop has-small-padding-top"><a href="{{site.link}}/about-me" class="link arrow">Read More</a></h3>
             
         </div>
-        <div class="column is-three-fifths is-half-fullhd has-text-align-right">
-            <div class="header with-divider right has-tiny-padding-bottom">
-                <span></span>
-                <h2 class="is-size-3">Portfolio work</h2>
-            </div>
+        <div class="column has-text-align-right">
+            <div class="header  has-tiny-padding-bottom">
 						<div class="level is-mobile">
-						<div class="level-left"></div>
+							<div class="level-left">
+                <h2 class="is-size-4 is-size-3-fullhd">Portfolio work</h2>
+							</div>
 							<div class="level-right">
 								<div class="level-item">
 									<span>Filter:</span>
@@ -32,6 +31,8 @@
 								</div>
 							</div>
 						</div>
+                
+            </div>
 
             <div class="projects-grid infinite" id="projects-grid">
                 {% for project in projects %}

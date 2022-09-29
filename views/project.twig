@@ -5,12 +5,12 @@
         <div class="header has-small-padding-bottom">
             <a href="{{site.link}}" class="link arrow left">Go back</a>
             <br>
-            <h1 class="is-size-3 is-size-2-desktop is-size-1-fullhd" style="margin-top:1rem">{{post.title}}</h1>
+            <h1 class="is-size-3 is-size-2-desktop" style="margin-top:1rem">{{post.title}}</h1>
             {% for tag in post.tags %}
                 <div class="tag">{{tag.name}}</div>
             {% endfor %}
         </div>
-        <div class="content infinite">
+        <div class="content infinite with-header">
         {{post.content}}
         </div>
     </div>

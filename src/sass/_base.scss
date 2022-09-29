@@ -34,7 +34,6 @@ body{
             }
         }
         footer {
-            min-height: 60px;
             flex: 0;
         }
         .container > .columns {
@@ -87,8 +86,12 @@ body{
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
         position: relative;
-       @include desktop {
-           padding-bottom: 2rem;
+				@include desktop {
+				 	height: 100%;
+          padding-bottom: 7rem;
+					&.with-header {
+						height: 90%;
+					}
        }
     }
 }
@@ -116,42 +119,32 @@ body{
     grid-gap: 1.5rem;
     grid-auto-rows: 14rem;
 		overflow-y: scroll;
+		@include widescreen {
+			height: 100%;
+		}
     &:not(.small)
     {
-        grid-auto-rows: 11rem;
-        @include widescreen {
-            grid-auto-rows: 13rem;
-        }
-        @include fullhd {
-            grid-auto-rows: 14rem;
-        }
+			@include desktop {
+				grid-auto-rows: 5rem;
+			}
 
 				@include widescreen {
-						
 						grid-template-columns: repeat((2,1fr));
 						height: 100%;
 				}
 				a.has-card {
 					@include fullhd {
-						&:nth-of-type(4) {
-							grid-column: 1 / span 2;
-				
-							.card-content {
-								align-items: flex-start;
-								padding-left: 2rem;
-				
-								h2,
-								h3,
-								a,
-								.tags {
-									text-align: left;
-								}
-								
-							}
-						}
-				
-						&:nth-of-type(2) {
+						&:nth-of-type(odd) {
 							grid-row-end: span 2;
+						}
+						&:nth-of-type(even) {
+							grid-row-end: span 3;
+							h3 {
+									font-size: 1.5rem !important;
+								}
+						}
+						&:nth-of-type(3n) {
+							grid-row-end: span 3;
 							h3 {
 									font-size: 1.5rem !important;
 								}
@@ -202,7 +195,14 @@ footer.footer {
         max-width: $container-max-width;
         margin: 0 auto;
         margin-top: auto;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
     }
+		p {
+			font-size: 12px;
+		}
     
 }
 

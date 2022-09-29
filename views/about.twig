@@ -1,16 +1,17 @@
 {% extends "base.twig" %}
 {% block content %}
-<div class="columns is-vcentered is-variable-in-desktop is-10">
-    <div class="column is-9">
+<div class="columns is-vcentered is-variable is-8-desktop">
+    <div class="column is-7">
         <div class="header has-small-padding-bottom">
             <a href="{{site.link}}" class="link arrow left">Go back</a>
-            <div class="about-me">
-                <img src="{{post.thumbnail.src}}" alt="Jose Rafael Strieidnger Pinilla" >
-                <h1 class="is-size-2 is-size-1-fullhd">Jose Rafael<br><strong>Striedinger Pinilla</strong></h1>
-            </div>
-            
         </div>
         <div class="content infinite">
+					<div class="about-me">
+						<img src="{{post.thumbnail.src}}" alt="Jose Rafael Strieidnger Pinilla">
+						<h1 class="is-size-3 is-size-2-desktop is-size-1-fullhd">Jose Rafael<br><strong>Striedinger Pinilla</strong>
+						</h1>
+					</div>
+				<br>
         {{post.content}}
         </div>
     </div>
@@ -19,7 +20,7 @@
             <span></span>
             <h2 class="is-size-4">Portfolio work</h2>
         </div>
-        <div class="projects-grid infinite small">
+        <div class="projects-grid infinite" id="projects-grid">
             {% for project in projects %}
                 {% include 'partials/project-card.twig' %}
             {% endfor %}

@@ -97,6 +97,8 @@ a.has-card {
 .select {
 	border-radius: 5px;
 	height: auto !important;
+	padding: 0;
+	font-size: 14px;
 	select {
 		color: $tag-color;
 		font-weight: 700;
@@ -124,26 +126,31 @@ a.has-card {
             border-top: 2px solid rgba($primary-color,0.5);
         }
     }
-    .about-me {
-        display: flex;
-        align-items: center;
-        margin-top:1rem;
-        img {
-            flex: 0;
-            height: 100px;
-            width: 100px;
-            border-radius: 100%;
-            @include fullhd {
-                height: 125px;
-                width: 125px;
-            }
-            
-        }
-        h1 {
-            flex: 1;
-            margin-left: 1rem;
-        }
-    }
+}
+.about-me {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		img {
+				flex: 0;
+				height: 80px;
+				width: 80px;
+				border-radius: 100%;
+				@include desktop {
+					height: 100px;
+					width: 100px;
+				}
+				@include fullhd {
+						height: 125px;
+						width: 125px;
+				}
+				
+		}
+		h1 {
+				flex: 1;
+				margin: 0 !important;
+				margin-left: 1rem !important;
+		}
 }
 
 
