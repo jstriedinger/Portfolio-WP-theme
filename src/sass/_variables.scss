@@ -1,24 +1,22 @@
-$primary-color: #3a215d;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+$primary-color: #050409;
+$dark-color: #050409;//11052C
+$dark-contrast-color: #f2f2f2;
+$gold-color: #c29b63;
 $secondary-color: #18e1e3;
 $body-color: #f4ede3;
 $textcolor: darken($body-color,45%);
 $tag-color: darken($body-color,35%);
 $card-radius: 6px;
-$padding_sizes: (
-	('tiny',0.8),
-    ('small', 2),
-    ('medium', 4),
-    ('big', 7),
-    ('huge', 10),
-);
-$padding_positions: (
-    'top','bottom'
-);
 
 //Bulma css variables override
 $container-max-width: 1600px;
 $breakpoint-1600: 1600px;
 $content-heading-color: $primary-color;
+$family-primary: 'Open Sans',sans-serif;
+$link: $dark-color;
+
 
 
 

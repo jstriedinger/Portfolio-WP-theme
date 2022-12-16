@@ -1,68 +1,106 @@
 @font-face {
-    font-family: 'Lyon Display Web';
-    src: url('./webfonts/ldw-regular.eot'); /* IE9 Compat Modes */
-    src: url('./webfonts/ldw-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('./webfonts/ldw-regular.woff2') format('woff2'), /* Super Modern Browsers */
-            url('./webfonts/ldw-regular.woff') format('woff'), /* Pretty Modern Browsers */
-            url('./webfonts/ldw-regular.ttf')  format('truetype'); /* Safari, Android, iOS */
-    font-weight: 300;
-}
-@font-face {
-    font-family: 'Lyon Display Web';
-    src: url('./webfonts/ldw-medium.eot'); /* IE9 Compat Modes */
-    src: url('./webfonts/ldw-medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('./webfonts/ldw-medium.woff2') format('woff2'), /* Super Modern Browsers */
-            url('./webfonts/ldw-medium.woff') format('woff'), /* Pretty Modern Browsers */
-            url('./webfonts/ldw-medium.ttf')  format('truetype'); /* Safari, Android, iOS */
-    font-weight: 400;
-}
-@font-face {
-    font-family: 'Lyon Display Web';
-    src: url('./webfonts/ldw-black.eot'); /* IE9 Compat Modes */
-    src: url('./webfonts/ldw-black.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('./webfonts/ldw-black.woff2') format('woff2'), /* Super Modern Browsers */
-            url('./webfonts/ldw-black.woff') format('woff'), /* Pretty Modern Browsers */
-            url('./webfonts/ldw-black.ttf')  format('truetype'); /* Safari, Android, iOS */
-    font-weight: 700;
+	font-family: 'Canela';
+	src: url('./webfonts/Canela-Regular.eot');
+	src: url('./webfonts/Canela-Regular.eot?#iefix') format('embedded-opentype'),
+		url('./webfonts/Canela-Regular.woff2') format('woff2'),
+		url('./webfonts/Canela-Regular.woff') format('woff'),
+		url('./webfonts/Canela-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
 }
 
-h1,h2,h3 {
-    font-family: 'Lyon Display Web';
+@font-face {
+	font-family: 'Canela';
+	src: url('./webfonts/Canela-Thin.eot');
+	src: url('./webfonts/Canela-Thin.eot?#iefix') format('embedded-opentype'),
+		url('./webfonts/Canela-Thin.woff2') format('woff2'),
+		url('./webfonts/Canela-Thin.woff') format('woff'),
+		url('./webfonts/Canela-Thin.ttf') format('truetype');
+	font-weight: 100;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Canela';
+	src: url('./webfonts/Canela-Medium.eot');
+	src: url('./webfonts/Canela-Medium.eot?#iefix') format('embedded-opentype'),
+		url('./webfonts/Canela-Medium.woff2') format('woff2'),
+		url('./webfonts/Canela-Medium.woff') format('woff'),
+		url('./webfonts/Canela-Medium.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+
+
+
+h1,h2, .title {
+    font-family: 'Canela';
     font-feature-settings: "kern" 1;
     font-kerning: normal;
     -webkit-font-smoothing: antialiased; /* Chrome, Safari */
     -moz-osx-font-smoothing: grayscale; /* Firefox */
-    letter-spacing: 0.015em;
-    color: $primary-color;
-    line-height: 1.2;
-    font-weight: 400;
+    font-weight: normal;
+		unicode-range: U+0000-001F, U+0021-007F;
+		word-spacing: 0.125rem;
     strong {
-        color: $primary-color;
+        color: white;
+				font-weight: 600;
     }
+		&.is-size-0, span.is-size-0 {
+			font-size: 3rem;
+			@include tablet {
+				font-size: 3.3rem;
+			}
+			@include desktop {
+				font-size: 4.2rem;
+			}
+			@include widescreen {
+				font-size: 4.9rem;
+			}
+			@include fullhd {
+				font-size: 5.9rem;
+			}
+		
+		}
 }
-h1.main_title {
-    line-height: 1;
-    margin-bottom: 1.2rem;
-   
-    @include tablet {
-        font-size: calc(100vw / 900 * 55);
-    }
-    @include fullhd {
-        font-size: calc(100vw / 900 * 60);
-    }
-    @media (min-width: $breakpoint-1600) {
-        font-size: 7rem;
-    }
-    
-    span:first-child{
-        font-weight: 300;
-    }
-    span:last-child {
-        font-weight: 700;
-    }
-    
-}
-p, li, ol, ul, strong {
-    color: $textcolor;
+.title {
+	line-height: 1.25;
 }
 
+a {
+	border-bottom: 2px solid $dark-color;
+	
+	&.social {
+		text-decoration: none;
+		border: none;
+		color: $dark-contrast-color;
+		margin-left: 0.5rem;
+
+		i.icon {
+			height: 36px;
+			width: 36px;
+			display: inline-block;
+			border-radius: 100%;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+		}
+
+		&:hover,
+		&:focus {
+			color: $dark-color !important;
+
+			i.icon {
+				background: $dark-contrast-color;
+			}
+		}
+
+	}
+
+}

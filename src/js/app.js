@@ -1,5 +1,13 @@
-import gsap from 'gsap';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin( ScrollTrigger )
 const tl = gsap.timeline();
+
+//set toop-section defaults.
+gsap.set( '.anim-bottom-top .column > *', { autoAlpha: 0 } )
+gsap.set( '.projects-grid > *', { autoAlpha: 0 } )
+
 
 const getProjects = async (cat, projectsNode) => {
 	const fetchData = new FormData()
@@ -37,11 +45,25 @@ const getProjects = async (cat, projectsNode) => {
 	}
 }
 document.addEventListener( 'DOMContentLoaded', () => {
+
+	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ))
+	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
+
+	const projectsSection = document.getElementById( 'projects-grid' )
+	if( projectsSection )
+	{
+		const tl2 = gsap.timeline( {
+			scrollTrigger: {
+				trigger: projectsSection,
+				start: 'top 75%',
+			},
+		} )
+		tl2.add( gsap.fromTo( '.projects-grid article', { autoAlpha: 0, y: 120 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ) )
+	}
+
 	//create a timeline instance
 	
 	const projectsNode = document.getElementById("projects-grid")
-	tl.add(gsap.fromTo(".container > .columns > .column:first-child > *", {autoAlpha: 0, y: 120}, {autoAlpha: 1, y: 0, duration: 1,stagger: 0.15}));
-	tl.add(gsap.fromTo(".projects-grid article", {autoAlpha: 0, y: 120}, {autoAlpha: 1, y: 0, duration: 1,stagger: 0.15}));
 	
 	//manage project categories
 	const projects = document.querySelectorAll(".card.project")
@@ -49,15 +71,23 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	if ( catSelect !== null ) {
 		catSelect.addEventListener( 'change', ( event ) => {
 			const cat = event.target.value;
-			getProjects(cat,projectsNode);
+			//getProjects(cat,projectsNode);
 	
-			/*[ ...projects ].forEach( ( project ) => {
-				if (! project.dataset.categories.includes(val)) {
-					project.classList.add("is-hidden")
-				} else {
+			[ ...projects ].forEach( ( project ) => {
+				if(cat === '0') {
 					project.classList.remove("is-hidden")
 				}
-			} )*/
+				else {
+					console.log(cat);
+					console.log(project.dataset.categories);
+					if (! project.dataset.categories.includes(cat)) {
+						project.classList.add("is-hidden")
+					} else {
+						project.classList.remove("is-hidden")
+					}
+
+				}
+			} )
 		} )
 	}
 } )

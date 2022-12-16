@@ -1,11 +1,11 @@
 
 html, body {
-    background: $body-color;
+    background: whitesmoke;
 }
 
 body{
-    color: $textcolor;
-    @include tablet {
+    color: $dark-color;
+   /* @include tablet {
         .container  {
             height: 88%;
         }
@@ -70,12 +70,10 @@ body{
         .container {
             max-height: 1024px;
         }
-    }
+    }*/
 }
 
 .container {
-    max-width: $container-max-width !important;
-    padding: 2rem;
 }
 .columns 
 {
@@ -114,96 +112,102 @@ body{
 }
 .projects-grid
 {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1.5rem;
-    grid-auto-rows: 14rem;
-		overflow-y: scroll;
-		@include widescreen {
-			height: 100%;
-		}
-    &:not(.small)
-    {
-			@include desktop {
-				grid-auto-rows: 5rem;
-			}
+	gap: 2rem;
+	column-gap: 1.5rem;
+	//display: grid;
+	>* {
+		margin: 0;
+		margin-bottom: 2.5rem;
+		//grid-template-rows: 1fr auto;
+	}
+	@include tablet {
+		column-count: 2;
+		grid-template-columns: repeat((2, 1fr));
+	}
+	@include widescreen {
+		column-count: 3;
+		grid-template-columns: repeat((3, 1fr));
+	}
+    
+	@include desktop {
+		grid-auto-rows: 5rem;
+	}
 
-				@include widescreen {
-						grid-template-columns: repeat((2,1fr));
-						height: 100%;
-				}
-				a.has-card {
-					@include fullhd {
-						&:nth-of-type(odd) {
-							grid-row-end: span 2;
-						}
-						&:nth-of-type(even) {
-							grid-row-end: span 3;
-							h3 {
-									font-size: 1.5rem !important;
-								}
-						}
-						&:nth-of-type(3n) {
-							grid-row-end: span 3;
-							h3 {
-									font-size: 1.5rem !important;
-								}
-						}
-					}
-				}
-    }
-		&.is-loading {
-			overflow: hidden;
-			&::before {
-				content: "";
-				background: $body-color;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				z-index: 2;
+	@include widescreen {
+			height: 100%;
+	}
+	@include fullhd {
+		margin: 0;
+	}
+	a.has-card {
+		@include fullhd {
+			&:nth-of-type(odd) {
+				grid-row-end: span 2;
 			}
-			&::after {
-				content:"\f1ce";
-				font-family: "Font Awesome 6 Free";
-				font-size: 5rem;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				opacity: 0.5;
-				animation: rotating 1s linear infinite;
-				z-index: 3;
+			&:nth-of-type(even) {
+				grid-row-end: span 3;
+				h3 {
+						font-size: 1.5rem !important;
+					}
+			}
+			&:nth-of-type(3n) {
+				grid-row-end: span 3;
+				h3 {
+						font-size: 1.5rem !important;
+					}
 			}
 		}
+	}
+	&.is-loading {
+		overflow: hidden;
+		&::before {
+			content: "";
+			background: $body-color;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+		}
+		&::after {
+			content:"\f1ce";
+			font-family: "Font Awesome 6 Free";
+			font-size: 5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0.5;
+			animation: rotating 1s linear infinite;
+			z-index: 3;
+		}
+	}
 
 
 }
 
 footer.footer {
-    background: transparent;
+    background: $dark-color;
+		overflow: hidden;
     padding: 1rem;
-    padding-top: 0;
     @include desktop {
         padding-left: 3rem;
         width: 100%;
-        max-width: $container-max-width;
         margin: 0 auto;
         margin-top: auto;
-				position: absolute;
 				bottom: 0;
 				left: 0;
 				right: 0;
     }
 		p {
-			font-size: 12px;
+			color: $dark-contrast-color;
 		}
-    
+		
 }
 
 .content figure:not(.wp-block-embed) {
