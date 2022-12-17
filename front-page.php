@@ -11,6 +11,9 @@ $args     = array(
 );
 $projects = get_posts( $args );
 $bio      = $meta['bio'];
+$last_update = $meta['last_update'];
+$month = date("F",strtotime($last_update));
+$year = date("Y",strtotime($last_update));
 ?>
 
 <section class="section colored-black pb-0 anim-bottom-top" id="top-section">
@@ -57,6 +60,7 @@ $bio      = $meta['bio'];
 		<div class="columns is-multiline is-vcentered">
 			<div class="column is-narrow">
 				<h2 class="title is-size-2"><?php esc_html_e( 'Checkout my work', 'jrsp' ); ?></h2>
+				<h3 class="subtitle is-size-5">Last update: <?php echo esc_html( $month );?>, <?php echo esc_html( $year );?></h3>
 			</div>
 			<div class="column has-text-right">
 				<div class="select is-medium">
