@@ -25,11 +25,8 @@ $bio      = $meta['bio'];
 				</div>
 				<div class="level mt-5 pt-5 mb-5">
 					<div class="level-left">
-						<a href="<?php echo esc_url( $meta['cv'] ); ?>" class="button is-gold is-outlined">
-							<span><?php esc_html_e( 'Download CV', 'jrsp' ); ?></span>
-							<span class="icon">
-								<i class="fa-solid fa-file"></i>
-							</span>
+						<a href="<?php echo esc_url( $meta['cv'] ); ?>" class="button is-medium is-gold is-outlined">
+							<?php esc_html_e( 'Download CV', 'jrsp' ); ?>
 						</a>
 					</div>
 					<div class="level-right">

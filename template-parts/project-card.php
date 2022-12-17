@@ -17,7 +17,7 @@ foreach ( $tags as $key => $tag ) {
 ?>
 <article class="card project" data-categories="<?php echo esc_attr( $tag_string ); ?>">
 	<a class="card-header" href="<?php echo esc_url( $permalink ); ?>">
-			<?php the_post_thumbnail(); ?>
+			<?php echo get_the_post_thumbnail($project->ID); ?>
 		<div class="header-content has-text-centered is-size-6">
 			<p><?php echo esc_html( $desc ); ?></p>
 		</div>
