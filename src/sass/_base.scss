@@ -113,7 +113,6 @@ body{
 .projects-grid
 {
 	gap: 2rem;
-	column-gap: 1.5rem;
 	//display: grid;
 	>* {
 		margin: 0;
@@ -124,13 +123,16 @@ body{
 		column-count: 2;
 		grid-template-columns: repeat((2, 1fr));
 	}
-	@include widescreen {
+	@include desktop {
 		column-count: 3;
 		grid-template-columns: repeat((3, 1fr));
 	}
+	@include widescreen {
+		gap: 3rem;
+	}
     
 	@include desktop {
-		grid-auto-rows: 5rem;
+		//grid-auto-rows: 5rem;
 	}
 
 	@include widescreen {

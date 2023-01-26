@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-$primary-color: #050409;
-$dark-color: #050409;//11052C
+$primary-color: #00092C;//#050409;
+$dark-color: #00092C;//#050409;//11052C
 $dark-contrast-color: #f2f2f2;
+$blue-color: #242F9B;
 $gold-color: #c29b63;
 $secondary-color: #18e1e3;
 $body-color: #f4ede3;
@@ -15,7 +16,8 @@ $container-max-width: 1600px;
 $breakpoint-1600: 1600px;
 $content-heading-color: $primary-color;
 $family-primary: 'Open Sans',sans-serif;
-$link: $dark-color;
+$link: #242F9B;
+$title-color: $dark-color;
 
 
 

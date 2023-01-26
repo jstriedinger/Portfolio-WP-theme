@@ -13,6 +13,8 @@
 		display: block;
 		font-size: 0;
 		border: none;
+		max-height: 400px;
+		overflow: hidden;
 		img {
 			z-index: 0;
 			position: relative;
@@ -46,13 +48,16 @@
 			top: 12px;
 			left: 0;
 			opacity: 0;
+			> * {
+				color: $dark-contrast-color;
+				font-weight: normal;
+			}
 		}
 		&:hover {
 			.header-content {
 				top: 0;
 				opacity: 1;
 				> * {
-					color: $dark-contrast-color;
 				}
 			}
 			&:after {
@@ -67,7 +72,7 @@
 	}
 }
 .tag, .select {
-    border: 1px solid $gold-color;
+    border: 1px solid $blue-color;
     border-radius: 20px;
     color: $gold-color;
     font-weight: 700;
@@ -85,12 +90,12 @@
 	padding: 0;
 	font-size: 14px;
 	select {
-		color: $gold-color;
+		color: $blue-color;
 		font-weight: 700;
 		height: auto;
 	}
 	&::after {
-		border-color: $gold-color !important;
+		border-color: $blue-color !important;
 	}
 	
 }

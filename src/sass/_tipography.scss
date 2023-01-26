@@ -54,18 +54,17 @@ h1,h2, .title {
 		&.is-size-0, span.is-size-0 {
 			font-size: 3rem;
 			@include tablet {
-				font-size: 3.3rem;
+				font-size: 3.1rem;
 			}
 			@include desktop {
-				font-size: 4.2rem;
+				font-size: 4rem;
 			}
 			@include widescreen {
-				font-size: 4.9rem;
+				font-size: 4.7rem;
 			}
 			@include fullhd {
-				font-size: 5.9rem;
+				font-size: 5.7rem;
 			}
-		
 		}
 }
 .title {
@@ -73,7 +72,11 @@ h1,h2, .title {
 }
 
 a {
-	border-bottom: 2px solid $dark-color;
+	border-bottom: 1px solid $link;
+	font-weight: bold;
+	&:hover {
+		color: $link;
+	}
 	
 	&.social {
 		text-decoration: none;
@@ -103,4 +106,7 @@ a {
 
 	}
 
+}
+strong {
+	color: $dark-color;
 }

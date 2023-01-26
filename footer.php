@@ -1,8 +1,8 @@
 <footer class="footer">
 	<div class="container mt-3 mb-3">
 		<div class="columns is-variable is-8">
-			<div class="column">
-				<p class="">© 2022 José Rafael Striedinger Pinilla</p>
+			<div class="column is-flex is-alignt-items-center">
+				<p class="">©2023 José Rafael Striedinger Pinilla</p>
 			</div>
 			<div class="column has-text-right-desktop">
 				<p>

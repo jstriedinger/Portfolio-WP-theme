@@ -23,7 +23,7 @@ foreach ( $tags as $key => $tag ) {
 		</div>
 	</a>
 	<div class="card-content">
-		<h3 class="is-size-5"><?php echo esc_html( $project->post_title ); ?></h3>
+		<h3 class="is-size-5 has-text-weight-bold has-text-centered"><?php echo esc_html( $project->post_title ); ?></h3>
 	</div>
 
 </article>
