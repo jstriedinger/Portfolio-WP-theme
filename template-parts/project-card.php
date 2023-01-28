@@ -1,9 +1,10 @@
 <?php
 $project    = $args['project'];
+$meta       = get_fields( $project->ID );
 $permalink  = get_permalink( $project->ID );
 $thumbnail  = get_the_post_thumbnail_url( $project->ID, 'large' );
-$grid_dir   = get_field( 'grid_dir', $project->ID );
-$desc       = get_field( 'desc', $project->ID );
+$desc       = $meta['desc'];
+$position   = $meta['role'];
 $tag_string = '';
 $tags       = get_the_tags( $project->ID );
 foreach ( $tags as $key => $tag ) {
@@ -17,9 +18,10 @@ foreach ( $tags as $key => $tag ) {
 ?>
 <article class="card project" data-categories="<?php echo esc_attr( $tag_string ); ?>">
 	<a class="card-header" href="<?php echo esc_url( $permalink ); ?>">
-			<?php echo get_the_post_thumbnail($project->ID); ?>
+			<?php echo get_the_post_thumbnail( $project->ID ); ?>
 		<div class="header-content has-text-centered is-size-6">
-			<p><?php echo esc_html( $desc ); ?></p>
+			<p class="title is-size-4 is-size-3-widescreen is-gold"><?php echo esc_html( $position ); ?></p>
+			<p class="has-text-white"><?php echo esc_html( $desc ); ?></p>
 		</div>
 	</a>
 	<div class="card-content">

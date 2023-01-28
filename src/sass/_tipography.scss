@@ -66,6 +66,9 @@ h1,h2, .title {
 				font-size: 5.7rem;
 			}
 		}
+		&.is-gold {
+			color: $gold-color;
+		}
 }
 .title {
 	line-height: 1.25;

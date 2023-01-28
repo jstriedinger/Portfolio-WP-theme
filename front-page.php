@@ -62,7 +62,8 @@ $year        = date( 'Y', strtotime( $last_update ) );
 				<h2 class="title is-size-2"><?php esc_html_e( 'Checkout my work', 'jrsp' ); ?></h2>
 				<h3 class="subtitle is-size-5">Last update: <?php echo esc_html( $month ); ?>, <?php echo esc_html( $year ); ?></h3>
 			</div>
-			<div class="column has-text-right">
+			<div class="column has-text-right is-flex is-align-items-center is-justify-content-flex-end" style="gap:15px">
+				<span>Categories: </span>
 				<div class="select is-medium">
 					<select id="project-categories">
 						<option value="0" selected>View all</option>
