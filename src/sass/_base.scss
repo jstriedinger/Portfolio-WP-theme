@@ -112,6 +112,8 @@ body{
 }
 .projects-grid
 {
+	max-width: 1600px;
+	margin: 0 auto;
 	gap: 2rem;
 	//display: grid;
 	>* {
@@ -137,9 +139,6 @@ body{
 
 	@include widescreen {
 			height: 100%;
-	}
-	@include fullhd {
-		margin: 0;
 	}
 	a.has-card {
 		@include fullhd {

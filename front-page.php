@@ -19,7 +19,7 @@ $year        = date( 'Y', strtotime( $last_update ) );
 <section class="section colored-black pb-0 anim-bottom-top" id="top-section">
 	<div class="container mb-0">
 		<div class="columns is-vcentered">
-			<div class="column is-half content mb-0 pb-0">
+			<div class="column is-half content">
 				<h1 class="title is-size-2 has-text-weight-light ">
 					<span>¡Hola! I'm</span><br><span class="has-text-weight-bold is-size-0"><?php the_title(); ?></span>
 				</h1>
