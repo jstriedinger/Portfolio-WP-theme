@@ -16,7 +16,7 @@ foreach ( $tags as $key => $tag ) {
 }
 
 ?>
-<a href="<?php echo esc_url( $permalink ); ?>" style="border: none !important; display:block">
+<a href="<?php echo esc_url( $permalink ); ?>" style="border: none !important; display:block !important;">
 	<article class="card project" data-categories="<?php echo esc_attr( $tag_string ); ?>">
 		<div class="card-content">
 			<h3 class="title is-size-4 is-gold has-text-weight-bold has-text-centered"><?php echo esc_html( $project->post_title ); ?></h3>
