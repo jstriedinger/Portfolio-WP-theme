@@ -75,7 +75,7 @@ $year        = date( 'Y', strtotime( $last_update ) );
 			</div>
 		</div>
 	</div>
-	<div class="container is-fluid pr-0 pl-0">
+	<div class="container is-fluid pr-0 pl-0 pt-5">
 		<div class="projects-grid" id="projects-grid">
 		<?php
 		foreach ( $projects as $project ) {

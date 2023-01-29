@@ -29,19 +29,21 @@ $project_role = $meta['role'];
 						<?php the_title(); ?>
 					</h1>
 					<h2 class="subtitle is-size-4 has-text-weight-light is-talic"><span class="has-text-weight-bold">Role:</span>  <?php echo esc_html( $project_role ); ?></h2>
-					<div class="buttons is-centered">
-	
-						<?php	/*foreach ( $enlaces as $enlace ) { ?>
-								<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-outlined is-gold is-medium">
-								<?php if ( $enlace['icon'] != null ) : ?>
-									<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
-									<span class="icon"><?php echo $enlace['icon']; ?></span>
-								<?php else : ?>
-									<?php echo $enlace['txt']; ?>
-								<?php endif; ?>
-								</a>
-						<?php	}*/ ?>
-					</div>
+					<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
+						<div class="buttons is-centered">
+		
+							<?php	foreach ( $enlaces as $enlace ) { ?>
+									<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-outlined is-gold is-medium">
+									<?php if ( $enlace['icon'] != null ) : ?>
+										<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
+										<span class="icon"><?php echo $enlace['icon']; ?></span>
+									<?php else : ?>
+										<?php echo $enlace['txt']; ?>
+									<?php endif; ?>
+									</a>
+							<?php	} ?>
+						</div>
+					<?php endif; ?>
 	
 				</div>
 			</div>
