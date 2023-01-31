@@ -24,7 +24,7 @@ foreach ( $tags as $key => $tag ) {
 		<div class="card-header" >
 				<?php echo get_the_post_thumbnail( $project->ID ); ?>
 			<div class="header-content has-text-centered is-size-6">
-				<p class="title is-size-4 is-size-3-widescreen has-text-white"><?php echo esc_html( $position ); ?></p>
+				<p class="title is-size-4 is-size-3-fullhd has-text-white"><?php echo esc_html( $position ); ?></p>
 				<p class="has-text-white"><?php echo esc_html( $desc ); ?></p>
 			</div>
 		</div>

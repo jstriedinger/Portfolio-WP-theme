@@ -75,7 +75,7 @@
 		}
 	}
 }
-.tag, .select {
+.select {
     border: 1px solid $blue-color;
     border-radius: 20px;
     color: $gold-color;
@@ -87,6 +87,15 @@
 			background: transparent;
 			border: none;
 		}
+}
+.tag {
+	border: 1px solid white;
+	display: inline-block;
+	&.is-gold {
+		border-color: $gold-color;
+		color: $gold-color;
+		background: transparent;
+	}
 }
 .select {
 	border-radius: 5px;

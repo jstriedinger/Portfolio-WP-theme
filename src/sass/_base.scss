@@ -129,7 +129,7 @@ body{
 		column-count: 3;
 		grid-template-columns: repeat((3, 1fr));
 	}
-	@include widescreen {
+	@include fullhd {
 		gap: 3rem;
 	}
     

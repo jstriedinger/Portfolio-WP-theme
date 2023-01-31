@@ -7,12 +7,14 @@ $meta         = get_fields();
 $desc         = $meta['desc'];
 $enlaces      = $meta['links'];
 $project_role = $meta['role'];
+$year_made    = $meta['year'];
+
 
 ?>
-<section class="pt-5 pb-5">
+<section class="pt-5 pb-6">
 	<div class="container"><div class="columns is-centered">
 		<div class="column is-full has-text-centered">
-			<p class="title is-size-1 mb-2">Jose Striedinger</p>
+			<p class="title is-size-3 mb-2">Jose Striedinger</p>
 			<div class="is-flex is-align-items-center is-justify-content-center" style="gap:2rem;">
 				<a href="<?php echo esc_url( home_url() . '#projects' ); ?>">Projects</a>
 				<a href="<?php echo esc_url( home_url() . '/about' ); ?>">About me</a>
@@ -25,12 +27,17 @@ $project_role = $meta['role'];
 		<div class="container mt-4 mb-4">
 			<div class="columns is-centered has-text-centered">
 				<div class="column is-full is-two-thirds-widescreen">
-					<h1 class="title is-size-2 is-size-1-widescreen mt-6">
+					<?php if ( $year_made ) : ?>
+						<div class="tag is-rounded is-gold is-medium">
+							<?php echo esc_html( $year_made ); ?>
+						</div>
+					<?php endif; ?>
+					<h1 class="title is-size-2 is-size-1-widescreen mt-2">
 						<?php the_title(); ?>
 					</h1>
 					<h2 class="subtitle is-size-4 has-text-weight-light is-talic"><span class="has-text-weight-bold">Role:</span>  <?php echo esc_html( $project_role ); ?></h2>
 					<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
-						<div class="buttons is-centered">
+						<div class="buttons is-centered pt-4">
 		
 							<?php	foreach ( $enlaces as $enlace ) { ?>
 									<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-outlined is-gold is-medium">
