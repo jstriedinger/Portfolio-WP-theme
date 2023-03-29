@@ -6,7 +6,7 @@ const tl = gsap.timeline();
 
 //set toop-section defaults.
 gsap.set( '.anim-bottom-top .column > *', { autoAlpha: 0 } )
-gsap.set( '.projects-grid > *', { autoAlpha: 0 } )
+gsap.set( '#projects-grid > *', { autoAlpha: 0 } )
 
 
 const getProjects = async (cat, projectsNode) => {
@@ -41,7 +41,7 @@ const getProjects = async (cat, projectsNode) => {
 			projectsNode.innerHTML += projectHtml
 		} )
 		projectsNode.classList.remove("is-loading")
-		tl.add(gsap.fromTo(".projects-grid article", {autoAlpha: 0, y: 120}, {autoAlpha: 1, y: 0, duration: 1,stagger: 0.15}));
+		tl.add(gsap.fromTo("#projects-grid article", {autoAlpha: 0, y: 120}, {autoAlpha: 1, y: 0, duration: 1,stagger: 0.15}));
 	}
 }
 document.addEventListener( 'DOMContentLoaded', () => {
@@ -58,7 +58,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				start: 'top 75%',
 			},
 		} )
-		tl2.add( gsap.fromTo( '.projects-grid article', { autoAlpha: 0, y: 120 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ) )
+		tl2.add( gsap.fromTo( '#projects-grid article', { autoAlpha: 0, y: 120 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ) )
 	}
 
 	//create a timeline instance
@@ -90,4 +90,5 @@ document.addEventListener( 'DOMContentLoaded', () => {
 			} )
 		} )
 	}
+	
 } )
