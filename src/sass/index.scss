@@ -56,14 +56,15 @@ p,span, a {
 		}
 
 	}
+	
 }
 
 section.section {
 	position: relative;
 	&.colored-black {
 		background: $dark-color;
-		.title,p,h1,h2,h3, a, strong {
-			color: $dark-contrast-color;
+		.title,p,h1,h2,h3,strong {
+			color: white;
 		}
 		a:not(.button) {
 			color: #F2F2F2;
@@ -86,7 +87,10 @@ section.section {
 			z-index: 1;
 			content: "";
 			background: $dark-color;
-			opacity: 0.6;
+			opacity: 0.4;
+		}
+		p, h1, h2 {
+			text-shadow: 1px 1px 3px rgba($dark-color, 0.3);
 		}
 	}
 	&#top-section {
@@ -96,7 +100,7 @@ section.section {
 			font-size: 1em;
 		}
 		img {
-			max-width: 400px;
+			max-width: 350px;
 			margin: 0 auto;
 		}
 	}
@@ -105,7 +109,11 @@ section.section {
 button.button, a.button {
 	border-radius: 0;
 	&.is-gold{
+		color: $dark-contrast-color;
+		background: $gold-color;
+		border-width: 0px;
 		&.is-outlined {
+			border-width: 1px;
 			border-color: $gold-color;
 			background: transparent;
 			color: $gold-color;

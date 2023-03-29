@@ -5,6 +5,9 @@ html, body {
 
 body{
     color: $dark-color;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
    /* @include tablet {
         .container  {
             height: 88%;

@@ -109,6 +109,14 @@ a {
 
 	}
 
+	&.no-border {
+		border: none;
+	}
+	&.is-gold:not(.button) {
+		color: $gold-color !important;
+		border-color: $gold-color !important;
+	}
+
 }
 strong {
 	color: $dark-color;

@@ -15,6 +15,8 @@ foreach ( $tags as $key => $tag ) {
 	}
 }
 
+$card_img = isset( $meta['card_img'] ) ? $meta['card_img'] : null;
+
 ?>
 <a href="<?php echo esc_url( $permalink ); ?>" style="border: none !important; display:block !important;">
 	<article class="card project" data-categories="<?php echo esc_attr( $tag_string ); ?>">
@@ -22,7 +24,17 @@ foreach ( $tags as $key => $tag ) {
 			<h3 class="title is-size-4 is-gold has-text-weight-bold has-text-centered"><?php echo esc_html( $project->post_title ); ?></h3>
 		</div>
 		<div class="card-header" >
-				<?php echo get_the_post_thumbnail( $project->ID ); ?>
+				<?php
+				if ( $card_img ) {
+					?>
+				<img src="<?php echo esc_url( $card_img ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
+
+					<?php
+				} else {
+					echo get_the_post_thumbnail( $project->ID );
+
+				}
+				?>
 			<div class="header-content has-text-centered is-size-6">
 				<p class="title is-size-4 is-size-3-fullhd has-text-white"><?php echo esc_html( $position ); ?></p>
 				<p class="has-text-white"><?php echo esc_html( $desc ); ?></p>

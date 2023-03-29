@@ -89,7 +89,6 @@
 		}
 }
 .tag {
-	border: 1px solid white;
 	display: inline-block;
 	&.is-gold {
 		border-color: $gold-color;
@@ -154,6 +153,22 @@
 				margin: 0 !important;
 				margin-left: 1rem !important;
 		}
+}
+
+figure.wp-block-image
+{
+	a{
+		img {
+			transition: transform .25s;
+		}
+		&:hover {
+			img {
+				transition: transform .25s;
+				transform: scale(1.05);
+
+			}
+		}
+	}
 }
 
 

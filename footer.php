@@ -1,3 +1,5 @@
+
+</div><!-- #page -->
 <footer class="footer">
 	<div class="container mt-3 mb-3">
 		<div class="columns is-variable is-8">
@@ -16,6 +18,11 @@
 							<span class="fab fa-linkedin-in fa-lg"></span>
 						</i>
 					</a>
+					<a href="https://jstriedinger.itch.io/" class="social">
+						<i class="icon">
+							<span class="fa-brands fa-itch-io"></span>
+						</i>
+					</a>
 				</p>
 
 			</div>
@@ -23,7 +30,6 @@
 		</div>
 	</div>
 </footer>
-</div><!-- #page -->
 <?php wp_footer(); ?>
 </body>
 </html>

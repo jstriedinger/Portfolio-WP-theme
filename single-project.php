@@ -7,7 +7,8 @@ $meta         = get_fields();
 $desc         = $meta['desc'];
 $enlaces      = $meta['links'];
 $project_role = $meta['role'];
-$year_made    = $meta['year'];
+$project_date = $meta['year'];
+$tags         = get_the_tags();
 
 
 ?>
@@ -27,20 +28,35 @@ $year_made    = $meta['year'];
 		<div class="container mt-4 mb-4">
 			<div class="columns is-centered has-text-centered">
 				<div class="column is-full is-two-thirds-widescreen">
-					<?php if ( $year_made ) : ?>
-						<div class="tag is-rounded is-gold is-medium">
-							<?php echo esc_html( $year_made ); ?>
+					<div class="tags is-centered">
+					<?php
+					foreach ( $tags as $key => $tag ) {
+						?>
+						<div class="tag is-rounded is-warning is-light has-text-weight-bold">
+							<?php echo $tag->name; ?>
 						</div>
-					<?php endif; ?>
+						<?php
+					}
+					?>
+					</div>
 					<h1 class="title is-size-2 is-size-1-widescreen mt-2">
 						<?php the_title(); ?>
 					</h1>
-					<h2 class="subtitle is-size-4 has-text-weight-light is-talic"><span class="has-text-weight-bold">Role:</span>  <?php echo esc_html( $project_role ); ?></h2>
+					<div class="columns has-text-centered is-centered mt-4">
+						<div class="column is-5">
+							<p class="is-size-3 title mb-0">Date</p>
+							<p class="is-size-5"><?php echo esc_html( $project_date ); ?></p>
+						</div>
+						<div class="column is-5">
+							<p class="is-size-3 title  mb-0">Role</p>
+								<p class="is-size-5"><?php echo esc_html( $project_role ); ?></p>
+						</div>
+					</div>
 					<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
 						<div class="buttons is-centered pt-4">
 		
 							<?php	foreach ( $enlaces as $enlace ) { ?>
-									<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-outlined is-gold is-medium">
+									<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-gold is-medium">
 									<?php if ( $enlace['icon'] != null ) : ?>
 										<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
 										<span class="icon"><?php echo $enlace['icon']; ?></span>

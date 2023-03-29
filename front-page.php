@@ -18,8 +18,8 @@ $year        = date( 'Y', strtotime( $last_update ) );
 
 <section class="section colored-black pb-0 anim-bottom-top" id="top-section">
 	<div class="container mb-0">
-		<div class="columns is-vcentered">
-			<div class="column is-half content">
+		<div class="columns is-vcentered is-variable is-8">
+			<div class="column is-7 content">
 				<h1 class="title is-size-2 has-text-weight-light ">
 					<span>¡Hola! I'm</span><br><span class="has-text-weight-bold is-size-0"><?php the_title(); ?></span>
 				</h1>
@@ -27,10 +27,15 @@ $year        = date( 'Y', strtotime( $last_update ) );
 					<?php the_content(); ?>
 				</div>
 				<div class="level mt-5 pt-5 mb-5">
-					<div class="level-left">
-						<a href="<?php echo esc_url( $meta['cv'] ); ?>" class="button is-medium is-gold is-outlined">
-							<?php esc_html_e( 'Download CV', 'jrsp' ); ?>
-						</a>
+					<div class="level-left" style="gap: 16px">
+						<div class="level-item">
+							<a href="<?php echo esc_url( $meta['cv'] ); ?>" class="button is-medium is-gold is-outlined">
+								<?php esc_html_e( 'Download CV', 'jrsp' ); ?>
+							</a>
+						</div>
+						<div class="level-item">
+							<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-size-5  is-gold ">More about me</a>
+						</div>
 					</div>
 					<div class="level-right">
 						<p >
@@ -49,7 +54,7 @@ $year        = date( 'Y', strtotime( $last_update ) );
 					</div>
 				</div>
 			</div>
-			<div class="column is-half pb-0 is-flex">
+			<div class="column pb-0 is-flex">
 				<?php the_post_thumbnail(); ?>
 			</div>
 		</div>
@@ -60,7 +65,6 @@ $year        = date( 'Y', strtotime( $last_update ) );
 		<div class="columns is-multiline is-vcentered">
 			<div class="column is-narrow">
 				<h2 class="title is-size-2"><?php esc_html_e( 'Checkout my work', 'jrsp' ); ?></h2>
-				<h3 class="subtitle is-size-5">Last update: <?php echo esc_html( $month ); ?>, <?php echo esc_html( $year ); ?></h3>
 			</div>
 			<div class="column has-text-right is-flex is-align-items-center is-justify-content-flex-end" style="gap:15px">
 				<span>Categories: </span>
