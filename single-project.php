@@ -9,6 +9,7 @@ $enlaces      = $meta['links'];
 $project_role = $meta['role'];
 $project_date = $meta['year'];
 $tags         = get_the_tags();
+$with_layer   = isset( $meta['dark_cover_layer'] ) ? $meta['dark_cover_layer'] : true;
 
 
 ?>
@@ -24,7 +25,7 @@ $tags         = get_the_tags();
 	</div></div>
 </section>
 <div class="container">
-	<section class="section colored-black with-image anim-bottom-top" style="background-image: url(<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>)" >
+	<section class="section colored-black with-image anim-bottom-top <?php echo $with_layer ? 'with-layer' : ''; ?>" style="background-image: url(<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>)" >
 		<div class="container mt-4 mb-4">
 			<div class="columns is-centered has-text-centered">
 				<div class="column is-full is-two-thirds-widescreen">
