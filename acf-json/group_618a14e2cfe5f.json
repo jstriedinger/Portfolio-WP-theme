@@ -181,6 +181,31 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_642524a9014f5",
+            "label": "GIF en card",
+            "name": "card_gif",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_6424cfa4a67d2",
             "label": "Layer in cover image?",
             "name": "dark_cover_layer",
@@ -219,5 +244,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1680134097
+    "modified": 1680156082
 }
