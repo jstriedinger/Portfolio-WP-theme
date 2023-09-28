@@ -98,12 +98,13 @@ section.section {
 	}
 	&#top-section {
 
-		font-size: 0;
+		//font-size: 0;
 		> .container {
 			font-size: 1em;
 		}
 		img {
-			max-width: 350px;
+			max-height: 300px;
+			width: auto;
 			margin: 0 auto;
 		}
 	}

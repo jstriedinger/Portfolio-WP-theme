@@ -16,46 +16,35 @@ $month       = date( 'F', strtotime( $last_update ) );
 $year        = date( 'Y', strtotime( $last_update ) );
 ?>
 
-<section class="section colored-black pb-0 anim-bottom-top" id="top-section">
+<section class="section colored-black anim-bottom-top" id="top-section">
 	<div class="container mb-0">
-		<div class="columns is-vcentered is-variable is-8">
-			<div class="column is-7 content">
-				<h1 class="title is-size-2 has-text-weight-light ">
-					<span>¡Hola! I'm</span><br><span class="has-text-weight-bold is-size-0"><?php the_title(); ?></span>
+		<div class="columns is-centered has-text-centered is-variable is-8">
+			<div class="column is-two-thirds content">
+				<h1 class="title is-size-1 has-text-weight-bold ">
+					<?php the_title(); ?>
 				</h1>
-				<div class="title is-size-4 has-text-weight-light mt-2 has-text-justified">
+				<div class="title is-size-5 has-text-weight-light mt-2 has-text-justified-center">
 					<?php the_content(); ?>
 				</div>
-				<div class="level mt-5 pt-5 mb-5">
-					<div class="level-left" style="gap: 16px">
-						<div class="level-item">
-							<a href="<?php echo esc_url( $meta['cv'] ); ?>" class="button is-medium is-gold is-outlined">
-								<?php esc_html_e( 'Download CV', 'jrsp' ); ?>
-							</a>
-						</div>
-						<div class="level-item">
-							<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-size-5  is-gold ">More about me</a>
-						</div>
-					</div>
-					<div class="level-right">
-						<p >
-							<span class="is-size-6 is-hidden-touch"><?php esc_html_e( 'Connect with me: ', 'jrsp' ); ?></span>
-							<a href="https://github.com/jstriedinger" class="social">
-								<i class="icon is-medium">
-									<span class="fab fa-github fa-lg"></span>
-								</i>
-							</a>
-							<a href="https://www.linkedin.com/in/jstriedinger/" class="social">
-								<i class="icon is-medium">
-									<span class="fab fa-linkedin-in fa-lg"></span>
-								</i>
-							</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="column pb-0 is-flex">
-				<?php the_post_thumbnail(); ?>
+				<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-gold is-size-6 mb-4">More about me</a>
+				<p class="mt-4">
+					
+					<a href="https://github.com/jstriedinger" class="social">
+						<i class="icon is-medium">
+							<span class="fab fa-github "></span>
+						</i>
+					</a>
+					<a href="https://www.linkedin.com/in/jstriedinger/" class="social">
+						<i class="icon is-medium">
+							<span class="fab fa-linkedin-in "></span>
+						</i>
+					</a>
+					<a href="https://jstriedinger.itch.io/" class="social">
+						<i class="icon">
+							<span class="fa-brands fa-itch-io"></span>
+						</i>
+					</a>
+				</p>
 			</div>
 		</div>
 	</div>

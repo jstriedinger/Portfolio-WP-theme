@@ -118,11 +118,11 @@ body{
 {
 	max-width: 1600px;
 	margin: 0 auto;
-	gap: 1.5rem;
+	gap: .5rem;
 	//display: grid;
 	>* {
 		margin: 0;
-		margin-bottom: 2.5rem;
+		margin-bottom: 0.5rem;
 		//grid-template-rows: 1fr auto;
 	}
 	@include tablet {
@@ -132,9 +132,6 @@ body{
 	@include desktop {
 		column-count: 3;
 		grid-template-columns: repeat((3, 1fr));
-	}
-	@include fullhd {
-		gap: 2rem;
 	}
     
 	@include desktop {

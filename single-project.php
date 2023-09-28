@@ -13,16 +13,18 @@ $with_layer   = isset( $meta['dark_cover_layer'] ) ? $meta['dark_cover_layer'] :
 
 
 ?>
-<section class="pt-5 pb-6">
-	<div class="container"><div class="columns is-centered">
-		<div class="column is-full has-text-centered">
-			<p class="title is-size-3 mb-2">Jose Striedinger</p>
-			<div class="is-flex is-align-items-center is-justify-content-center" style="gap:2rem;">
-				<a href="<?php echo esc_url( home_url() . '#projects' ); ?>">Projects</a>
-				<a href="<?php echo esc_url( home_url() . '/about' ); ?>">About me</a>
+<section class="section colored-black anim-bottom-top mb-5" id="top-section">
+	<div class="container mb-0">
+		<div class="columns is-centered has-text-centered is-variable is-8">
+			<div class="column is-two-thirds content">
+				<h1 class="title is-size-3 has-text-weight-bold ">José Rafael Striedinger</h1>
+				<div class="is-flex is-align-items-center is-justify-content-center has-text-weight-light" style="gap:2rem;">
+					<a href="<?php echo esc_url( home_url() . '#projects' ); ?>">Projects</a>
+					<a href="<?php echo esc_url( home_url() . '/about' ); ?>">About me</a>
+				</div>
 			</div>
 		</div>
-	</div></div>
+	</div>
 </section>
 <div class="container">
 	<section class="section colored-black with-image anim-bottom-top <?php echo $with_layer ? 'with-layer' : ''; ?>" style="background-image: url(<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>)" >
