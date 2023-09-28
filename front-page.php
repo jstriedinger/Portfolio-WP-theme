@@ -20,10 +20,10 @@ $year        = date( 'Y', strtotime( $last_update ) );
 	<div class="container mb-0">
 		<div class="columns is-centered has-text-centered is-variable is-8">
 			<div class="column is-two-thirds content">
-				<h1 class="title is-size-1 has-text-weight-bold ">
+				<h1 class="title is-size-1 has-text-weight-normal ">
 					<?php the_title(); ?>
 				</h1>
-				<div class="title is-size-5 has-text-weight-light mt-2 has-text-justified-center">
+				<div class="is-size-6 has-text-justified-center mb-5">
 					<?php the_content(); ?>
 				</div>
 				<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-gold is-size-6 mb-4">More about me</a>
