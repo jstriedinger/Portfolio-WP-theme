@@ -7,6 +7,7 @@
 	position: relative;
 	z-index: 0;
 	width: 100%;
+	border-radius: 12px;
 
 	
 	
@@ -30,6 +31,7 @@
 			top: 0;
 			left: 0;
 			z-index: 2;
+			
 		}
 		&:after {
 			position: absolute;
@@ -58,8 +60,13 @@
 			height: 100%;
 			left: 0;
 			top: 0;
+			
+			> .is-gold {
+				transition: all 0.4s;
+				opacity: 0;
+			}
 			> * {
-				font-weight: normal;
+				text-shadow: 1px 1px 2px rgba($dark-color, 0.4);
 			}
 		}
 		
@@ -71,18 +78,14 @@
 	&:hover {
 		
 		.card-header {
-			img.gif-bg{
-				z-index: 0;
-			}
 			.header-content {
-				> p {
-					text-shadow: 1px 1px 2px rgba($dark-color, 0.5);
-
+				> .is-gold {
+					opacity: 1;
 				}
 			}
 			
 			&:after {
-				background: rgba($dark-color, 0.4);
+				background: rgba($dark-color, 0.75);
 	
 			}
 		}
@@ -182,6 +185,37 @@ figure.wp-block-image
 			}
 		}
 	}
+}
+
+hr {
+	background-color: $grey-lighter;
+}
+
+.project-feature-thing
+{
+	> * {
+		border-radius: 8px !important;
+		overflow: hidden;
+		font-size: 0;
+	} 
+}
+
+.embed-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 

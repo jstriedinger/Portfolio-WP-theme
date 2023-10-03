@@ -24,20 +24,13 @@ $card_gif = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
 		
 		<div class="card-header" >
 				<?php
-				if ( $card_img ) {
-					?>
-				<img src="<?php echo esc_url( $card_img ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
-
-					<?php
-				} else {
 					echo get_the_post_thumbnail( $project->ID );
-
-				}
 				?>
 				<img class="gif-bg" src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
 			<div class="header-content has-text-centered is-size-6">
-				<p class="title is-size-4 is-size-2-fullhd has-text-white"><?php echo esc_html( $project->post_title ); ?></p>
+				<p class="title is-size-4 is-size-3-desktop  is-size-2-widescreen is-size-1-fullhd has-text-white"><?php echo esc_html( $project->post_title ); ?></p>
 				<p class="subtitle has-text-white is-size-5 is-size-4-fullhd"><?php echo esc_html( $position ); ?></p>
+				<p class="is-gold is-size-6 has-text-weight-bold">Click for more →</p>
 			</div>
 		</div>
 	</article>

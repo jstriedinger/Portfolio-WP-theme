@@ -3,82 +3,100 @@
  * viewing a single project
  */
 get_header();
-$meta         = get_fields();
-$desc         = $meta['desc'];
-$enlaces      = $meta['links'];
-$project_role = $meta['role'];
-$project_date = $meta['year'];
-$tags         = get_the_tags();
-$with_layer   = isset( $meta['dark_cover_layer'] ) ? $meta['dark_cover_layer'] : true;
+$meta          = get_fields();
+$desc          = $meta['desc'];
+$enlaces       = $meta['links'];
+$project_role  = $meta['role'];
+$project_date  = $meta['year'];
+$video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
+$card_gif      = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
+$tags          = get_the_tags();
 
 
 ?>
-<section class="section colored-black anim-bottom-top mb-5" id="top-section">
+<section class="section colored-black mb-5" >
 	<div class="container mb-0">
 		<div class="columns is-centered has-text-centered is-variable is-8">
-			<div class="column is-two-thirds content">
-				<h1 class="title is-size-3 has-text-weight-bold ">José Rafael Striedinger</h1>
+			<div class="column is-two-thirds is-paddingless">
+				<h1 class="title is-size-3 has-text-weight-bold ">~ José Rafael Striedinger ~</h1>
 				<div class="is-flex is-align-items-center is-justify-content-center has-text-weight-light" style="gap:2rem;">
-					<a href="<?php echo esc_url( home_url() . '#projects' ); ?>">Projects</a>
-					<a href="<?php echo esc_url( home_url() . '/about' ); ?>">About me</a>
+					<a href="<?php echo esc_url( home_url() . '#projects' ); ?>" class="is-gold">Projects</a>
+					<a href="<?php echo esc_url( home_url() . '/about' ); ?>" class="is-gold">About me</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<div class="container">
-	<section class="section colored-black with-image anim-bottom-top <?php echo $with_layer ? 'with-layer' : ''; ?>" style="background-image: url(<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>)" >
-		<div class="container mt-4 mb-4">
-			<div class="columns is-centered has-text-centered">
-				<div class="column is-full is-two-thirds-widescreen">
-					<div class="tags is-centered">
+
+<section class="section anim-bottom-top">
+	<div class="container  mt-4">
+		<div class="columns is-vcentered is-centered">
+			<div class="column is-7">
+				<div class="level mb-2" >
+					<div class="level-left" style="gap: 2rem">
+						<h1 class="title mb-0 is-size-2 is-size-1-desktop">
+							<?php the_title(); ?>
+							
+						</h1>
+						
+					</div>
+					
+				</div>
+				<div class="tags are-large mb-4">
+					<div class="tag is-rounded is-link is-light ">
+						<?php echo esc_html( $project_role ); ?>
+					</div>
 					<?php
 					foreach ( $tags as $key => $tag ) {
 						?>
-						<div class="tag is-rounded is-warning is-light has-text-weight-bold">
+						<div class="tag is-rounded is-link is-light ">
 							<?php echo $tag->name; ?>
 						</div>
 						<?php
 					}
 					?>
+					<div class="tag is-rounded is-link is-light ">
+						<?php echo esc_html( $project_date ); ?>
 					</div>
-					<h1 class="title is-size-2 is-size-1-widescreen mt-2">
-						<?php the_title(); ?>
-					</h1>
-					<div class="columns has-text-centered is-centered mt-4">
-						<div class="column is-5">
-							<p class="is-size-3 title mb-0">Date</p>
-							<p class="is-size-5"><?php echo esc_html( $project_date ); ?></p>
-						</div>
-						<div class="column is-5">
-							<p class="is-size-3 title  mb-0">Role</p>
-								<p class="is-size-5"><?php echo esc_html( $project_role ); ?></p>
-						</div>
-					</div>
-					<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
-						<div class="buttons is-centered pt-4">
-		
-							<?php	foreach ( $enlaces as $enlace ) { ?>
-									<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-gold is-medium">
-									<?php if ( $enlace['icon'] != null ) : ?>
-										<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
-										<span class="icon"><?php echo $enlace['icon']; ?></span>
-									<?php else : ?>
-										<?php echo $enlace['txt']; ?>
-									<?php endif; ?>
-									</a>
-							<?php	} ?>
-						</div>
-					<?php endif; ?>
-	
 				</div>
+				<div class="content">
+					<?php esc_html_e( $desc ); ?>
+				</div>
+			
+				<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
+					<div class="buttons pt-2">
+	
+						<?php	foreach ( $enlaces as $enlace ) { ?>
+								<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-gold">
+								<?php if ( $enlace['icon'] != null ) : ?>
+									<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
+									<span class="icon"><?php echo $enlace['icon']; ?></span>
+								<?php else : ?>
+									<?php echo $enlace['txt']; ?>
+								<?php endif; ?>
+								</a>
+						<?php	} ?>
+					</div>
+				<?php endif; ?>
+			</div>
+			<div class="column project-feature-thing">
+				<?php if ( !is_null( $video_trailer ) && !empty( $video_trailer) ) : ?>
+					<div class="embed-container">
+						<?php echo $video_trailer; ?>
+					</div>
+				<?php elseif (!is_null( $card_gif ) && !empty( $card_gif) ) : ?>
+					<img src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
+					<?php else : 
+					the_post_thumbnail(  );
+				endif; ?>
 			</div>
 		</div>
-	</section>
-
-</div>
-<section class="section">
-	<div class="container is-max-desktop">
+		<hr>
+	</div>
+	
+</section>
+<section class="section pt-0">
+	<div class="container is-max-widescreen">
 		<div class="columns">
 			<div class="column is-full">
 				<div class="content">

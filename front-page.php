@@ -21,7 +21,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 	<div class="container is-max-widescreen mb-0">
 		<div class="columns is-centered is-vcentered is-variable is-8">
 			<div class="column is-two-thirds">
-				<h1 class="title is-size-1 has-text-weight-normal ">
+				<h1 class="title is-size-1">
 					<?php the_title(); ?>
 				</h1>
 				<div class="is-size-6 has-text-justified-center mb-5">
@@ -62,7 +62,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 	<div class="container mt-5 mb-5">
 		<div class="columns is-multiline  is-centered">
 			<div class="column is-narrow">
-				<h2 class="title is-size-2"><?php esc_html_e( 'Featured work', 'jrsp' ); ?></h2>
+				<h2 class="title is-size-2"><?php esc_html_e( '~ Featured work ~', 'jrsp' ); ?></h2>
 				<?php /* <div class="select is-medium">
 					<select id="project-categories">
 						<option value="0" selected>View all</option>

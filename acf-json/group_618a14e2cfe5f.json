@@ -23,6 +23,23 @@
             "new_lines": ""
         },
         {
+            "key": "field_651baa7a08713",
+            "label": "Video trailer",
+            "name": "video_trailer",
+            "aria-label": "",
+            "type": "oembed",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": "",
+            "height": ""
+        },
+        {
             "key": "field_639c11e2db57c",
             "label": "Position",
             "name": "role",
@@ -244,5 +261,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1680156082
+    "modified": 1696312073
 }
