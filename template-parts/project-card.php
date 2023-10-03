@@ -22,11 +22,16 @@ $card_gif = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
 <a href="<?php echo esc_url( $permalink ); ?>" style="border: none !important; display:block !important;">
 	<article class="card project" data-categories="<?php echo esc_attr( $tag_string ); ?>">
 		
-		<div class="card-header" >
+		<div class="card-header <?php echo empty( $card_gif ) ? 'no-gif' : ''; ?>" >
 				<?php
 					echo get_the_post_thumbnail( $project->ID );
+				if ( ! empty( $card_gif ) ) {
+					?>
+						<img class="gif-bg" src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
+
+					<?php
+				}
 				?>
-				<img class="gif-bg" src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
 			<div class="header-content has-text-centered is-size-6">
 				<p class="title is-size-4 is-size-3-desktop  is-size-2-widescreen is-size-1-fullhd has-text-white"><?php echo esc_html( $project->post_title ); ?></p>
 				<p class="subtitle has-text-white is-size-5 is-size-4-fullhd"><?php echo esc_html( $position ); ?></p>

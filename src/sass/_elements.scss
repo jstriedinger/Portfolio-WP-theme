@@ -20,19 +20,31 @@
 		overflow: hidden;
 		img {
 			z-index: 0;
+			z-index: 1;
+			&.attachment-post-thumbnail
+			{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+			}
+		}
+		
+		img.gif-bg {
 			position: relative;
 			object-fit: cover;
-			z-index: 1;
-		}
-		img.gif-bg {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			top: 0;
-			left: 0;
 			z-index: 2;
 			
 		}
+		&.no-gif {
+			img.attachment-post-thumbnail{
+				position: relative;
+				object-fit: cover;
+				z-index: 1;
+			}
+		}
+
 		&:after {
 			position: absolute;
 			transition: all 0.4s;
