@@ -21,7 +21,7 @@
 			z-index: 0;
 			position: relative;
 			object-fit: cover;
-			z-index: 1;;
+			z-index: 1;
 		}
 		img.gif-bg {
 			position: absolute;
@@ -29,7 +29,7 @@
 			height: 100%;
 			top: 0;
 			left: 0;
-			z-index: 0;
+			z-index: 2;
 		}
 		&:after {
 			position: absolute;
@@ -40,10 +40,10 @@
 			content:"";
 			top:0;
 			left: 0;
+			background: rgba($dark-color, 0.4);
 		}
 		.header-content {
 			transition: all 0.4s;
-			//opacity: 0;
 			width: 100%;
 			height: 100%;
 			display: flex;
@@ -56,9 +56,8 @@
 			position: absolute;
 			width: 100%;
 			height: 100%;
-			top: 12px;
 			left: 0;
-			opacity: 0;
+			top: 0;
 			> * {
 				font-weight: normal;
 			}
@@ -73,11 +72,9 @@
 		
 		.card-header {
 			img.gif-bg{
-				z-index: 2;
+				z-index: 0;
 			}
 			.header-content {
-				top: 0;
-				opacity: 1;
 				> p {
 					text-shadow: 1px 1px 2px rgba($dark-color, 0.5);
 

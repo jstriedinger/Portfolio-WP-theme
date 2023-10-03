@@ -16,6 +16,7 @@ $fa-font-path: "./webfonts";
 @import "~bulma/sass/elements/content";
 @import "~bulma/sass/elements/button";
 @import "~bulma/sass/elements/tag";
+@import "~bulma/sass/elements/image";
 @import "~bulma/sass/components/level";
 @import "~bulma/sass/grid/columns";
 
@@ -103,9 +104,23 @@ section.section {
 			font-size: 1em;
 		}
 		img {
-			max-height: 300px;
+			max-height: 240px;
 			width: auto;
 			margin: 0 auto;
+		}
+		@include desktop {
+			padding-bottom: 0;
+
+			.columns > .column:last-child
+			{
+				padding-bottom: 0;
+				font-size: 0;
+			}
+		}
+		@include widescreen {
+			img {
+				max-width: 250px;
+			}
 		}
 	}
 }
