@@ -10,6 +10,7 @@ $project_role  = $meta['role'];
 $project_date  = $meta['year'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
 $card_gif      = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
+$page_gif      = isset( $meta['page_gif'] ) ? $meta['page_gif'] : null;
 $tags          = get_the_tags();
 
 
@@ -84,6 +85,8 @@ $tags          = get_the_tags();
 					<div class="embed-container">
 						<?php echo $video_trailer; ?>
 					</div>
+				<?php elseif ( ! is_null( $page_gif ) && ! empty( $page_gif ) ) : ?>
+					<img src="<?php echo esc_url( $page_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
 				<?php elseif ( ! is_null( $card_gif ) && ! empty( $card_gif ) ) : ?>
 					<img src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
 					<?php
