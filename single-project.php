@@ -18,7 +18,7 @@ $tags          = get_the_tags();
 	<div class="container mb-0">
 		<div class="columns is-centered has-text-centered is-variable is-8">
 			<div class="column is-two-thirds is-paddingless">
-				<h1 class="title is-size-3 has-text-weight-bold ">~ José Rafael Striedinger ~</h1>
+				<h1 class="title is-size-3 has-text-weight-bold mb-2">José Rafael Striedinger</h1>
 				<div class="is-flex is-align-items-center is-justify-content-center has-text-weight-light" style="gap:2rem;">
 					<a href="<?php echo esc_url( home_url() . '#projects' ); ?>" class="is-gold">Projects</a>
 					<a href="<?php echo esc_url( home_url() . '/about' ); ?>" class="is-gold">About me</a>
@@ -80,15 +80,17 @@ $tags          = get_the_tags();
 				<?php endif; ?>
 			</div>
 			<div class="column project-feature-thing">
-				<?php if ( !is_null( $video_trailer ) && !empty( $video_trailer) ) : ?>
+				<?php if ( ! is_null( $video_trailer ) && ! empty( $video_trailer ) ) : ?>
 					<div class="embed-container">
 						<?php echo $video_trailer; ?>
 					</div>
-				<?php elseif (!is_null( $card_gif ) && !empty( $card_gif) ) : ?>
+				<?php elseif ( ! is_null( $card_gif ) && ! empty( $card_gif ) ) : ?>
 					<img src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
-					<?php else : 
-					the_post_thumbnail(  );
-				endif; ?>
+					<?php
+					else :
+						the_post_thumbnail();
+				endif;
+					?>
 			</div>
 		</div>
 		<hr>

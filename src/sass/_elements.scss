@@ -64,7 +64,6 @@
 			align-items: center;
 			flex-direction: column;
 			justify-content: center;
-			position: relative;
 			padding: 1rem;
 			z-index: 4;
 			position: absolute;
@@ -73,10 +72,6 @@
 			left: 0;
 			top: 0;
 			
-			> .is-gold {
-				transition: all 0.4s;
-				opacity: 0;
-			}
 			> * {
 				text-shadow: 1px 1px 2px rgba($dark-color, 0.4);
 			}
@@ -87,21 +82,40 @@
 		padding: 1rem;
 		background: $dark-color;
 	}
-	&:hover {
-		
-		.card-header {
-			.header-content {
-				> .is-gold {
-					opacity: 1;
+
+		@include desktop {
+			.card-header {
+				&:after {
+					background: rgba($dark-color, 0.1);
 				}
 			}
-			
-			&:after {
-				background: rgba($dark-color, 0.75);
 	
+			.header-content {
+				>p {
+					transition: all 0.4s;
+					opacity: 0;
+					position: relative;
+					top: 12px;
+				}
+			}
+	
+			&:hover {
+				.card-header {
+					.header-content {
+						>p {
+							opacity: 1;
+							top: 0;
+						}
+					}
+	
+					&:after {
+						background: rgba($dark-color, 0.75);
+	
+					}
+				}
 			}
 		}
-	}
+	
 }
 .select {
     border: 1px solid $blue-color;
