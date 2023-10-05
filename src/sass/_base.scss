@@ -125,13 +125,12 @@ body{
 		margin-bottom: 0.5rem;
 		//grid-template-rows: 1fr auto;
 	}
-	@include desktop {
+	@include fullhd {
 		a:first-child {
 			.card-header {
-				height: 370px;
+				height: 400px;
 			}
 		}
-
 	}
 	@include tablet {
 		column-count: 2;
@@ -140,6 +139,11 @@ body{
 	@include desktop {
 		column-count: 3;
 		grid-template-columns: repeat((3, 1fr));
+		a:first-child {
+			.card-header {
+				height: 370px;
+			}
+		}
 	}
     
 	@include desktop {
@@ -148,6 +152,11 @@ body{
 
 	@include widescreen {
 			height: 100%;
+			a:first-child {
+				.card-header {
+					height: 390px;
+				}
+			}
 	}
 	a.has-card {
 		@include fullhd {
