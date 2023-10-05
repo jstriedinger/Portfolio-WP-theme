@@ -125,6 +125,14 @@ body{
 		margin-bottom: 0.5rem;
 		//grid-template-rows: 1fr auto;
 	}
+	@include desktop {
+		a:first-child {
+			.card-header {
+				height: 350px;
+			}
+		}
+
+	}
 	@include tablet {
 		column-count: 2;
 		grid-template-columns: repeat((2, 1fr));
