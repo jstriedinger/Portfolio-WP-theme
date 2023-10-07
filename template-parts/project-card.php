@@ -7,11 +7,11 @@ $desc       = isset( $meta['desc'] ) ? $meta['desc'] : null;
 $position   = isset( $meta['role'] ) ? $meta['role'] : null;
 $tag_string = '';
 $tags       = get_the_tags( $project->ID );
+$is_wip     = false;
 foreach ( $tags as $key => $tag ) {
-	if ( $key !== array_key_last( $tags ) ) {
-		$tag_string .= $tag->slug . ',';
-	} else {
-		$tag_string .= $tag->slug;
+	if ( $tag->slug == 'wip' ) {
+		$is_wip = true;
+		break;
 	}
 }
 
@@ -32,6 +32,9 @@ $card_gif = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
 					<?php
 				}
 				?>
+				<?php if ( $is_wip ) : ?>
+					<div class="tag is-primary is-light">WIP</div>
+				<?php endif; ?>
 			<div class="header-content has-text-centered is-size-6">
 				<p class="title is-size-4 is-size-3-desktop  is-size-2-widescreen is-size-1-fullhd has-text-white"><?php echo esc_html( $project->post_title ); ?></p>
 				<p class="subtitle has-text-white is-size-5 is-size-4-fullhd"><?php echo esc_html( $position ); ?></p>

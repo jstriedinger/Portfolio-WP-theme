@@ -18,6 +18,12 @@
 		border: none;
 		max-height: 400px;
 		overflow: hidden;
+		> .tag {
+			position: absolute;
+			top: 12px;
+			right: 12px;
+			z-index: 5;
+		}
 		img {
 			z-index: 0;
 			z-index: 1;
