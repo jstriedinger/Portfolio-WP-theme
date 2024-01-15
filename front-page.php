@@ -25,7 +25,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 					<?php the_title(); ?>
 				</h1>
 				<div class="is-size-6 has-text-justified-center mb-5">
-					<?php the_content(); ?>
+					<?php echo $bio; ?>
 				</div>
 				<div class="level">
 					<div class="level-left">
@@ -58,23 +58,26 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		</div>
 	</div>
 </section>
+<section class="section pt-0">
+	<div class="container mt-5 mb-5 is-fullhd">
+		<div class="columns">
+			<div class="column is-full">
+				<div class="content projects">
+					<?php the_content(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<?php 
+/*
 <section class="section" id="projects">
 	<div class="container mt-5 mb-5">
 		<div class="columns is-multiline  is-centered">
 			<div class="column is-narrow">
 				<h2 class="title is-size-2"><?php esc_html_e( '~ Featured work ~', 'jrsp' ); ?></h2>
-				<?php /* <div class="select is-medium">
-					<select id="project-categories">
-						<option value="0" selected>View all</option>
-						<?php foreach ( get_tags() as $tag ) { ?>
-							<option value="<?php echo $tag->slug; ?>"><?php echo $tag->name; ?></option>
-				<?php	} ?>
-					</select>
-				</div> */ ?>
+			
 			</div>
-			<?php /*<div class="column has-text-right is-flex is-align-items-center is-justify-content-flex-end" style="gap:15px">
-				<span>Categories: </span>
-			</div> */ ?>
 		</div>
 	</div>
 	<div class="container is-fluid pr-0 pl-0 pt-5">
@@ -86,19 +89,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		?>
 		</div>
 	</div>
-</section>
+</section> */ ?>
 <?php
-get_footer();/*
-<section class="section colored-black" id="about">
-	<div class="container">
-		<div class="columns is-multiline">
-			<div class="column is-full">
-				<h2 class="title is-size-2"><?php esc_html_e( 'More about me', 'jrsp' ); ?> 👋</h2>
-			</div>
-			<div class="column is-full content">
-				<?php echo $bio; ?>
-			</div>
-		</div>
-	</div>
-</section>*/
+get_footer();
 

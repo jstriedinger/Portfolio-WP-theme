@@ -8,6 +8,30 @@ body{
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
+
+		.content{
+			&.projects {
+				a {
+					color: $gold-color !important;
+					border-color: $gold-color;
+				}
+				figure {
+					margin: 0 auto;
+					width: auto;
+					a {
+						border: none;
+					}
+					&.project-img {
+						img {
+							border-radius: 12px;
+						}
+						margin-bottom: 1rem;
+
+					}
+
+				}
+			}
+		}
    /* @include tablet {
         .container  {
             height: 88%;
