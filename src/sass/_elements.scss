@@ -253,4 +253,12 @@ hr {
 }
 
 
+.wp-block-columns.wp-block-columns-is-layout-flex
+{
+	@include desktop {
+		justify-content: center !important;
+	}
+}
+
+
 

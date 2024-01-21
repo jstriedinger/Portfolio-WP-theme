@@ -49,7 +49,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ))
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
 
-	const projectsSection = document.getElementById( 'projects-grid' )
+	/*const projectsSection = document.getElementById( 'projects-grid' )
 	if( projectsSection )
 	{
 		const tl2 = gsap.timeline( {
@@ -89,17 +89,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				}
 			} )
 		} )
-	}
+	}*/
 
-	//set project-img with their after content
-	const projectImgs = document.querySelectorAll(".project-img img");
-	[ ...projectImgs ].forEach( ( projectImg ) => {
-		var alt = projectImg.alt;
-		var anchor = projectImg.parentNode;
-		anchor.addRule(':before','content: "'+alt+'";');
-		//getComputedStyle(projectImg.parentElement, '::before').setProperty("content",alt)
-		//console.log(getComputedStyle(projectImg.parentElement, '::before').getPropertyValue("content"));
-
-
-	})
+	
 } )
