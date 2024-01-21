@@ -18,7 +18,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 ?>
 
 <section class="section colored-black anim-bottom-top" id="top-section">
-	<div class="container is-max-widescreen mb-0">
+	<div class="container mb-0 is-max-widescreen">
 		<div class="columns is-centered is-vcentered is-variable is-8">
 			<div class="column is-two-thirds">
 				<h1 class="title is-size-1">
@@ -58,8 +58,8 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		</div>
 	</div>
 </section>
-<section class="section pt-0">
-	<div class="container mt-5 mb-5 is-fullhd">
+<section class="section pt-2">
+	<div class="container mt-5 mb-5 is-fluid">
 		<div class="columns">
 			<div class="column is-full">
 				<div class="content projects">
@@ -69,14 +69,14 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		</div>
 	</div>
 </section>
-<?php 
+<?php
 /*
 <section class="section" id="projects">
 	<div class="container mt-5 mb-5">
 		<div class="columns is-multiline  is-centered">
 			<div class="column is-narrow">
 				<h2 class="title is-size-2"><?php esc_html_e( '~ Featured work ~', 'jrsp' ); ?></h2>
-			
+
 			</div>
 		</div>
 	</div>
@@ -89,7 +89,8 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		?>
 		</div>
 	</div>
-</section> */ ?>
+</section> */
+?>
 <?php
 get_footer();
 
