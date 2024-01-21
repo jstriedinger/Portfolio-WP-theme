@@ -21,7 +21,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 	<div class="container mb-0 is-max-widescreen">
 		<div class="columns is-centered is-vcentered is-variable is-8">
 			<div class="column is-two-thirds">
-				<h1 class="title is-size-1">
+				<h1 class="title is-1">
 					<?php the_title(); ?>
 				</h1>
 				<div class="is-size-6 has-text-justified-center mb-5">

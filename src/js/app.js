@@ -90,5 +90,16 @@ document.addEventListener( 'DOMContentLoaded', () => {
 			} )
 		} )
 	}
-	
+
+	//set project-img with their after content
+	const projectImgs = document.querySelectorAll(".project-img img");
+	[ ...projectImgs ].forEach( ( projectImg ) => {
+		var alt = projectImg.alt;
+		var anchor = projectImg.parentNode;
+		anchor.addRule(':before','content: "'+alt+'";');
+		//getComputedStyle(projectImg.parentElement, '::before').setProperty("content",alt)
+		//console.log(getComputedStyle(projectImg.parentElement, '::before').getPropertyValue("content"));
+
+
+	})
 } )

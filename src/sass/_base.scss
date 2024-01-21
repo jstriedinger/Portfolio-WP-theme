@@ -10,6 +10,9 @@ body{
 		flex-direction: column;
 
 		.content{
+			h1,h2 {
+				font-weight: 300;
+			}
 			&.projects {
 				a {
 					color: $gold-color !important;
@@ -21,11 +24,67 @@ body{
 						border: none;
 					}
 					&.project-img {
+						position: relative;
+						overflow: hidden;
 						margin: 1rem;
+						border-radius: 12px;
 						img {
 							border-radius: 12px;
 						}
-						margin-bottom: 1rem;
+						&:hover, &:focus {
+							a {
+								&:before {
+									background: rgba($dark-color, 0.8);
+									opacity: 1;
+								}
+							}
+							figcaption {
+								opacity: 1;
+							}
+						}
+						figcaption {
+							margin: 0;
+							position: absolute;
+							top: 0;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							text-align: center;
+							z-index: 1;
+							font-size: 1.75rem;
+							font-family: 'Cormorant Garamond';
+							font-weight: 400;
+							font-style: normal;
+							color: white;
+							pointer-events: none;
+							transition: all 0.4s;
+							opacity: 0;
+							width: 100%;
+							height: 100%;
+							@include desktop {
+								font-size: 2rem;
+							}
+							@include fullhd {
+								font-size: 3rem;
+							}
+						}
+						a {
+							&:before {
+								transition: all 0.4s;
+								content: "";
+								position: absolute;
+								width: 100%;
+								height: 100%;
+								top: 0;
+								right: 0;
+								z-index: 1;
+								background: rgba($dark-color,0);
+								border-radius: 12px;
+								opacity: 0;
+								
+								
+							}
+						}
 
 					}
 
