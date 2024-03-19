@@ -26,7 +26,11 @@ body{
 					&.project-img {
 						position: relative;
 						overflow: hidden;
-						margin: 1rem;
+						margin-left: 0;
+						margin-right: 0;
+						@include desktop {
+							margin: 1rem;
+						}
 						border-radius: 12px;
 						img {
 							border-radius: 12px;

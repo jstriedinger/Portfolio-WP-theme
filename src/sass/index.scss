@@ -61,6 +61,11 @@ p,span, a {
 }
 
 section.section {
+	.container.is-fluid{
+		@include mobile {
+			padding: 0;
+		}
+	}
 	position: relative;
 	&.colored-black {
 		background: $dark-color;
