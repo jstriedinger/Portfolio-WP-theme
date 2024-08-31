@@ -82,27 +82,6 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_639c12bbfb56b",
-                    "label": "Texto",
-                    "name": "txt",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_639c12a9fb56a"
-                },
-                {
                     "key": "field_639c12cafb56c",
                     "label": "url",
                     "name": "url",
@@ -118,36 +97,6 @@
                     },
                     "default_value": "",
                     "placeholder": "",
-                    "parent_repeater": "field_639c12a9fb56a"
-                },
-                {
-                    "key": "field_639c12d2fb56d",
-                    "label": "icono",
-                    "name": "icon",
-                    "aria-label": "",
-                    "type": "font-awesome",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "icon_sets": [
-                        "solid",
-                        "regular",
-                        "brands"
-                    ],
-                    "custom_icon_set": "",
-                    "default_label": "",
-                    "default_value": "",
-                    "save_format": "element",
-                    "allow_null": 0,
-                    "show_preview": 1,
-                    "enqueue_fa": 0,
-                    "fa_live_preview": "",
-                    "choices": [],
                     "parent_repeater": "field_639c12a9fb56a"
                 }
             ]
@@ -241,5 +190,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1696444279
+    "modified": 1725086473
 }

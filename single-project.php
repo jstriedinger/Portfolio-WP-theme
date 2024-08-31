@@ -68,14 +68,13 @@ $tags          = get_the_tags();
 					<div class="buttons pt-2">
 	
 						<?php	foreach ( $enlaces as $enlace ) { ?>
-								<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-gold">
-								<?php if ( $enlace['icon'] != null ) : ?>
-									<span><?php echo esc_html( $enlace['txt'] ); ?> </span>
-									<span class="icon"><?php echo $enlace['icon']; ?></span>
-								<?php else : ?>
-									<?php echo $enlace['txt']; ?>
-								<?php endif; ?>
-								</a>
+							<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-ghost">
+							<?php if ( str_contains( $enlace['url'], 'steam' ) ) : ?>
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:150px;">
+							<?php else : ?>
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:150px;">
+							<?php endif; ?>
+							</a>
 						<?php	} ?>
 					</div>
 				<?php endif; ?>
