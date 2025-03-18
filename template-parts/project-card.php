@@ -26,14 +26,15 @@ $card_video = isset( $meta['card_video'] ) ? $meta['card_video'] : null;
 		<div class="card-header <?php echo empty( $card_gif ) ? 'no-gif' : ''; ?>" >
 				<?php
 					echo get_the_post_thumbnail( $project->ID );
-					if ( ! empty( $card_video ) ) {
+				if ( ! empty( $card_video ) ) {
 					?>
 					<video autoplay muted loop id="">
 						<source src="<? echo esc_url($card_video); ?>" type="video/mp4">
 					</video>
 					<?php
 				}
-				/*if ( ! empty( $card_gif ) ) {
+				/*
+				if ( ! empty( $card_gif ) ) {
 					?>
 						<img class="gif-bg" src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
 
