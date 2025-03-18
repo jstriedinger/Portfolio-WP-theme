@@ -15,8 +15,9 @@ foreach ( $tags as $key => $tag ) {
 	}
 }
 
-$card_img = isset( $meta['card_img'] ) ? $meta['card_img'] : null;
-$card_gif = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
+$card_img   = isset( $meta['card_img'] ) ? $meta['card_img'] : null;
+$card_gif   = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
+$card_video = isset( $meta['card_video'] ) ? $meta['card_video'] : null;
 
 ?>
 <a href="<?php echo esc_url( $permalink ); ?>" style="border: none !important; display:block !important;">
@@ -25,12 +26,19 @@ $card_gif = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
 		<div class="card-header <?php echo empty( $card_gif ) ? 'no-gif' : ''; ?>" >
 				<?php
 					echo get_the_post_thumbnail( $project->ID );
-				if ( ! empty( $card_gif ) ) {
+					if ( ! empty( $card_video ) ) {
+					?>
+					<video autoplay muted loop id="">
+						<source src="<? echo esc_url($card_video); ?>" type="video/mp4">
+					</video>
+					<?php
+				}
+				/*if ( ! empty( $card_gif ) ) {
 					?>
 						<img class="gif-bg" src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo esc_attr( $project->post_title ); ?>">
 
 					<?php
-				}
+				}*/
 				?>
 				<?php if ( $is_wip ) : ?>
 					<div class="tag is-primary is-light">WIP</div>

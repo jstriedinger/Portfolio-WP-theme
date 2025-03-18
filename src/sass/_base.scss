@@ -33,20 +33,10 @@ body{
 							margin: 1rem;
 						}
 						border-radius: 12px;
-						img {
+						img, video {
 							border-radius: 12px;
 						}
-						&:hover, &:focus {
-							a {
-								&:before {
-									background: rgba($dark-color, 0.8);
-									opacity: 1;
-								}
-							}
-							figcaption {
-								opacity: 1;
-							}
-						}
+						
 						figcaption {
 							margin: 0;
 							position: absolute;
@@ -60,12 +50,21 @@ body{
 							font-family: 'Cormorant Garamond';
 							font-weight: 400;
 							font-style: normal;
-							color: white;
-							pointer-events: none;
+							color: white !important;
+							
 							transition: all 0.4s;
 							opacity: 0;
 							width: 100%;
 							height: 100%;
+							a{
+								color: white !important;
+								z-index: 2;
+								width: 100%;
+								height: 100%;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+							}
 							@include desktop {
 								font-size: 2rem;
 							}
@@ -73,7 +72,10 @@ body{
 								font-size: 3rem;
 							}
 						}
-						a {
+						a + figcaption {
+							pointer-events: none;
+						}
+						> a:first-child, video + figcaption {
 							&:before {
 								transition: all 0.4s;
 								content: "";
@@ -86,8 +88,19 @@ body{
 								background: rgba($dark-color,0);
 								border-radius: 12px;
 								opacity: 0;
-								
-								
+							}
+						}
+						&:hover,
+						&:focus {
+							a, video + figcaption {
+								&:before {
+									background: rgba($dark-color, 0.8);
+									opacity: 1;
+								}
+							}
+
+							figcaption {
+								opacity: 1;
 							}
 						}
 

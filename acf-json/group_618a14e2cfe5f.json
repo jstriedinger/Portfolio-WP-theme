@@ -122,6 +122,26 @@
             "append": ""
         },
         {
+            "key": "field_67d8cdf2e5d7f",
+            "label": "Video preview",
+            "name": "card_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "",
+            "library": "",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ".mp4"
+        },
+        {
             "key": "field_642524a9014f5",
             "label": "GIF en card",
             "name": "card_gif",
@@ -190,5 +210,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1725086473
+    "modified": 1742261816
 }
