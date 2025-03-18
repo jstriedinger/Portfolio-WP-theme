@@ -91,7 +91,7 @@
 		background: $dark-color;
 	}
 
-		@include desktop {
+		@include mixins.desktop {
 			.card-header {
 				&:after {
 					background: rgba($dark-color, 0.1);
@@ -188,11 +188,11 @@
 				height: 80px;
 				width: 80px;
 				border-radius: 100%;
-				@include desktop {
+				@include mixins.desktop {
 					height: 100px;
 					width: 100px;
 				}
-				@include fullhd {
+				@include mixins.fullhd {
 						height: 125px;
 						width: 125px;
 				}
@@ -255,7 +255,7 @@ hr {
 
 .wp-block-columns.wp-block-columns-is-layout-flex
 {
-	@include desktop {
+	@include mixins.desktop {
 		justify-content: center !important;
 	}
 }

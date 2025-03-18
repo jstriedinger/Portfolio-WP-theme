@@ -1,4 +1,5 @@
 
+@use "bulma/sass/utilities/mixins";
 @import "variables";
 
 $fa-font-path: "./webfonts";
@@ -6,18 +7,18 @@ $fa-font-path: "./webfonts";
 @import "@fortawesome/fontawesome-free/scss/regular";
 @import "@fortawesome/fontawesome-free/scss/solid";
 @import "@fortawesome/fontawesome-free/scss/brands";
-@import "~bulma/sass/utilities/_all";
-@import "~bulma/sass/base/_all";
-@import "~bulma/sass/layout/_all";
-@import "~bulma/sass/helpers/_all";
-@import "~bulma/sass/form/_all";
-@import "~bulma/sass/elements/container";
+@import "~bulma/sass/utilities/_index";
+@import "~bulma/sass/base/_index";
+@import "~bulma/sass/layout/_index";
+@import "~bulma/sass/helpers/_index";
+@import "~bulma/sass/form/_index";
+@import "~bulma/sass/layout/container";
 @import "~bulma/sass/elements/title";
 @import "~bulma/sass/elements/content";
 @import "~bulma/sass/elements/button";
 @import "~bulma/sass/elements/tag";
 @import "~bulma/sass/elements/image";
-@import "~bulma/sass/components/level";
+@import "~bulma/sass/layout/level";
 @import "~bulma/sass/grid/columns";
 
 @import "tipography";
@@ -62,7 +63,7 @@ p,span, a {
 
 section.section {
 	.container.is-fluid{
-		@include mobile {
+		@include mixins.mobile {
 			padding: 0;
 		}
 		max-width: 1600px !important;
@@ -116,7 +117,7 @@ section.section {
 			width: auto;
 			margin: 0 auto;
 		}
-		@include desktop {
+		@include mixins.desktop {
 			padding-bottom: 0;
 
 			.columns > .column:last-child
@@ -125,7 +126,7 @@ section.section {
 				font-size: 0;
 			}
 		}
-		@include widescreen {
+		@include mixins.widescreen {
 			img {
 				max-width: 280px;
 			}

@@ -53,16 +53,16 @@ h1,h2, .title {
     }
 		&.is-size-0, span.is-size-0 {
 			font-size: 3rem;
-			@include tablet {
+			@include mixins.tablet {
 				font-size: 3.1rem;
 			}
-			@include desktop {
+			@include mixins.desktop {
 				font-size: 4rem;
 			}
-			@include widescreen {
+			@include mixins.widescreen {
 				font-size: 4.7rem;
 			}
-			@include fullhd {
+			@include mixins.fullhd {
 				font-size: 5.7rem;
 			}
 		}

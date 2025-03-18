@@ -29,7 +29,7 @@ body{
 						overflow: hidden;
 						margin-left: 0;
 						margin-right: 0;
-						@include desktop {
+						@include mixins.desktop {
 							margin: 1rem;
 						}
 						border-radius: 12px;
@@ -65,10 +65,10 @@ body{
 								align-items: center;
 								justify-content: center;
 							}
-							@include desktop {
+							@include mixins.desktop {
 								font-size: 2rem;
 							}
-							@include fullhd {
+							@include mixins.fullhd {
 								font-size: 3rem;
 							}
 						}
@@ -109,12 +109,12 @@ body{
 				}
 			}
 		}
-   /* @include tablet {
+   /* @include mixins.tablet {
         .container  {
             height: 88%;
         }
     }
-    @include desktop {
+    @include mixins.desktop {
         height: 100vh;
         overflow: hidden;
         display: flex;
@@ -188,7 +188,7 @@ body{
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
         position: relative;
-				@include desktop {
+				@include mixins.desktop {
 				 	height: 100%;
           padding-bottom: 7rem;
 					&.with-header {
@@ -226,18 +226,18 @@ body{
 		margin-bottom: 0.5rem;
 		//grid-template-rows: 1fr auto;
 	}
-	@include fullhd {
+	@include mixins.fullhd {
 		a:first-child {
 			.card-header {
 				height: 400px;
 			}
 		}
 	}
-	@include tablet {
+	@include mixins.tablet {
 		column-count: 2;
 		grid-template-columns: repeat((2, 1fr));
 	}
-	@include desktop {
+	@include mixins.desktop {
 		column-count: 3;
 		grid-template-columns: repeat((3, 1fr));
 		a:first-child {
@@ -247,11 +247,11 @@ body{
 		}
 	}
     
-	@include desktop {
+	@include mixins.desktop {
 		//grid-auto-rows: 5rem;
 	}
 
-	@include widescreen {
+	@include mixins.widescreen {
 			height: 100%;
 			a:first-child {
 				.card-header {
@@ -260,7 +260,7 @@ body{
 			}
 	}
 	a.has-card {
-		@include fullhd {
+		@include mixins.fullhd {
 			&:nth-of-type(odd) {
 				grid-row-end: span 2;
 			}
@@ -315,7 +315,7 @@ footer.footer {
     background: $dark-color;
 		overflow: hidden;
     padding: 1rem;
-    @include desktop {
+    @include mixins.desktop {
         padding-left: 3rem;
         width: 100%;
         margin: 0 auto;
