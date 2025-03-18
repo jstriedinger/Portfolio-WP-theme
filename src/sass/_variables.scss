@@ -15,7 +15,12 @@ $card-radius: 6px;
 $container-max-width: 1600px;
 $breakpoint-1600: 1600px;
 $content-heading-color: $primary-color;
-$family-primary: 'Open Sans',sans-serif;
+$family-sans-serif: 'Open Sans',sans-serif;
+$family-primary: $family-sans-serif;
+:root{
+	--bulma-family-primary: #{$family-primary};
+
+}
 $link: #242F9B;
 $title-color: $dark-color;
 
