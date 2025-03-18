@@ -1,7 +1,7 @@
 const path = require('path');
 const {merge} = require('webpack-merge');
 const common = require('./webpack.common.js');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-v3-webpack-plugin');
 
 
 
