@@ -6,7 +6,6 @@ get_header();
 $meta          = get_fields();
 $desc          = $meta['desc'];
 $enlaces       = $meta['links'];
-$project_role  = $meta['role'];
 $project_date  = $meta['year'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
 $card_gif      = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
@@ -44,9 +43,6 @@ $tags          = get_the_tags();
 					
 				</div>
 				<div class="tags are-large mb-4">
-					<div class="tag is-rounded is-link is-light ">
-						<?php echo esc_html( $project_role ); ?>
-					</div>
 					<?php
 					foreach ( $tags as $key => $tag ) {
 						?>
