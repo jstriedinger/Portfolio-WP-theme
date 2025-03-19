@@ -23,6 +23,26 @@
             "new_lines": ""
         },
         {
+            "key": "field_67db04a6dbfc2",
+            "label": "Summary",
+            "name": "summary",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
             "key": "field_639c11e2db57c",
             "label": "Position",
             "name": "role",
@@ -185,5 +205,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742367607
+    "modified": 1742406928
 }

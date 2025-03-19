@@ -5,6 +5,7 @@
 get_header();
 $meta          = get_fields();
 $desc          = $meta['desc'];
+$summary       = $meta['summary'];
 $enlaces       = $meta['links'];
 $project_date  = $meta['year'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
@@ -18,7 +19,7 @@ $tags          = get_the_tags();
 	<div class="container mb-0">
 		<div class="columns is-centered has-text-centered is-variable is-8">
 			<div class="column is-two-thirds is-paddingless">
-				<h1 class="title is-size-3 has-text-weight-bold mb-2">José Rafael Striedinger</h1>
+				<h1 class="title is-size-3 mb-2">José Rafael Striedinger</h1>
 				<div class="is-flex is-align-items-center is-justify-content-center has-text-weight-light" style="gap:2rem;">
 					<a href="<?php echo esc_url( home_url() . '#projects' ); ?>" class="is-gold">Projects</a>
 					<a href="<?php echo esc_url( home_url() . '/about' ); ?>" class="is-gold">About me</a>
@@ -57,7 +58,7 @@ $tags          = get_the_tags();
 					</div>
 				</div>
 				<div class="content">
-					<?php esc_html_e( $desc ); ?>
+					<?php echo $summary; ?>
 				</div>
 			
 				<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
@@ -81,10 +82,10 @@ $tags          = get_the_tags();
 						<?php echo $video_trailer; ?>
 					</div>
 				<?php elseif ( ! is_null( $video_preview ) && ! empty( $video_preview ) ) : ?>
-					<video autoplay="" loop="" muted="" src="<?php echo esc_url( $video_preview ); ?>" poster="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(),'full'));?>"></video>
+					<video autoplay="" loop="" muted="" src="<?php echo esc_url( $video_preview ); ?>" poster="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>"></video>
 				<?php elseif ( ! is_null( $gif_preview ) && ! empty( $gif_preview ) ) : ?>
 					<img src="<?php echo esc_url( $gif_preview ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
-				<?php
+					<?php
 					else :
 						the_post_thumbnail();
 				endif;
