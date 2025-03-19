@@ -70,27 +70,5 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 	</div>
 </section>
 <?php
-/*
-<section class="section" id="projects">
-	<div class="container mt-5 mb-5">
-		<div class="columns is-multiline  is-centered">
-			<div class="column is-narrow">
-				<h2 class="title is-size-2"><?php esc_html_e( '~ Featured work ~', 'jrsp' ); ?></h2>
-
-			</div>
-		</div>
-	</div>
-	<div class="container is-fluid pr-0 pl-0 pt-5">
-		<div class="projects-grid" id="projects-grid">
-		<?php
-		foreach ( $projects as $project ) {
-				get_template_part( 'template-parts/project-card', '', array( 'project' => $project ) );
-		}
-		?>
-		</div>
-	</div>
-</section> */
-?>
-<?php
 get_footer();
 

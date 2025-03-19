@@ -23,23 +23,6 @@
             "new_lines": ""
         },
         {
-            "key": "field_651baa7a08713",
-            "label": "Video trailer",
-            "name": "video_trailer",
-            "aria-label": "",
-            "type": "oembed",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "width": "",
-            "height": ""
-        },
-        {
             "key": "field_639c11e2db57c",
             "label": "Position",
             "name": "role",
@@ -122,9 +105,26 @@
             "append": ""
         },
         {
+            "key": "field_651baa7a08713",
+            "label": "Video trailer",
+            "name": "video_trailer",
+            "aria-label": "",
+            "type": "oembed",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": "",
+            "height": ""
+        },
+        {
             "key": "field_67d8cdf2e5d7f",
             "label": "Video preview",
-            "name": "card_video",
+            "name": "video_preview",
             "aria-label": "",
             "type": "file",
             "instructions": "",
@@ -135,16 +135,16 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "",
-            "library": "",
+            "return_format": "url",
+            "library": "all",
             "min_size": "",
             "max_size": "",
             "mime_types": ".mp4"
         },
         {
             "key": "field_642524a9014f5",
-            "label": "GIF en card",
-            "name": "card_gif",
+            "label": "GIF preview",
+            "name": "gif_preview",
             "aria-label": "",
             "type": "image",
             "instructions": "",
@@ -163,32 +163,7 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_651daf4148c36",
-            "label": "GIF en pagina",
-            "name": "page_gif",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "url",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
+            "mime_types": ".gif",
             "preview_size": "medium"
         }
     ],
@@ -210,5 +185,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742261816
+    "modified": 1742367607
 }

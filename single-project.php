@@ -8,8 +8,8 @@ $desc          = $meta['desc'];
 $enlaces       = $meta['links'];
 $project_date  = $meta['year'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
-$card_gif      = isset( $meta['card_gif'] ) ? $meta['card_gif'] : null;
-$page_gif      = isset( $meta['page_gif'] ) ? $meta['page_gif'] : null;
+$video_preview = isset( $meta['video_preview'] ) ? $meta['video_preview'] : null;
+$gif_preview   = isset( $meta['gif_preview'] ) ? $meta['gif_preview'] : null;
 $tags          = get_the_tags();
 
 
@@ -66,9 +66,9 @@ $tags          = get_the_tags();
 						<?php	foreach ( $enlaces as $enlace ) { ?>
 							<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-ghost">
 							<?php if ( str_contains( $enlace['url'], 'steam' ) ) : ?>
-									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:150px;">
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:120px;">
 							<?php else : ?>
-									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:150px;">
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:120px;">
 							<?php endif; ?>
 							</a>
 						<?php	} ?>
@@ -80,11 +80,11 @@ $tags          = get_the_tags();
 					<div class="embed-container">
 						<?php echo $video_trailer; ?>
 					</div>
-				<?php elseif ( ! is_null( $page_gif ) && ! empty( $page_gif ) ) : ?>
-					<img src="<?php echo esc_url( $page_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
-				<?php elseif ( ! is_null( $card_gif ) && ! empty( $card_gif ) ) : ?>
-					<img src="<?php echo esc_url( $card_gif ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
-					<?php
+				<?php elseif ( ! is_null( $video_preview ) && ! empty( $video_preview ) ) : ?>
+					<video autoplay="" loop="" muted="" src="<?php echo esc_url( $video_preview ); ?>" poster="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(),'full'));?>"></video>
+				<?php elseif ( ! is_null( $gif_preview ) && ! empty( $gif_preview ) ) : ?>
+					<img src="<?php echo esc_url( $gif_preview ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
+				<?php
 					else :
 						the_post_thumbnail();
 				endif;
