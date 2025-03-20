@@ -4,10 +4,9 @@
  */
 get_header();
 $meta          = get_fields();
-$desc          = $meta['desc'];
+$contributions = $meta['contributions'];
 $summary       = $meta['summary'];
 $enlaces       = $meta['links'];
-$project_date  = $meta['year'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
 $video_preview = isset( $meta['video_preview'] ) ? $meta['video_preview'] : null;
 $gif_preview   = isset( $meta['gif_preview'] ) ? $meta['gif_preview'] : null;
@@ -32,32 +31,16 @@ $tags          = get_the_tags();
 <section class="section anim-bottom-top">
 	<div class="container  mt-4">
 		<div class="columns is-vcentered is-centered">
-			<div class="column is-7">
+			<div class="column is-half">
 				<div class="level mb-2" >
 					<div class="level-left" style="gap: 2rem">
 						<h1 class="title mb-0 is-size-2 is-size-1-desktop">
 							<?php the_title(); ?>
 							
 						</h1>
-						
-					</div>
-					
-				</div>
-				<div class="tags are-large mb-4">
-					<?php
-					foreach ( $tags as $key => $tag ) {
-						?>
-						<div class="tag is-rounded is-link is-light ">
-							<?php echo $tag->name; ?>
-						</div>
-						<?php
-					}
-					?>
-					<div class="tag is-rounded is-link is-light ">
-						<?php echo esc_html( $project_date ); ?>
 					</div>
 				</div>
-				<div class="content">
+				<div class="content has-text-justified">
 					<?php echo $summary; ?>
 				</div>
 			
@@ -67,9 +50,9 @@ $tags          = get_the_tags();
 						<?php	foreach ( $enlaces as $enlace ) { ?>
 							<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-ghost">
 							<?php if ( str_contains( $enlace['url'], 'steam' ) ) : ?>
-									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:120px;">
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:130px;" loading="lazy">
 							<?php else : ?>
-									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:120px;">
+									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:130px;" loading="lazy">
 							<?php endif; ?>
 							</a>
 						<?php	} ?>
@@ -82,9 +65,9 @@ $tags          = get_the_tags();
 						<?php echo $video_trailer; ?>
 					</div>
 				<?php elseif ( ! is_null( $video_preview ) && ! empty( $video_preview ) ) : ?>
-					<video autoplay="" loop="" muted="" src="<?php echo esc_url( $video_preview ); ?>" poster="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>"></video>
+					<video autoplay="" loop="" muted="" src="<?php echo esc_url( $video_preview ); ?>" poster="<?php echo esc_url( get_the_post_thumbnail_url( get_the_ID(), 'full' ) ); ?>" loading="lazy" oncontextmenu="return false;"></video>
 				<?php elseif ( ! is_null( $gif_preview ) && ! empty( $gif_preview ) ) : ?>
-					<img src="<?php echo esc_url( $gif_preview ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>">
+					<img src="<?php echo esc_url( $gif_preview ); ?>" alt="Jose Striedinger portfolio <?php echo the_title_attribute(); ?>" loading="lazy">
 					<?php
 					else :
 						the_post_thumbnail();
@@ -93,6 +76,16 @@ $tags          = get_the_tags();
 			</div>
 		</div>
 		<hr>
+		<?php if ( ! is_null( $contributions ) && ! empty( $contributions ) ) : ?>
+		<div class="columns is-vcentered is-centered has-text-justified m-4">
+			<div class="column is-4 " >
+				<h2 class="title is-2">Role & contributions</h2>
+			</div>
+			<div class="column has-text-justified content is-size-5-widescreen">
+				<?php echo $contributions; ?>
+			</div>
+		</div>
+		<?php endif; ?>
 	</div>
 	
 </section>

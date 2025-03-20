@@ -3,26 +3,6 @@
     "title": "Projects",
     "fields": [
         {
-            "key": "field_639be6bedda8d",
-            "label": "Descripcion",
-            "name": "desc",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
             "key": "field_67db04a6dbfc2",
             "label": "Summary",
             "name": "summary",
@@ -43,11 +23,11 @@
             "delay": 0
         },
         {
-            "key": "field_639c11e2db57c",
-            "label": "Position",
-            "name": "role",
+            "key": "field_639be6bedda8d",
+            "label": "Role & contributions",
+            "name": "contributions",
             "aria-label": "",
-            "type": "text",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -57,10 +37,10 @@
                 "id": ""
             },
             "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         },
         {
             "key": "field_639c12a9fb56a",
@@ -103,26 +83,6 @@
                     "parent_repeater": "field_639c12a9fb56a"
                 }
             ]
-        },
-        {
-            "key": "field_63d891f125dc1",
-            "label": "Year",
-            "name": "year",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
         },
         {
             "key": "field_651baa7a08713",
@@ -205,5 +165,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742406928
+    "modified": 1742451704
 }
