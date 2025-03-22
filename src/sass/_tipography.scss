@@ -70,7 +70,7 @@ h1,h2, .title {
 }
 h1,h2,h3, .title, .subtitle, p{
 	&.is-gold {
-		color: $gold-color;
+		color: $gold-color !important;
 	}
 }
 .title {
