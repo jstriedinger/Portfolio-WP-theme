@@ -35,6 +35,9 @@ $card-radius: 6px;
 	$content-heading-color: $primary-color,
 );
 @forward "bulma/sass/elements/button";
+@forward "bulma/sass/elements/box" with (
+		$box-padding: 1.2rem
+);
 @forward "bulma/sass/elements/tag";
 @forward "bulma/sass/elements/image";
 @forward "bulma/sass/layout/level";

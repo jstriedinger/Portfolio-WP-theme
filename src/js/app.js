@@ -48,48 +48,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ))
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
-
-	/*const projectsSection = document.getElementById( 'projects-grid' )
-	if( projectsSection )
-	{
-		const tl2 = gsap.timeline( {
-			scrollTrigger: {
-				trigger: projectsSection,
-				start: 'top 75%',
-			},
-		} )
-		tl2.add( gsap.fromTo( '#projects-grid article', { autoAlpha: 0, y: 120 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ) )
-	}
-
-	//create a timeline instance
-	
-	const projectsNode = document.getElementById("projects-grid")
-	
-	//manage project categories
-	const projects = document.querySelectorAll(".card.project")
-	const catSelect = document.getElementById('project-categories')
-	if ( catSelect !== null ) {
-		catSelect.addEventListener( 'change', ( event ) => {
-			const cat = event.target.value;
-			//getProjects(cat,projectsNode);
-	
-			[ ...projects ].forEach( ( project ) => {
-				if(cat === '0') {
-					project.classList.remove("is-hidden")
-				}
-				else {
-					console.log(cat);
-					console.log(project.dataset.categories);
-					if (! project.dataset.categories.includes(cat)) {
-						project.classList.add("is-hidden")
-					} else {
-						project.classList.remove("is-hidden")
-					}
-
-				}
-			} )
-		} )
-	}*/
-
+	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1 } ))
 	
 } )

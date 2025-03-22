@@ -28,9 +28,9 @@ $tags          = get_the_tags();
 	</div>
 </section>
 
-<section class="section anim-bottom-top">
-	<div class="container  mt-4">
-		<div class="columns is-vcentered is-centered">
+<section class="section ">
+	<div class="container my-4 mb-6">
+		<div class="columns is-vcentered is-centered anim-bottom-top">
 			<div class="column is-half">
 				<div class="level mb-2" >
 					<div class="level-left" style="gap: 2rem">
@@ -75,9 +75,8 @@ $tags          = get_the_tags();
 					?>
 			</div>
 		</div>
-		<hr>
 		<?php if ( ! is_null( $contributions ) && ! empty( $contributions ) ) : ?>
-		<div class="columns is-vcentered is-centered has-text-justified m-4">
+		<div class="columns is-vcentered is-centered has-text-justified m-1 mt-4 box anim-bottom-whole is-6">
 			<div class="column is-4 " >
 				<h2 class="title is-2">Role & contributions</h2>
 			</div>
@@ -89,7 +88,7 @@ $tags          = get_the_tags();
 	</div>
 	
 </section>
-<section class="section pt-0">
+<section class="section">
 	<div class="container is-max-widescreen">
 		<div class="columns">
 			<div class="column is-full">
