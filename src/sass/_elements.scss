@@ -285,6 +285,31 @@ hr {
 	
 }
 
+.featured-columns {
+	@include mixins.desktop {
+		max-width: 1024px;
+		margin: 0 auto;
+		.wp-block-columns {
+			margin: 0;
+			figure,img {
+				border-radius: 12px;
+			}
+		}
+		.wp-block-columns:first-child{
+			.wp-block-column:last-child *{
+					text-align: left;
+				}
+		}
+		.wp-block-columns:last-child{
+			margin-top: -2rem;
+			flex-direction: row-reverse;
+			.wp-block-column:last-child *{
+				text-align: right;
+			}
+		}
+	}
+}
+
 
 
 
