@@ -97,7 +97,6 @@ $tags          = get_the_tags();
 			</div>
 		</div>
 	</div>
-	 <div class="divider-text">Lorem Ipsum</div> 
 </section>
 <?php
 get_footer();

@@ -19,12 +19,12 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 
 <section class="section colored-black anim-bottom-top" id="top-section">
 	<div class="container mb-0 is-max-widescreen">
-		<div class="columns is-centered is-vcentered is-variable is-8">
+		<div class="columns is-centered is-variable is-8">
 			<div class="column is-two-thirds">
 				<h1 class="title is-1">
-					<?php the_title(); ?>
+					Hi! I'm <?php the_title(); ?>
 				</h1>
-				<div class="is-size-6 has-text-justified-center mb-5">
+				<div class="is-size-4 has-text-justified-center mb-5">
 					<?php echo $bio; ?>
 				</div>
 				<div class="level">
@@ -52,7 +52,7 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 					</div>
 				</div>
 			</div>
-			<div class="column is-narrow is-hidden-touch">
+			<div class="column is-narrow is-hidden-touch is-flex is-align-items-flex-end">
 				<?php the_post_thumbnail(); ?>
 			</div>
 		</div>
