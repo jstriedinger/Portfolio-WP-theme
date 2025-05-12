@@ -170,7 +170,7 @@ body{
 						position: absolute;
 					}
 					&:hover, &:focus {
-						figure:last-child {
+						figure:last-of-type {
 							opacity: 1;
 							&:before {
 									background: rgba($dark-color, 0.8);
