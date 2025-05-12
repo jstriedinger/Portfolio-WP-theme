@@ -14,10 +14,6 @@ body{
 				font-weight: 300;
 			}
 			&.projects {
-				a {
-					color: $gold-color !important;
-					border-color: $gold-color;
-				}
 				figure {
 					width: auto;
 					a {
@@ -111,10 +107,12 @@ body{
 					position: relative;
 					overflow: hidden;
 					font-size: 0;
+					
 					@include mixins.desktop {
 							margin: 1rem;
 						}
 					figure:first-child {
+						font-size: 0;
 						display: inline-block;
 						position: relative;
 						overflow: hidden;
@@ -136,6 +134,7 @@ body{
 						align-items: center;
 						justify-content: center;
 						text-align: center;
+						flex-direction: column;
 						z-index: 1;
 						transition: all 0.4s;
 						opacity: 0;
@@ -154,10 +153,21 @@ body{
 							border-radius: 12px;
 							opacity: 0;
 						}
-						img, a {
+						img {
 							z-index: 2;
 							max-width: 75%;
 						}
+						a {
+							z-index: 2;
+						}
+						figcaption a {
+							z-index: 2;
+							@extend .button,.is-warning,.is-dark;
+						}
+					}
+					.wp-block-buttons {
+						font-size: inherit;
+						position: absolute;
 					}
 					&:hover, &:focus {
 						figure:last-child {
