@@ -221,6 +221,8 @@ function projects_grid_masonry_shortcode($atts) {
 			$preview_desc = isset($project_meta['preview']['preview_desc']) ? $project_meta['preview']['preview_desc'] : null;
 			$preview_role = isset($project_meta['preview']['preview_role']) ? $project_meta['preview']['preview_role'] : null;
 			$preview_only_video = isset($project_meta['preview']['video_only']) ? $project_meta['preview']['video_only'] : false;
+			$preview_link = isset($project_meta['preview']['external_link']) && !empty($project_meta['preview']['external_link']) ? $project_meta['preview']['external_link'] : get_permalink($project->ID);
+			$without_link = isset($project_meta['preview']['without_link']) ? $project_meta['preview']['without_link'] : false;
 			$grid_width = isset($project_meta['preview']['grid_width']) ? $project_meta['preview']['grid_width'] : 1;
 			$thumbnail = get_the_post_thumbnail_url($project->ID, 'large');
 
@@ -246,7 +248,9 @@ function projects_grid_masonry_shortcode($atts) {
 			$grid_class = 'grid-span-' . $grid_width;
 		?>
 		<div class="project-item <?php echo esc_attr($video_classes); ?> <?php echo esc_attr($grid_class); ?>" data-columns="<?php echo esc_attr($grid_width); ?>" <?php if ($preview_video) echo 'data-video="' . esc_url($preview_video) . '"'; ?>>
-			<a href="<?php echo esc_url(get_permalink($project->ID)); ?>" title="<?php echo esc_attr($project->post_title); ?>">
+		<?php if(!$without_link) : ?>
+			<a href="<?php echo esc_url($preview_link); ?>" title="<?php echo esc_attr($project->post_title); ?>">
+		<?php endif; ?>	
 				<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($project->post_title); ?>" loading="lazy">
 				<?php if ($preview_video) : ?>
 					<video class="project-video" muted loop preload="none" poster="<?php echo esc_url($thumbnail); ?>">
@@ -272,7 +276,9 @@ function projects_grid_masonry_shortcode($atts) {
 						<?php endif; ?>
 					</div>
 				</div>
+			<?php if(!$without_link) : ?>
 			</a>
+			<?php endif; ?>
 		</div>
 		<?php 
 		endforeach;
