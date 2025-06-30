@@ -384,9 +384,9 @@ body{
 }
 
 footer.footer {
-    background: $dark-color;
-		overflow: hidden;
+    background: $theme-bg;
     padding: 1rem;
+		padding-top: 0;
     @include mixins.desktop {
         padding-left: 3rem;
         width: 100%;
@@ -396,8 +396,9 @@ footer.footer {
 				left: 0;
 				right: 0;
     }
-		p {
-			color: $dark-contrast-color;
+		.columns{
+			border-top: 2px solid color.scale($theme-bg, $lightness: -5%);
+
 		}
 		
 }

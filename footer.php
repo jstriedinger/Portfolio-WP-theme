@@ -4,18 +4,18 @@
 	<div class="container mt-3 mb-3">
 		<div class="columns is-variable is-8">
 			<div class="column is-flex is-alignt-items-center">
-				<p class="">©2023 José Rafael Striedinger Pinilla. Orgullosamente colombiano  🇨🇴</p>
+				<p class="is-size-7">© José Rafael Striedinger Pinilla  🇨🇴</p>
 			</div>
 			<div class="column has-text-right-desktop">
 				<p>
 					<a href="https://github.com/jstriedinger" class="social">
 						<i class="icon">
-							<span class="fab fa-github fa-lg"></span>
+							<span class="fab fa-github"></span>
 						</i>
 					</a>
 					<a href="https://www.linkedin.com/in/jstriedinger/" class="social">
 						<i class="icon">
-							<span class="fab fa-linkedin-in fa-lg"></span>
+							<span class="fab fa-linkedin-in"></span>
 						</i>
 					</a>
 					<a href="https://jstriedinger.itch.io/" class="social">

@@ -54,7 +54,6 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
 	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1 } ))
 	
-	
 } )
 
 // 6-Column masonry fallback with responsive design

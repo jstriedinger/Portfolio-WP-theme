@@ -146,3 +146,105 @@ function get_projects() {
 
 add_action( 'wp_ajax_nopriv_get_projects', 'get_projects' );
 add_action( 'wp_ajax_get_projects', 'get_projects' );
+
+// Projects Grid Masonry Shortcode
+function projects_grid_masonry_shortcode($atts) {
+	// Parse shortcode attributes
+	$atts = shortcode_atts(array(
+		'posts_per_page' => -1,
+		'category' => '',
+		'tag' => '',
+		'orderby' => 'date',
+		'order' => 'DESC'
+	), $atts, 'projects_grid');
+
+	// Build query arguments
+	$args = array(
+		'post_type' => 'project',
+		'posts_per_page' => intval($atts['posts_per_page']),
+		'orderby' => $atts['orderby'],
+		'order' => $atts['order'],
+		'post_status' => 'publish'
+	);
+
+	// Add category filter if specified
+	if (!empty($atts['category'])) {
+		$args['meta_query'] = array(
+			array(
+				'key' => 'category',
+				'value' => $atts['category'],
+				'compare' => 'LIKE'
+			)
+		);
+	}
+
+	// Add tag filter if specified
+	if (!empty($atts['tag'])) {
+		$args['tag'] = $atts['tag'];
+	}
+
+	$projects = get_posts($args);
+
+	if (empty($projects)) {
+		return '<div class="projects-grid-masonry"><p>No projects found.</p></div>';
+	}
+
+	// Start output buffering
+	ob_start();
+	?>
+	<div class="projects-grid-masonry">
+		<?php
+		foreach ($projects as $project) :
+			$project_meta = get_fields($project->ID);
+			$preview_video = isset($project_meta['preview']['preview_video']) ? $project_meta['preview']['preview_video'] : null;
+			$preview_title = isset($project_meta['preview']['preview_title']) ? $project_meta['preview']['preview_title'] : $project->post_title;
+			$preview_desc = isset($project_meta['preview']['preview_desc']) ? $project_meta['preview']['preview_desc'] : null;
+			$preview_role = isset($project_meta['preview']['preview_role']) ? $project_meta['preview']['preview_role'] : null;
+			$preview_only_video = isset($project_meta['preview']['video_only']) ? $project_meta['preview']['video_only'] : false;
+			$grid_width = isset($project_meta['preview']['grid_width']) ? $project_meta['preview']['grid_width'] : 1;
+			$thumbnail = get_the_post_thumbnail_url($project->ID, 'large');
+
+			if (!$thumbnail) {
+				continue; // Skip if no thumbnail is available
+			}
+			
+			// Determine classes based on video settings
+			$video_classes = '';
+			if ($preview_video) {
+				if ($preview_only_video) {
+					$video_classes = 'only-video';
+				} else {
+					$video_classes = 'has-video';
+				}
+			}
+			
+			// Add grid width class
+			$grid_class = 'grid-span-' . $grid_width;
+		?>
+		<div class="project-item <?php echo esc_attr($video_classes); ?> <?php echo esc_attr($grid_class); ?>" data-columns="<?php echo esc_attr($grid_width); ?>" <?php if ($preview_video) echo 'data-video="' . esc_url($preview_video) . '"'; ?>>
+			<a href="<?php echo esc_url(get_permalink($project->ID)); ?>" title="<?php echo esc_attr($project->post_title); ?>">
+				<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($project->post_title); ?>" loading="lazy">
+				<?php if ($preview_video) : ?>
+					<video class="project-video" muted loop preload="none">
+						<source src="<?php echo esc_url($preview_video); ?>" type="video/mp4">
+					</video>
+				<?php endif; ?>
+				<div class="project-overlay">
+					<div class="overlay-content">
+						<h3 class="title canela-font mb-0"><?php echo esc_html($project->post_title); ?></h3>
+						<?php if ($preview_role) : ?>
+							<span class="role-text"><?php echo esc_html($preview_role); ?></span>
+						<?php endif; ?>
+					</div>
+				</div>
+			</a>
+		</div>
+		<?php 
+		endforeach;
+		wp_reset_postdata();
+		?>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+add_shortcode('projects_grid', 'projects_grid_masonry_shortcode');
