@@ -56,7 +56,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	
 } )
 
-// 8-Column masonry fallback with responsive design
+// 12-Column masonry fallback with responsive design
 const initMasonry = () => {
 	const container = document.querySelector('.projects-grid-masonry');
 	if (!container) return;
@@ -67,7 +67,7 @@ const initMasonry = () => {
 	if (!supportsMasonry) {
 		container.classList.add('js-masonry');
 		const items = container.querySelectorAll('.project-item');
-		const gap = 10;
+		const gap = 16; // 1rem = 16px
 		
 		const layout = () => {
 			const containerWidth = container.offsetWidth;
@@ -75,7 +75,7 @@ const initMasonry = () => {
 			
 			// Determine column count based on screen size
 			if (containerWidth >= 1216) { // Widescreen
-				totalColumns = 8;
+				totalColumns = 12;
 			} else if (containerWidth >= 769) { // Tablet AND Desktop
 				totalColumns = 2;
 			} else { // Mobile
@@ -85,18 +85,19 @@ const initMasonry = () => {
 			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
 			const columnHeights = new Array(totalColumns).fill(0);
 			
-			// First pass: handle the first two items - force them to be 50% width ONLY on widescreen
+			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen
 			let maxHeightOfFirstTwo = 0;
 			
-			// Only apply special first-two logic on widescreen where we have 8 columns
-			if (totalColumns === 8) {
+			// Only apply special first-two logic on widescreen where we have 12 columns
+			if (totalColumns === 12) {
 				items.forEach((item, index) => {
 					if (index < 2) {
 						const img = item.querySelector('img');
 						if (!img) return;
 						
-						// Force first two items to be 4 columns wide (50%) regardless of data-columns
-						const itemWidth = (columnWidth * 4) + (gap * 3);
+						// Both first items get exactly 6 columns (50% each)
+						const columns = 6;
+						const itemWidth = (columnWidth * columns) + (gap * (columns - 1));
 						item.style.width = itemWidth + 'px';
 						item.style.height = 'auto';
 						
@@ -148,12 +149,11 @@ const initMasonry = () => {
 				let columns = 1; // Default: all items are 1 column
 				
 				// ONLY on widescreen, use the grid-span data
-				if (totalColumns === 8) {
+				if (totalColumns === 12) {
 					if (index < 2) {
-						// Force first two items to be 4 columns (50%) regardless of data-columns
-						columns = 4;
+						// Both first items get exactly 6 columns (50% each)
+						columns = 6;
 					} else {
-						// Use grid-span data for remaining items
 						columns = parseInt(item.getAttribute('data-columns')) || 1;
 					}
 				}
@@ -165,18 +165,25 @@ const initMasonry = () => {
 				item.style.width = itemWidth + 'px';
 				
 				// Special handling for first two items on widescreen only
-				if (totalColumns === 8 && index < 2 && maxHeightOfFirstTwo > 0) {
+				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0) {
 					item.classList.add('large-item');
 					item.style.height = maxHeightOfFirstTwo + 'px';
 					
 					if (index === 0) {
 						item.style.left = '0px';
 						item.style.top = '0px';
-						columnHeights[0] = columnHeights[1] = columnHeights[2] = columnHeights[3] = maxHeightOfFirstTwo + gap;
+						// First item spans columns 0-5
+						for (let i = 0; i < 6; i++) {
+							columnHeights[i] = maxHeightOfFirstTwo + gap;
+						}
 					} else {
-						item.style.left = (columnWidth * 4 + gap * 4) + 'px';
+						// Second item starts at column 6
+						item.style.left = (columnWidth * 6 + gap * 6) + 'px';
 						item.style.top = '0px';
-						columnHeights[4] = columnHeights[5] = columnHeights[6] = columnHeights[7] = maxHeightOfFirstTwo + gap;
+						// Second item spans columns 6-11
+						for (let i = 6; i < 12; i++) {
+							columnHeights[i] = maxHeightOfFirstTwo + gap;
+						}
 					}
 				} else {
 					// Regular items - use auto height

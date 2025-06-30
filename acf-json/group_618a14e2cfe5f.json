@@ -155,7 +155,9 @@
                     },
                     "choices": {
                         "unrealengine-original": "Unreal Engine",
-                        "unity-plain": "Unity"
+                        "unity-plain": "Unity",
+                        "javascript-plain": "Javascript",
+                        "php-plain": "PHP"
                     },
                     "default_value": [],
                     "return_format": "value",
@@ -347,5 +349,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1751314180
+    "modified": 1751315713
 }

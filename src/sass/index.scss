@@ -512,10 +512,10 @@ p.button {
 }
 
 // Simple CSS Grid Masonry
-// 8-Column CSS Grid Masonry System with Mobile-First Responsive Design
+// 12-Column CSS Grid Masonry System with Mobile-First Responsive Design
 .projects-grid-masonry {
 	display: grid;
-	gap: 10px;
+	gap: 1rem;
 
 	// Mobile First: 1 column by default
 	grid-template-columns: 1fr;
@@ -525,9 +525,9 @@ p.button {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	// Widescreen: 8 columns
+	// Widescreen: 12 columns
 	@include mixins.widescreen {
-		grid-template-columns: repeat(8, 1fr);
+		grid-template-columns: repeat(12, 1fr);
 	}
 
 	.project-item {
@@ -729,64 +729,40 @@ p.button {
 		.grid-span-5,
 		.grid-span-6,
 		.grid-span-7,
-		.grid-span-8 {
+		.grid-span-8,
+		.grid-span-9,
+		.grid-span-10,
+		.grid-span-11,
+		.grid-span-12 {
 			grid-column: span 1;
 		}
 
 		// Widescreen: ALL grid span classes become active + responsive adjustments
 		@include mixins.widescreen {
-			// Force first two items to be 50% width (4 columns) regardless of their class
+			// Force first two items to be exactly 50% width each (6 columns each)
 			.project-item:nth-child(1),
 			.project-item:nth-child(2) {
-				grid-column: span 4 !important;
+				grid-column: span 6 !important; // Exactly 50% width each
 			}
 
-			.grid-span-1 {
-				grid-column: span 1;
-			}
-
-			// 12.5% width
-			.grid-span-2 {
-				grid-column: span 2;
-			}
-
-			// 25% width  
-			.grid-span-3 {
-				grid-column: span 3;
-			}
-
-			// 37.5% width
-			.grid-span-4 {
-				grid-column: span 4;
-			}
-
-			// 50% width
-			.grid-span-5 {
-				grid-column: span 5;
-			}
-
-			// 62.5% width
-			.grid-span-6 {
-				grid-column: span 6;
-			}
-
-			// 75% width
-			.grid-span-7 {
-				grid-column: span 7;
-			}
-
-			// 87.5% width
-			.grid-span-8 {
-				grid-column: span 8;
-			}
-
-			// 100% width
+			.grid-span-1 { grid-column: span 1; }   // 8.33% width
+			.grid-span-2 { grid-column: span 2; }   // 16.67% width  
+			.grid-span-3 { grid-column: span 3; }   // 25% width
+			.grid-span-4 { grid-column: span 4; }   // 33.33% width
+			.grid-span-5 { grid-column: span 5; }   // 41.67% width
+			.grid-span-6 { grid-column: span 6; }   // 50% width
+			.grid-span-7 { grid-column: span 7; }   // 58.33% width
+			.grid-span-8 { grid-column: span 8; }   // 66.67% width
+			.grid-span-9 { grid-column: span 9; }   // 75% width
+			.grid-span-10 { grid-column: span 10; } // 83.33% width
+			.grid-span-11 { grid-column: span 11; } // 91.67% width
+			.grid-span-12 { grid-column: span 12; } // 100% width
 		}
 	}
 
 	//title and text sizes
 	@include mixins.widescreen {
-		// Force sizing for first two items (50% width)
+		// Force sizing for first two items (exactly 50% width each)
 		.project-item:nth-child(1),
 		.project-item:nth-child(2) {
 			.project-overlay {
@@ -802,42 +778,67 @@ p.button {
 			}
 		}
 
-		.grid-span-1 {}
-
-		// 12.5% width
+		.grid-span-1,
 		.grid-span-2 {
 			.project-overlay {
 				.overlay-content {
 					h3 {
-						font-size: 1.25rem;
+						font-size: 0.9rem;
+					}
+					p {
+						font-size: 0.7rem;
 					}
 				}
 			}
 		}
 
-		// 25% width  
 		.grid-span-3 {
 			.project-overlay {
 				.overlay-content {
 					h3 {
-						font-size: 1.5rem;
+						font-size: 1.1rem;
 					}
-
 					p {
-						font-size: 0.875rem;
+						font-size: 0.8rem;
 					}
 				}
 			}
 		}
 
-		// 37.5% width
 		.grid-span-4 {
 			.project-overlay {
 				.overlay-content {
 					h3 {
-						font-size: 2rem;
+						font-size: 1.3rem;
 					}
+					p {
+						font-size: 0.85rem;
+					}
+				}
+			}
+		}
 
+		.grid-span-5,
+		.grid-span-6 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 1.6rem;
+					}
+					p {
+						font-size: 0.9rem;
+					}
+				}
+			}
+		}
+
+		.grid-span-7,
+		.grid-span-8 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 1.8rem;
+					}
 					p {
 						font-size: 1rem;
 					}
@@ -845,19 +846,21 @@ p.button {
 			}
 		}
 
-		// 50% width
-		.grid-span-5 {}
-
-		// 62.5% width
-		.grid-span-6 {}
-
-		// 75% width
-		.grid-span-7 {}
-
-		// 87.5% width
-		.grid-span-8 {}
-
-		// 100% width
+		.grid-span-9,
+		.grid-span-10,
+		.grid-span-11,
+		.grid-span-12 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 2.2rem;
+					}
+					p {
+						font-size: 1.1rem;
+					}
+				}
+			}
+		}
 	}
 
 	// Fallback for non-masonry browsers
