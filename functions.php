@@ -178,16 +178,12 @@ function projects_grid_masonry_shortcode($atts) {
 		'posts_per_page' => -1,
 		'category' => '',
 		'tag' => '',
-		'orderby' => 'date',
-		'order' => 'DESC'
 	), $atts, 'projects_grid');
 
 	// Build query arguments
 	$args = array(
 		'post_type' => 'project',
 		'posts_per_page' => intval($atts['posts_per_page']),
-		'orderby' => $atts['orderby'],
-		'order' => $atts['order'],
 		'post_status' => 'publish'
 	);
 
@@ -231,8 +227,6 @@ function projects_grid_masonry_shortcode($atts) {
 			if (!$thumbnail) {
 				continue; // Skip if no thumbnail is available
 			}
-			var_dump($preview_tech);
-			
 			// Ensure preview_tech is always an array
 			if (!is_array($preview_tech)) {
 				$preview_tech = !empty($preview_tech) ? array($preview_tech) : array();
@@ -261,7 +255,7 @@ function projects_grid_masonry_shortcode($atts) {
 				<?php endif; ?>
 				<div class="project-overlay">
 					<div class="overlay-content">
-						<h3 class="title canela-font mb-0">
+						<h3 class="title canela-font mb-0" style="line-height: 1.1;">
 							<?php echo esc_html($project->post_title); ?>
 						</h3>
 						<?php if ($preview_role) : ?>
