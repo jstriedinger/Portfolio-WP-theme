@@ -560,7 +560,7 @@ p.button {
 				background-size: 100% 100%; // Normal size by default
 				width: auto;
 				padding: 0.75rem 2rem;
-				transform: translateX(-1rem);
+				transform: translateX(-1.5rem);
 				transition: transform 0.3s ease, background-size 0.3s ease;
 				display: inline-block;
 				border-top-right-radius: 50px;
@@ -586,13 +586,29 @@ p.button {
 					mix-blend-mode: overlay;
 					pointer-events: none;
 					border-top-right-radius: 50px; // Match parent border radius
+					z-index: 1;
+				}
+
+				// Add dark overlay that disappears on hover
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					background: rgba(0, 0, 0, 0.5);
+					border-top-right-radius: 50px; // Match parent border radius
+					transition: opacity 0.3s ease;
+					pointer-events: none;
+					z-index: 2;
 				}
 
 				h3,p
 				 {
 					color: $theme-bg;
-					position: relative; // Ensure text stays above noise
-					z-index: 1;
+					position: relative; // Ensure text stays above overlays
+					z-index: 3;
 				}
 
 				h3 {
@@ -627,6 +643,11 @@ p.button {
 				// Slightly increase noise visibility on hover for more texture
 				&::before {
 					opacity: 0.5;
+				}
+
+				// Remove dark overlay on hover to reveal bright gradient
+				&::after {
+					opacity: 0;
 				}
 			}
 		}
