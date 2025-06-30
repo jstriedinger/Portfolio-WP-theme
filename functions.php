@@ -24,6 +24,12 @@ if ( ! function_exists( 'jrsp_setup' ) ) :
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
 		add_theme_support( 'post-thumbnails' );
+		
+		// Register navigation menus
+		register_nav_menus( array(
+			'primary' => esc_html__( 'Primary Menu', 'jrsp' ),
+		) );
+		
 		/*
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.
@@ -72,6 +78,8 @@ add_action( 'after_setup_theme', 'jrsp_setup' );
 
 add_filter( 'show_admin_bar', '__return_false' );
 
+// Include custom nav walker
+require_once get_template_directory() . '/inc/class-bulma-nav-walker.php';
 
 /**
  * Enqueue scripts and styles.
@@ -86,6 +94,22 @@ function jrsp_scripts() {
 	// CDN hosted jQuery placed in the header, as some plugins require that jQuery is loaded in the header.
 	wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), '3.2.1', false );
 	wp_enqueue_script( 'jrsp-js', get_template_directory_uri() . '/assets/js/main.js' );
+	
+	// Add inline script for mobile menu toggle
+	wp_add_inline_script( 'jrsp-js', '
+		document.addEventListener("DOMContentLoaded", function() {
+			const burger = document.querySelector(".navbar-burger");
+			const nav = document.querySelector("#navbarMain");
+			
+			if (burger && nav) {
+				burger.addEventListener("click", function() {
+					burger.classList.toggle("is-active");
+					nav.classList.toggle("is-active");
+				});
+			}
+		});
+	' );
+	
 	wp_localize_script(
 		'jrsp-js',
 		'jrsp_ajax',
@@ -197,7 +221,7 @@ function projects_grid_masonry_shortcode($atts) {
 		foreach ($projects as $project) :
 			$project_meta = get_fields($project->ID);
 			$preview_video = isset($project_meta['preview']['preview_video']) ? $project_meta['preview']['preview_video'] : null;
-			$preview_title = isset($project_meta['preview']['preview_title']) ? $project_meta['preview']['preview_title'] : $project->post_title;
+			$preview_tech = isset($project_meta['preview']['preview_tech']) ? $project_meta['preview']['preview_tech'] : array();
 			$preview_desc = isset($project_meta['preview']['preview_desc']) ? $project_meta['preview']['preview_desc'] : null;
 			$preview_role = isset($project_meta['preview']['preview_role']) ? $project_meta['preview']['preview_role'] : null;
 			$preview_only_video = isset($project_meta['preview']['video_only']) ? $project_meta['preview']['video_only'] : false;
@@ -206,6 +230,12 @@ function projects_grid_masonry_shortcode($atts) {
 
 			if (!$thumbnail) {
 				continue; // Skip if no thumbnail is available
+			}
+			var_dump($preview_tech);
+			
+			// Ensure preview_tech is always an array
+			if (!is_array($preview_tech)) {
+				$preview_tech = !empty($preview_tech) ? array($preview_tech) : array();
 			}
 			
 			// Determine classes based on video settings
@@ -225,15 +255,26 @@ function projects_grid_masonry_shortcode($atts) {
 			<a href="<?php echo esc_url(get_permalink($project->ID)); ?>" title="<?php echo esc_attr($project->post_title); ?>">
 				<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($project->post_title); ?>" loading="lazy">
 				<?php if ($preview_video) : ?>
-					<video class="project-video" muted loop preload="none">
+					<video class="project-video" muted loop preload="none" poster="<?php echo esc_url($thumbnail); ?>">
 						<source src="<?php echo esc_url($preview_video); ?>" type="video/mp4">
 					</video>
 				<?php endif; ?>
 				<div class="project-overlay">
 					<div class="overlay-content">
-						<h3 class="title canela-font mb-0"><?php echo esc_html($project->post_title); ?></h3>
+						<h3 class="title canela-font mb-0">
+							<?php echo esc_html($project->post_title); ?>
+						</h3>
 						<?php if ($preview_role) : ?>
-							<span class="role-text"><?php echo esc_html($preview_role); ?></span>
+						<p>
+						<span class="role-text"><?php echo esc_html($preview_role); ?></span>
+						<?php if (!empty($preview_tech)) : ?>
+								<?php foreach ($preview_tech as $tech) : ?>
+									<?php if (!empty($tech)) : ?>
+										<i class="devicon-<?php echo esc_attr($tech); ?>"></i>
+									<?php endif; ?>
+								<?php endforeach; ?>
+							<?php endif; ?>
+						</p>
 						<?php endif; ?>
 					</div>
 				</div>

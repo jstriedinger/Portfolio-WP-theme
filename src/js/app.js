@@ -101,22 +101,45 @@ const initMasonry = () => {
 							item.style.width = itemWidth + 'px';
 							item.style.height = 'auto';
 							
-							// Calculate height based on image aspect ratio
+							// Better height calculation that works when tab is not focused
+							let calculatedHeight = 0;
+							
 							if (img.naturalWidth && img.naturalHeight) {
+								// Use natural dimensions if available
 								const aspectRatio = img.naturalHeight / img.naturalWidth;
-								const calculatedHeight = itemWidth * aspectRatio;
-								if (calculatedHeight > maxHeightOfFirstTwo) {
-									maxHeightOfFirstTwo = calculatedHeight;
-								}
+								calculatedHeight = itemWidth * aspectRatio;
+							} else if (img.width && img.height) {
+								// Fallback to current dimensions
+								const aspectRatio = img.height / img.width;
+								calculatedHeight = itemWidth * aspectRatio;
 							} else {
-								const currentHeight = item.offsetHeight;
-								if (currentHeight > maxHeightOfFirstTwo) {
-									maxHeightOfFirstTwo = currentHeight;
-								}
+								// Final fallback: force image to load and calculate
+								const tempImg = new Image();
+								tempImg.onload = () => {
+									const aspectRatio = tempImg.height / tempImg.width;
+									const newHeight = itemWidth * aspectRatio;
+									if (newHeight > maxHeightOfFirstTwo) {
+										maxHeightOfFirstTwo = newHeight;
+										// Re-run layout after image loads
+										requestAnimationFrame(() => layout());
+									}
+								};
+								tempImg.src = img.src;
+								// Use a reasonable default for now
+								calculatedHeight = itemWidth * 0.6; // Assume 16:10 aspect ratio
+							}
+							
+							if (calculatedHeight > maxHeightOfFirstTwo) {
+								maxHeightOfFirstTwo = calculatedHeight;
 							}
 						}
 					}
 				});
+				
+				// Ensure we have a minimum height if calculations failed
+				if (maxHeightOfFirstTwo === 0) {
+					maxHeightOfFirstTwo = columnWidth * 0.6; // Default aspect ratio
+				}
 			}
 			
 			// Second pass: position all items
@@ -189,7 +212,7 @@ const initMasonry = () => {
 			container.style.height = maxHeight + 'px';
 		};
 
-		// Better image loading detection with proper timing
+		// Better image loading detection with visibility API support
 		const images = container.querySelectorAll('img');
 		let loadedCount = 0;
 		const totalImages = images.length;
@@ -198,7 +221,12 @@ const initMasonry = () => {
 		const executeLayout = () => {
 			if (!layoutExecuted) {
 				layoutExecuted = true;
-				setTimeout(layout, 100);
+				// Use multiple requestAnimationFrame to ensure DOM is ready
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						layout();
+					});
+				});
 			}
 		};
 		
@@ -208,6 +236,19 @@ const initMasonry = () => {
 				executeLayout();
 			}
 		};
+		
+		// Handle page visibility changes
+		const handleVisibilityChange = () => {
+			if (!document.hidden) {
+				// Page became visible, re-layout after a short delay
+				setTimeout(() => {
+					layoutExecuted = false;
+					executeLayout();
+				}, 100);
+			}
+		};
+		
+		document.addEventListener('visibilitychange', handleVisibilityChange);
 		
 		if (totalImages === 0) {
 			executeLayout();
@@ -222,17 +263,23 @@ const initMasonry = () => {
 			});
 		}
 		
-		// Multiple fallback attempts
+		// Multiple fallback attempts with longer delays for unfocused tabs
 		setTimeout(() => {
 			executeLayout();
 		}, 1000);
 		
 		setTimeout(() => {
-			if (layoutExecuted) {
+			layoutExecuted = false;
+			executeLayout();
+		}, 2000);
+		
+		// Additional fallback for when tab becomes focused
+		window.addEventListener('focus', () => {
+			setTimeout(() => {
 				layoutExecuted = false;
 				executeLayout();
-			}
-		}, 2000);
+			}, 100);
+		});
 		
 		// Layout on resize
 		window.addEventListener('resize', () => {

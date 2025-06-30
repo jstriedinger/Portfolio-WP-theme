@@ -20,6 +20,7 @@ $dark-contrast-color: #f2f2f2;
 $gold-color: #c29b63;
 $tag-color: color.scale($theme-bg, $lightness: -35%);
 $link: $theme-accent;
+$navbar-height: 10rem; 
 
 $card-radius: 0px;
 $breakpoint-1600: 1600px;
@@ -43,6 +44,7 @@ $breakpoint-1600: 1600px;
 );
 @forward "bulma/sass/elements/content" with ($content-heading-color: $primary-color,
 );
+@forward "bulma/sass/components/navbar";
 @forward "bulma/sass/elements/button";
 @forward "bulma/sass/elements/box" with ($box-padding: 1.2rem);
 @forward "bulma/sass/elements/tag";
@@ -79,6 +81,20 @@ html {
 	.title{
 		--bulma-title-color: #{$theme-primary};
 
+	}
+	.navbar {
+		background-color: $theme-bg;
+		.navbar-item {
+			background-color: transparent !important;
+		}
+		--bulma-navbar-height: 5rem;
+		--bulma-navbar-background-color: $theme-bg;
+
+		@include mixins.tablet {
+			.container {
+				border-bottom: 2px solid color.scale($theme-bg, $lightness: -3%);
+			}
+		}
 	}
 }
 
@@ -311,7 +327,7 @@ section.section {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	//animation: gradientTextShift 5s ease infinite;
+	
 
 	@keyframes gradientTextShift {
 		0% {
@@ -325,6 +341,10 @@ section.section {
 		100% {
 			background-position: 0% 50%;
 		}
+	}
+	&.animated {
+		background-size: 500% 100%;
+		animation: gradientTextShift 3s ease infinite;
 	}
 }
 
@@ -568,8 +588,8 @@ p.button {
 					border-top-right-radius: 50px; // Match parent border radius
 				}
 
-				h3,
-				span {
+				h3,p
+				 {
 					color: $theme-bg;
 					position: relative; // Ensure text stays above noise
 					z-index: 1;
@@ -579,9 +599,20 @@ p.button {
 					font-size: 1rem;
 				}
 
-				span {
+				p {
 					font-size: .75rem;
 					font-weight: 400;
+				}
+
+				[class^=devicon-]
+				{
+					position: relative;
+					top: 5px;
+					margin-right: 0.25rem;
+					font-size: 150%;
+					&:last-of-type{
+						margin: 0;
+					}
 				}
 			}
 		}
@@ -625,8 +656,8 @@ p.button {
 				position: absolute;
 				top: 0;
 				left: 0;
-				width: 100%;
-				height: 100%;
+				width: 101%;
+				height: 101%;
 				object-fit: cover;
 				opacity: 0;
 				transition: opacity 0.3s ease;
@@ -707,7 +738,7 @@ p.button {
 							font-size: 2rem;
 						}
 					
-						span.role-text {
+						p {
 							font-size: 1rem;
 						}
 				}

@@ -33,24 +33,6 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 						<div class="level-item is-flex-grow-0">
 							<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-size-6">More about me</a>
 						</div>
-						<div class="level-item is-flex-grow-0">
-							<a href="https://github.com/jstriedinger" class="social">
-								<i class="icon is-medium">
-									<span class="fab fa-github "></span>
-								</i>
-							</a>
-							<a href="https://www.linkedin.com/in/jstriedinger/" class="social">
-								<i class="icon is-medium">
-									<span class="fab fa-linkedin-in "></span>
-								</i>
-							</a>
-							<a href="https://jstriedinger.itch.io/" class="social">
-								<i class="icon">
-									<span class="fa-brands fa-itch-io"></span>
-								</i>
-							</a>
-
-						</div>
 
 				</div>
 			</div>
