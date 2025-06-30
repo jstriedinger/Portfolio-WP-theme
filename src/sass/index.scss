@@ -20,7 +20,7 @@ $dark-contrast-color: #f2f2f2;
 $gold-color: #c29b63;
 $tag-color: color.scale($theme-bg, $lightness: -35%);
 $link: $theme-accent;
-$navbar-height: 10rem; 
+$navbar-height: 10rem;
 
 $card-radius: 0px;
 $breakpoint-1600: 1600px;
@@ -74,19 +74,24 @@ $fa-font-path: "./webfonts";
 	line-height: 1.75;
 	;
 }
+
 html {
-	a{
+	a {
 		--bulma-link-text: #{$link};
 	}
-	.title{
+
+	.title {
 		--bulma-title-color: #{$theme-primary};
 
 	}
+
 	.navbar {
 		background-color: $theme-bg;
+
 		.navbar-item {
 			background-color: transparent !important;
 		}
+
 		--bulma-navbar-height: 5rem;
 		--bulma-navbar-background-color: $theme-bg;
 
@@ -327,7 +332,7 @@ section.section {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	
+
 
 	@keyframes gradientTextShift {
 		0% {
@@ -342,6 +347,7 @@ section.section {
 			background-position: 0% 50%;
 		}
 	}
+
 	&.animated {
 		background-size: 500% 100%;
 		animation: gradientTextShift 3s ease infinite;
@@ -506,7 +512,7 @@ p.button {
 }
 
 // Simple CSS Grid Masonry
-// 6-Column CSS Grid Masonry System with Mobile-First Responsive Design
+// 8-Column CSS Grid Masonry System with Mobile-First Responsive Design
 .projects-grid-masonry {
 	display: grid;
 	gap: 10px;
@@ -519,15 +525,22 @@ p.button {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	// Widescreen: 6 columns
+	// Widescreen: 8 columns
 	@include mixins.widescreen {
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(8, 1fr);
 	}
 
 	.project-item {
 		position: relative;
 		overflow: hidden;
 		//cursor: pointer;
+
+		// Apply desaturation filter on tablet and up (not on mobile)
+		@include mixins.tablet {
+			//filter: saturate(0.2) brightness(0.8) contrast(1.1);
+			filter: grayscale(0.6);
+			transition: filter 0.4s ease;
+		}
 
 		&.js-positioned {
 			position: absolute;
@@ -589,23 +602,10 @@ p.button {
 					z-index: 1;
 				}
 
-				// Add dark overlay that disappears on hover
-				&::after {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					background: rgba(0, 0, 0, 0.5);
-					border-top-right-radius: 50px; // Match parent border radius
-					transition: opacity 0.3s ease;
-					pointer-events: none;
-					z-index: 2;
-				}
+				// Remove the dark overlay - filter will handle the dimming effect
 
-				h3,p
-				 {
+				h3,
+				p {
 					color: $theme-bg;
 					position: relative; // Ensure text stays above overlays
 					z-index: 3;
@@ -620,21 +620,28 @@ p.button {
 					font-weight: 400;
 				}
 
-				[class^=devicon-]
-				{
+				[class^=devicon-] {
 					position: relative;
 					top: 4px;
 					margin-left: 0.25rem;
 					font-size: 150%;
-					&:last-of-type{
+
+					&:last-of-type {
 						margin: 0;
 					}
 				}
 			}
 		}
 
-		// Show entire overlay content on hover with infinite gradient animation
+		// Show entire overlay content on hover with infinite gradient animation + remove filter
 		&:hover {
+
+			// Remove desaturation filter on hover for dramatic color reveal
+			@include mixins.tablet {
+				//filter: saturate(1) brightness(1) contrast(1);
+				filter: none;
+			}
+
 			.project-overlay .overlay-content {
 				transform: translateX(0);
 				background-size: 200% 100%; // Only expand horizontally, keep height normal
@@ -643,11 +650,6 @@ p.button {
 				// Slightly increase noise visibility on hover for more texture
 				&::before {
 					opacity: 0.5;
-				}
-
-				// Remove dark overlay on hover to reveal bright gradient
-				&::after {
-					opacity: 0;
 				}
 			}
 		}
@@ -718,65 +720,153 @@ p.button {
 	// Native masonry for supporting browsers
 	@supports (grid-template-rows: masonry) {
 		grid-template-rows: masonry;
-		
+
 		// Mobile, Tablet, Desktop: All items span 1 column (ignore grid-span classes)
 		.grid-span-1,
 		.grid-span-2,
 		.grid-span-3,
 		.grid-span-4,
 		.grid-span-5,
-		.grid-span-6 {
+		.grid-span-6,
+		.grid-span-7,
+		.grid-span-8 {
 			grid-column: span 1;
 		}
 
 		// Widescreen: ALL grid span classes become active + responsive adjustments
 		@include mixins.widescreen {
-			.grid-span-1 { grid-column: span 1; } // 16.67% width
-			.grid-span-2 { grid-column: span 2; } // 33.33% width  
-			.grid-span-3 { grid-column: span 3; } // 50% width
-			.grid-span-4 { grid-column: span 4; } // 66.67% width
-			.grid-span-5 { grid-column: span 5; } // 83.33% width
-			.grid-span-6 { grid-column: span 6; } // 100% width
+			// Force first two items to be 50% width (4 columns) regardless of their class
+			.project-item:nth-child(1),
+			.project-item:nth-child(2) {
+				grid-column: span 4 !important;
+			}
+
+			.grid-span-1 {
+				grid-column: span 1;
+			}
+
+			// 12.5% width
+			.grid-span-2 {
+				grid-column: span 2;
+			}
+
+			// 25% width  
+			.grid-span-3 {
+				grid-column: span 3;
+			}
+
+			// 37.5% width
+			.grid-span-4 {
+				grid-column: span 4;
+			}
+
+			// 50% width
+			.grid-span-5 {
+				grid-column: span 5;
+			}
+
+			// 62.5% width
+			.grid-span-6 {
+				grid-column: span 6;
+			}
+
+			// 75% width
+			.grid-span-7 {
+				grid-column: span 7;
+			}
+
+			// 87.5% width
+			.grid-span-8 {
+				grid-column: span 8;
+			}
+
+			// 100% width
 		}
 	}
 
 	//title and text sizes
 	@include mixins.widescreen {
-		.grid-span-1 {  } // 16.67% width
-		.grid-span-2 { 
+		// Force sizing for first two items (50% width)
+		.project-item:nth-child(1),
+		.project-item:nth-child(2) {
 			.project-overlay {
-					.overlay-content {
-						h3 {
-							font-size: 1.25rem;
-						}
+				.overlay-content {
+					h3 {
+						font-size: 2rem;
+					}
+
+					p {
+						font-size: 1rem;
 					}
 				}
-		} // 33.33% width  
-		.grid-span-3 { 
-			.project-overlay{
-				.overlay-content{
+			}
+		}
+
+		.grid-span-1 {}
+
+		// 12.5% width
+		.grid-span-2 {
+			.project-overlay {
+				.overlay-content {
 					h3 {
-							font-size: 2rem;
-						}
-					
-						p {
-							font-size: 1rem;
-						}
+						font-size: 1.25rem;
+					}
 				}
 			}
-		} // 50% width
-		.grid-span-4 {  } // 66.67% width
-		.grid-span-5 {  } // 83.33% width
-		.grid-span-6 { } // 100% width
+		}
+
+		// 25% width  
+		.grid-span-3 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 1.5rem;
+					}
+
+					p {
+						font-size: 0.875rem;
+					}
+				}
+			}
+		}
+
+		// 37.5% width
+		.grid-span-4 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 2rem;
+					}
+
+					p {
+						font-size: 1rem;
+					}
+				}
+			}
+		}
+
+		// 50% width
+		.grid-span-5 {}
+
+		// 62.5% width
+		.grid-span-6 {}
+
+		// 75% width
+		.grid-span-7 {}
+
+		// 87.5% width
+		.grid-span-8 {}
+
+		// 100% width
 	}
-	
+
 	// Fallback for non-masonry browsers
 	@supports not (grid-template-rows: masonry) {
 		&.js-masonry {
 			position: relative;
 		}
-		
+
 	}
 
-	
+
 }

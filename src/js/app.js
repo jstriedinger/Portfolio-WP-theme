@@ -56,7 +56,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 	
 } )
 
-// 6-Column masonry fallback with responsive design
+// 8-Column masonry fallback with responsive design
 const initMasonry = () => {
 	const container = document.querySelector('.projects-grid-masonry');
 	if (!container) return;
@@ -75,7 +75,7 @@ const initMasonry = () => {
 			
 			// Determine column count based on screen size
 			if (containerWidth >= 1216) { // Widescreen
-				totalColumns = 6;
+				totalColumns = 8;
 			} else if (containerWidth >= 769) { // Tablet AND Desktop
 				totalColumns = 2;
 			} else { // Mobile
@@ -85,53 +85,51 @@ const initMasonry = () => {
 			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
 			const columnHeights = new Array(totalColumns).fill(0);
 			
-			// First pass: handle the first two items (grid-span-3) with same height ONLY on widescreen
+			// First pass: handle the first two items - force them to be 50% width ONLY on widescreen
 			let maxHeightOfFirstTwo = 0;
 			
-			// Only apply special first-two logic on widescreen where we have 6 columns
-			if (totalColumns === 6) {
+			// Only apply special first-two logic on widescreen where we have 8 columns
+			if (totalColumns === 8) {
 				items.forEach((item, index) => {
 					if (index < 2) {
 						const img = item.querySelector('img');
 						if (!img) return;
 						
-						const columns = parseInt(item.getAttribute('data-columns')) || 1;
-						if (columns === 3) {
-							const itemWidth = (columnWidth * 3) + (gap * 2);
-							item.style.width = itemWidth + 'px';
-							item.style.height = 'auto';
-							
-							// Better height calculation that works when tab is not focused
-							let calculatedHeight = 0;
-							
-							if (img.naturalWidth && img.naturalHeight) {
-								// Use natural dimensions if available
-								const aspectRatio = img.naturalHeight / img.naturalWidth;
-								calculatedHeight = itemWidth * aspectRatio;
-							} else if (img.width && img.height) {
-								// Fallback to current dimensions
-								const aspectRatio = img.height / img.width;
-								calculatedHeight = itemWidth * aspectRatio;
-							} else {
-								// Final fallback: force image to load and calculate
-								const tempImg = new Image();
-								tempImg.onload = () => {
-									const aspectRatio = tempImg.height / tempImg.width;
-									const newHeight = itemWidth * aspectRatio;
-									if (newHeight > maxHeightOfFirstTwo) {
-										maxHeightOfFirstTwo = newHeight;
-										// Re-run layout after image loads
-										requestAnimationFrame(() => layout());
-									}
-								};
-								tempImg.src = img.src;
-								// Use a reasonable default for now
-								calculatedHeight = itemWidth * 0.6; // Assume 16:10 aspect ratio
-							}
-							
-							if (calculatedHeight > maxHeightOfFirstTwo) {
-								maxHeightOfFirstTwo = calculatedHeight;
-							}
+						// Force first two items to be 4 columns wide (50%) regardless of data-columns
+						const itemWidth = (columnWidth * 4) + (gap * 3);
+						item.style.width = itemWidth + 'px';
+						item.style.height = 'auto';
+						
+						// Better height calculation that works when tab is not focused
+						let calculatedHeight = 0;
+						
+						if (img.naturalWidth && img.naturalHeight) {
+							// Use natural dimensions if available
+							const aspectRatio = img.naturalHeight / img.naturalWidth;
+							calculatedHeight = itemWidth * aspectRatio;
+						} else if (img.width && img.height) {
+							// Fallback to current dimensions
+							const aspectRatio = img.height / img.width;
+							calculatedHeight = itemWidth * aspectRatio;
+						} else {
+							// Final fallback: force image to load and calculate
+							const tempImg = new Image();
+							tempImg.onload = () => {
+								const aspectRatio = tempImg.height / tempImg.width;
+								const newHeight = itemWidth * aspectRatio;
+								if (newHeight > maxHeightOfFirstTwo) {
+									maxHeightOfFirstTwo = newHeight;
+									// Re-run layout after image loads
+									requestAnimationFrame(() => layout());
+								}
+							};
+							tempImg.src = img.src;
+							// Use a reasonable default for now
+							calculatedHeight = itemWidth * 0.6; // Assume 16:10 aspect ratio
+						}
+						
+						if (calculatedHeight > maxHeightOfFirstTwo) {
+							maxHeightOfFirstTwo = calculatedHeight;
 						}
 					}
 				});
@@ -150,8 +148,14 @@ const initMasonry = () => {
 				let columns = 1; // Default: all items are 1 column
 				
 				// ONLY on widescreen, use the grid-span data
-				if (totalColumns === 6) {
-					columns = parseInt(item.getAttribute('data-columns')) || 1;
+				if (totalColumns === 8) {
+					if (index < 2) {
+						// Force first two items to be 4 columns (50%) regardless of data-columns
+						columns = 4;
+					} else {
+						// Use grid-span data for remaining items
+						columns = parseInt(item.getAttribute('data-columns')) || 1;
+					}
 				}
 				// On all other screen sizes, columns stays 1
 				
@@ -160,19 +164,19 @@ const initMasonry = () => {
 				item.classList.add('js-positioned');
 				item.style.width = itemWidth + 'px';
 				
-				// Special handling for first two grid-span-3 items on widescreen only
-				if (totalColumns === 6 && index < 2 && parseInt(item.getAttribute('data-columns')) === 3 && maxHeightOfFirstTwo > 0) {
+				// Special handling for first two items on widescreen only
+				if (totalColumns === 8 && index < 2 && maxHeightOfFirstTwo > 0) {
 					item.classList.add('large-item');
 					item.style.height = maxHeightOfFirstTwo + 'px';
 					
 					if (index === 0) {
 						item.style.left = '0px';
 						item.style.top = '0px';
-						columnHeights[0] = columnHeights[1] = columnHeights[2] = maxHeightOfFirstTwo + gap;
+						columnHeights[0] = columnHeights[1] = columnHeights[2] = columnHeights[3] = maxHeightOfFirstTwo + gap;
 					} else {
-						item.style.left = (columnWidth * 3 + gap * 3) + 'px';
+						item.style.left = (columnWidth * 4 + gap * 4) + 'px';
 						item.style.top = '0px';
-						columnHeights[3] = columnHeights[4] = columnHeights[5] = maxHeightOfFirstTwo + gap;
+						columnHeights[4] = columnHeights[5] = columnHeights[6] = columnHeights[7] = maxHeightOfFirstTwo + gap;
 					}
 				} else {
 					// Regular items - use auto height
