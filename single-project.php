@@ -8,7 +8,7 @@ $contributions = $meta['contributions'];
 $summary       = $meta['summary'];
 $enlaces       = $meta['links'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
-$video_preview = isset( $meta['video_preview'] ) ? $meta['video_preview'] : null;
+$video_preview = isset( $meta['preview_video'] ) ? $meta['video_preview'] : null;
 $gif_preview   = isset( $meta['gif_preview'] ) ? $meta['gif_preview'] : null;
 $tags          = get_the_tags();
 

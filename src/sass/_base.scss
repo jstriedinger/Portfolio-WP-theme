@@ -1,10 +1,10 @@
 
 html, body {
-    background: whitesmoke;
+    background: $theme-bg;
 }
 
 body{
-    color: $dark-color;
+    color: $theme-text;
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
@@ -119,10 +119,10 @@ body{
 						margin-left: 0;
 						margin-right: 0;
 					
-						border-radius: 12px;
+						border-radius: $theme-border-radius;
 						img,
 						video {
-							border-radius: 12px;
+							border-radius: $theme-border-radius;
 							z-index: 1;
 						}
 					}
@@ -150,7 +150,7 @@ body{
 							right: 0;
 							z-index: 1;
 							background: rgba($dark-color, 0);
-							border-radius: 12px;
+							border-radius: $theme-border-radius;
 							opacity: 0;
 						}
 						img {
@@ -354,7 +354,7 @@ body{
 		overflow: hidden;
 		&::before {
 			content: "";
-			background: $body-color;
+			background: $theme-bg;
 			position: absolute;
 			top: 0;
 			left: 0;

@@ -126,7 +126,7 @@
 	
 }
 .select {
-    border: 1px solid $blue-color;
+    border: 1px solid $link;
     border-radius: 20px;
     color: $gold-color;
     font-weight: 700;
@@ -152,12 +152,12 @@
 	padding: 0;
 	font-size: 14px;
 	select {
-		color: $blue-color;
+		color: $link;
 		font-weight: 700;
 		height: auto;
 	}
 	&::after {
-		border-color: $blue-color !important;
+		border-color: $link !important;
 	}
 	
 }

@@ -1,28 +1,66 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-$primary-color: #00092C;//#050409;
-$dark-color: #00092C;//#050409;//11052C
-$dark-contrast-color: #f2f2f2;
-$blue-color: #242F9B;
-$gold-color: #c29b63;
-$secondary-color: #18e1e3;
-$body-color: #f4ede3;
-$textcolor: darken($body-color,45%);
-$tag-color: darken($body-color,35%);
-$card-radius: 6px;
+// =============================================
+// THEME PALETTES - Choose one by uncommenting
+// =============================================
+
+// PALETTE 1: Benjamin Moore
+$theme-bg: #efeee5;
+$theme-surface: #ffffff;
+$theme-primary: #00092C;
+$theme-secondary: #18e1e3;
+$theme-text: #364042;
+$theme-heading: #586d92;
+$theme-heading2: #d5e3e6;
+$theme-link: #d18266;
+$theme-border: #e0e0e0;
+
+// PALETTE 2: Dark Mode (Uncomment to use)
+// $theme-bg: #00092C;
+// $theme-surface: #1a1a2e;
+// $theme-primary: #f2f2f2;
+// $theme-secondary: #18e1e3;
+// $theme-accent: #c29b63;
+// $theme-text: #f2f2f2;
+// $theme-heading: #f2f2f2;
+// $theme-link: #5a67d8;
+// $theme-border: #444444;
+
+// PALETTE 3: Purple Dreams (Uncomment to use)
+// $theme-bg: #1a0b2e;
+// $theme-surface: #2d1b4e;
+// $theme-primary: #9f7aea;
+// $theme-secondary: #ed64a6;
+// $theme-accent: #fbb6ce;
+// $theme-text: #e2e8f0;
+// $theme-heading: #d69e2e;
+// $theme-link: #63b3ed;
+// $theme-border: #553c9a;
+
+// PALETTE 4: Ocean Breeze (Uncomment to use)
+// $theme-bg: #0f172a;
+// $theme-surface: #1e293b;
+// $theme-primary: #0ea5e9;
+// $theme-secondary: #06b6d4;
+// $theme-accent: #10b981;
+// $theme-text: #f1f5f9;
+// $theme-heading: #38bdf8;
+// $theme-link: #22d3ee;
+// $theme-border: #334155;
+
+
 
 //Bulma css variables override
 $container-max-width: 1600px;
 $breakpoint-1600: 1600px;
-$content-heading-color: $primary-color;
+$content-heading-color: $theme-heading;
 $family-sans-serif: 'Open Sans',sans-serif;
 $family-primary: $family-sans-serif;
 :root{
 	--bulma-family-primary: #{$family-primary};
-
 }
-$link: #242F9B;
-$title-color: $dark-color;
+$link: $theme-link;
+$title-color: $theme-heading;
 
 
 

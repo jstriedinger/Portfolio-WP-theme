@@ -1,21 +1,30 @@
-
 //@import "variables";
-$primary-color: #00092C; //#050409;
+$theme-gradient: linear-gradient(45deg, rgba(65, 89, 208, 1.000) 0.000%, rgba(200, 79, 192, 1.000) 50.000%, rgba(255, 205, 112, 1.000) 100.000%);
+// PALETTE 1: Benjamin Moore
+$theme-bg: #efeee5;
+$theme-primary: #5b6d93;
+$theme-primary-dark: darken($theme-primary, 20%);
+$theme-text: #364042;
+$theme-secondary: #d5e3e6;
+$theme-accent: #d18266;
+$theme-border: #e0e0e0;
+$theme-border-radius: 0px;
+
+//bulma override
+$primary-color: $theme-primary; //#050409;
+$text: $theme-text;
 $dark-color: #00092C; //#050409;//11052C
 $dark-contrast-color: #f2f2f2;
-$blue-color: #242F9B;
 $gold-color: #c29b63;
-$secondary-color: #18e1e3;
-$body-color: #f4ede3;
+$tag-color: darken($theme-bg, 35%);
+$link: $theme-accent;
+
+$card-radius: 0px;
 $breakpoint-1600: 1600px;
-$tag-color: darken($body-color, 35%);
-$textcolor: darken($body-color, 45%);
-$link: #242F9B;
-$card-radius: 6px;
 
 
 @forward "bulma/sass/utilities" with ( //Bulma css variables override
-	
+
 	$family-primary: '"Open Sans","sans-serif"',
 	$link: #242F9B,
 );
@@ -28,16 +37,12 @@ $card-radius: 6px;
 @forward "bulma/sass/layout/_index" with ($container-max-width: 1600px);
 @forward "bulma/sass/helpers/_index";
 @forward "bulma/sass/form/_index";
-@forward "bulma/sass/elements/title" with (
-		$title-color: $dark-color,
+@forward "bulma/sass/elements/title" with ($title-color: $dark-color,
 );
-@forward "bulma/sass/elements/content" with (
-	$content-heading-color: $primary-color,
+@forward "bulma/sass/elements/content" with ($content-heading-color: $primary-color,
 );
 @forward "bulma/sass/elements/button";
-@forward "bulma/sass/elements/box" with (
-		$box-padding: 1.2rem
-);
+@forward "bulma/sass/elements/box" with ($box-padding: 1.2rem);
 @forward "bulma/sass/elements/tag";
 @forward "bulma/sass/elements/image";
 @forward "bulma/sass/layout/level";
@@ -62,10 +67,17 @@ $fa-font-path: "./webfonts";
 
 //quick fix for some reason needed
 .tag {
-	line-height: 1.75;;
+	line-height: 1.75;
+	;
 }
 
-p,span, a {
+:root {
+	--bulma-link-text: #{$link};
+}
+
+p,
+span,
+a {
 	&.link {
 		color: $primary-color;
 		font-family: 'Lyon Display Web';
@@ -97,43 +109,111 @@ p,span, a {
 		}
 
 	}
-	
+
 }
 
 section.section {
-	.container.is-fluid{
+	.container.is-fluid {
 		@include mixins.mobile {
 			padding: 0;
 		}
+
 		max-width: 1600px !important;
 		padding-left: 0;
 		padding-right: 0;
 	}
+
 	position: relative;
+
 	&.colored-black {
 		background: $dark-color;
-		.title,p,h1,h2,h3,strong {
+
+		.title,
+		p,
+		h1,
+		h2,
+		h3,
+		strong {
 			color: white;
 		}
+
 		a:not(.button) {
 			color: #F2F2F2;
 			border-color: $dark-contrast-color;
 		}
 	}
+
+	&.gradient {
+		// Remove static background since we'll use a pseudo-element
+
+		// Gradient overlay on top of background image
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-image: radial-gradient(ellipse at center, rgba(103, 49, 145, 1) 0%, rgba(103, 49, 145, 0.9) 30%, rgba(50, 0, 129, 0.7) 60%, rgba(50, 0, 129, 0) 100%);
+			//background: linear-gradient(45deg, rgba(182, 130, 92, 1.000) 0.000%, rgba(115, 64, 148, 1.000) 16.667%, rgba(64, 51, 200, 1.000) 33.333%, rgba(57, 101, 227, 1.000) 50.000%, rgba(97, 179, 222, 1.000) 66.667%, rgba(163, 231, 186, 1.000) 83.333%, rgba(222, 221, 131, 1.000) 100.000%);
+			//opacity: 0.8; // Adjust opacity as needed
+			//background: linear-gradient(-45deg, rgba(42, 0, 27, 0.9) 0.000%, rgba(120, 19, 12, 0.8) 16.667%, rgba(206, 72, 14, 0.7) 33.333%, rgba(255, 141, 34, 0.5) 50.000%, rgba(255, 213, 67, 0.6) 66.667%, rgba(255, 255, 105, 0.7) 83.333%, rgba(255, 255, 141, 0.8) 100.000%);
+			background-size: 100% 100%;
+			//animation: gradientShift 15s ease infinite;
+			z-index: 1;
+			pointer-events: none;
+		}
+
+		// Fade to white at the bottom (on top of gradient)
+		/*&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 250px; // Adjust height of fade
+			background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, whitesmoke 100%);
+			pointer-events: none;
+			z-index: 1;
+		}*/
+
+		// Ensure content stays above everything
+		.container * {
+			position: relative;
+			z-index: 10 !important;
+		}
+
+		@keyframes gradientShift {
+			0% {
+				background-position: 0% 50%;
+			}
+
+			50% {
+				background-position: 100% 50%;
+			}
+
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+	}
+
 	&.with-image {
 		background-size: cover;
 		background-position: center center;
 		z-index: 0;
-		> * {
+
+		>* {
 			z-index: 2;
 		}
+
 		&.with-layer {
-			
+
 			&:after {
 				position: absolute;
-				top:0;
-				left:0;
-				width:100%;
+				top: 0;
+				left: 0;
+				width: 100%;
 				height: 100%;
 				z-index: 1;
 				content: "";
@@ -141,62 +221,141 @@ section.section {
 				opacity: 0.4;
 			}
 		}
-		p, h1, h2 {
+
+		p,
+		h1,
+		h2 {
 			text-shadow: 1px 1px 2px rgba($dark-color, 0.5);
 		}
 	}
+
 	&#top-section {
 
 		//font-size: 0;
-		> .container {
+		>.container {
 			font-size: 1em;
 		}
-		img {
-			max-height: 240px;
-			width: auto;
-			margin: 0 auto;
-		}
-		@include mixins.desktop {
-			padding-bottom: 0;
 
-			.columns > .column:last-child
-			{
-				padding-bottom: 0;
-				font-size: 0;
+
+		@include mixins.desktop {
+			//padding-bottom: 0;
+
+			.columns>.column:last-child {
+				//padding-bottom: 0;
+				//font-size: 0;
 			}
 		}
+
 		@include mixins.widescreen {
 			img {
-				max-width: 280px;
+				//max-width: 280px;
 			}
+		}
+	}
+
+	// Hero background image styling
+	.background-img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		overflow: hidden;
+		background-image: var(--hero-bg-image);
+		background-repeat: repeat-x;
+		background-size: auto 100%;
+		width: 7680px;
+		height: 100%;
+		//background-position: 0 center;
+		animation: slide 60s linear infinite;
+
+		.hero-image {
+			display: none;
+		}
+
+		@keyframes slide {
+			0% {
+				transform: translate(0);
+			}
+
+			100% {
+				transform: translate(-3840px);
+				/* The image width */
+			}
+		}
+	}
+
+	// Ensure content stays above background
+	.container {
+		position: relative;
+		z-index: 2;
+	}
+
+}
+
+// Gradient Text Animation
+.gradient-text {
+	
+	background: linear-gradient(30deg, rgba(106, 195, 203, 1.000) 0.000%, rgba(84, 169, 207, 1.000) 11.111%, rgba(62, 143, 214, 1.000) 22.222%, rgba(45, 117, 223, 1.000) 33.333%, rgba(38, 92, 233, 1.000) 44.444%, rgba(43, 68, 245, 1.000) 55.556%, rgba(59, 47, 255, 1.000) 66.667%, rgba(80, 27, 255, 1.000) 77.778%, rgba(103, 11, 255, 1.000) 88.889%, rgba(121, 0, 255, 1.000) 100.000%);
+	//background: linear-gradient(45deg, rgba(7, 174, 234, 1.000) 0.000%, rgba(43, 245, 152, 1.000) 100.000%);
+	//background: linear-gradient(-45deg, rgba(42, 0, 27, 1.000) 0.000%, rgba(120, 19, 12, 1.000) 16.667%, rgba(206, 72, 14, 1.000) 33.333%, rgba(255, 141, 34, 1.000) 50.000%, rgba(255, 213, 67, 1.000) 66.667%, rgba(255, 255, 105, 1.000) 83.333%, rgba(255, 255, 141, 1.000) 100.000%);
+	background-size: 400% 400%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	//animation: gradientTextShift 10s ease infinite;
+
+	@keyframes gradientTextShift {
+		0% {
+			background-position: 0% 50%;
+		}
+
+		50% {
+			background-position: 100% 50%;
+		}
+
+		100% {
+			background-position: 0% 50%;
 		}
 	}
 }
 
-button.button, a.button, .button a, p.button {
+
+button.button,
+a.button,
+.button a,
+p.button {
 	&.is-ghost {
 		padding: 0;
 	}
+
 	border-radius: 0;
-	&.is-gold{
+
+	&.is-gold {
 		color: $dark-contrast-color;
 		background: $gold-color;
 		border-width: 0px;
+
 		&.is-outlined {
 			border-width: 1px;
 			border-color: $gold-color;
 			background: transparent;
 			color: $gold-color;
-			&:hover, &:focus {
+
+			&:hover,
+			&:focus {
 				background: $gold-color;
 				color: $dark-contrast-color
 			}
 		}
-	} 
+	}
+
 	span.wp-font-awesome-icon {
 		color: inherit;
 	}
 }
+
 .button a {
 	color: inherit;
 	text-decoration: none;
@@ -205,3 +364,338 @@ button.button, a.button, .button a, p.button {
 
 }
 
+// Projects Masonry Layout
+// NOTE: No project item should ever be 100% width on tablet/desktop to avoid unfillable gaps
+// Mobile-first approach: start with mobile (100% width) and progressively enhance
+.projects-masonry {
+	width: 100%;
+
+	.project-sizer,
+	.project-item {
+		width: 100%; // Mobile first - 1 column
+		padding: 1rem;
+		box-sizing: border-box;
+		width: 33.3%;
+		height: 400px;
+
+
+		.project-link {
+			display: block;
+			text-decoration: none;
+
+			&:hover {
+				.card {
+					transform: translateY(-5px);
+					box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				}
+			}
+		}
+
+		a {
+			height: 100%;
+			display: block;
+		}
+
+		.card.project {
+			height: 100%; // Let content determine height
+			//min-height: 250px; // Base minimum height
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			border-radius: $card-radius;
+			overflow: hidden;
+			position: relative;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+			// Variable heights for masonry effect
+			&.card-small {
+				min-height: 200px;
+				max-height: 250px;
+			}
+
+			&.card-medium {
+				min-height: 300px;
+				max-height: 350px;
+			}
+
+			&.card-large {
+				min-height: 400px;
+				max-height: 450px;
+			}
+
+			&.card-tall {
+				min-height: 500px;
+				max-height: 600px;
+			}
+
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(to bottom,
+						rgba(0, 0, 0, 0.1) 0%,
+						rgba(0, 0, 0, 0.7) 100%);
+				z-index: 1;
+			}
+
+			.card-content {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 1.5rem;
+				z-index: 2;
+
+				.project-title {
+					color: white;
+					margin-bottom: 0.5rem;
+					font-weight: bold;
+				}
+
+				.link {
+					color: rgba(255, 255, 255, 0.8);
+				}
+			}
+		}
+
+		// Horizontal projects get taller cards
+		&.horizontal .card.project {
+			height: 400px;
+		}
+	}
+}
+
+// Isotope transitions
+.projects-masonry .project-item {
+	transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.projects-masonry .project-item.isotope-hidden {
+	opacity: 0;
+	transform: scale(0.001);
+}
+
+// Simple CSS Grid Masonry
+// 6-Column CSS Grid Masonry System with Mobile-First Responsive Design
+.projects-grid-masonry {
+	display: grid;
+	gap: 10px;
+
+	// Mobile First: 1 column by default
+	grid-template-columns: 1fr;
+
+	// Tablet: 2 columns (also applies to Desktop)
+	@include mixins.tablet {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	// Widescreen: 6 columns
+	@include mixins.widescreen {
+		grid-template-columns: repeat(6, 1fr);
+	}
+
+	.project-item {
+		position: relative;
+		overflow: hidden;
+		cursor: pointer;
+
+		&.js-positioned {
+			position: absolute;
+		}
+
+		&.large-item {
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+
+		img {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+
+		// Overlay that appears on hover
+		.project-overlay {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			z-index: 10;
+
+			.overlay-content {
+				background: $theme-gradient;
+				background-size: 100% 100%; // Normal size by default
+				width: auto;
+				padding: 0.75rem 2rem;
+				transform: translateX(-1rem);
+				transition: transform 0.3s ease, background-size 0.3s ease;
+				display: inline-block;
+				border-top-right-radius: 50px;
+				border: 0px;
+
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				width: fit-content;
+				padding-left: 2rem;
+
+				h3,
+				span {
+					color: $theme-bg;
+				}
+
+				h3 {
+					font-size: 1rem;
+				}
+
+				span.role-text {
+					font-size: .75rem;
+				}
+
+
+			}
+		}
+
+		// Show entire overlay content on hover with infinite gradient animation
+		&:hover {
+			.project-overlay .overlay-content {
+				transform: translateX(0);
+				background-size: 400% 100%; // Only expand horizontally, keep height normal
+				animation: gradientShift 4s ease infinite;
+			}
+		}
+
+		// Gradient animation keyframes
+		@keyframes gradientShift {
+			0% {
+				background-position: 0% 50%;
+			}
+
+			50% {
+				background-position: 100% 50%;
+			}
+
+			100% {
+				background-position: 0% 50%;
+			}
+		}
+
+		// Only add video styles and transitions if item has video
+		&.has-video {
+			img {
+				transition: opacity 0.3s ease;
+			}
+
+			.project-video {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+				pointer-events: none;
+			}
+
+			&:hover {
+				.project-video {
+					opacity: 1;
+				}
+
+				img {
+					opacity: 0;
+				}
+			}
+		}
+
+		// For projects that should show video by default
+		&.only-video {
+			img {
+				opacity: 0;
+			}
+
+			.project-video {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				opacity: 1;
+				pointer-events: none;
+			}
+		}
+	}
+
+	// Native masonry for supporting browsers
+	@supports (grid-template-rows: masonry) {
+		grid-template-rows: masonry;
+		
+		// Mobile, Tablet, Desktop: All items span 1 column (ignore grid-span classes)
+		.grid-span-1,
+		.grid-span-2,
+		.grid-span-3,
+		.grid-span-4,
+		.grid-span-5,
+		.grid-span-6 {
+			grid-column: span 1;
+		}
+
+		// Widescreen: ALL grid span classes become active + responsive adjustments
+		@include mixins.widescreen {
+			.grid-span-1 { grid-column: span 1; } // 16.67% width
+			.grid-span-2 { grid-column: span 2; } // 33.33% width  
+			.grid-span-3 { grid-column: span 3; } // 50% width
+			.grid-span-4 { grid-column: span 4; } // 66.67% width
+			.grid-span-5 { grid-column: span 5; } // 83.33% width
+			.grid-span-6 { grid-column: span 6; } // 100% width
+		}
+	}
+
+	//title and text sizes
+	@include mixins.widescreen {
+		.grid-span-1 {  } // 16.67% width
+		.grid-span-2 { 
+			.project-overlay {
+					.overlay-content {
+						h3 {
+							font-size: 1.25rem;
+						}
+					}
+				}
+		} // 33.33% width  
+		.grid-span-3 { 
+			.project-overlay{
+				.overlay-content{
+					h3 {
+							font-size: 2rem;
+						}
+					
+						span.role-text {
+							font-size: 1rem;
+						}
+				}
+			}
+		} // 50% width
+		.grid-span-4 {  } // 66.67% width
+		.grid-span-5 {  } // 83.33% width
+		.grid-span-6 { } // 100% width
+	}
+	
+	// Fallback for non-masonry browsers
+	@supports not (grid-template-rows: masonry) {
+		&.js-masonry {
+			position: relative;
+		}
+		
+	}
+
+	
+}
