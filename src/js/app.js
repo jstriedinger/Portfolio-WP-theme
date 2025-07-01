@@ -52,7 +52,8 @@ const initCircularText = () => {
 	
 	if (circularTextElement) {
 		const circleType = new CircleType(circularTextElement);
-		
+
+		circularTextElement.classList.add('animated');
 		// Update on resize (still needed for CircleType recalculation)
 		window.addEventListener('resize', () => {
 			clearTimeout(window.circleTypeTimeout);
@@ -404,10 +405,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1.5 } ))
 	
 	// Initialize all functionality
-	initCircularText();
+	//initCircularText();
 	initMasonry();
 	initVideoHover();
 	
 	// Additional fallback for masonry
 	setTimeout(initMasonry, 1000);
+	setTimeout(initCircularText, 1000);
+
 });
