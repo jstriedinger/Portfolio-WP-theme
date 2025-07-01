@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-// import Isotope from 'isotope-layout';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CircleType from 'circletype';
 
 gsap.registerPlugin( ScrollTrigger )
 const tl = gsap.timeline();
@@ -46,15 +46,28 @@ const getProjects = async (cat, projectsNode) => {
 	}
 }
 
-
-
-document.addEventListener( 'DOMContentLoaded', () => {
-
-	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ))
-	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
-	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1 } ))
+// Initialize Circular Text
+const initCircularText = () => {
+	const circularTextElement = document.getElementById('circular-text');
 	
-} )
+	if (circularTextElement) {
+		const circleType = new CircleType(circularTextElement);
+		
+		// Set consistent radius for all screen sizes
+		const updateRadius = () => {
+			circleType.radius(50); // Always 60px radius
+		};
+		
+		// Initial setup
+		updateRadius();
+		
+		// Update on resize (still needed for CircleType recalculation)
+		window.addEventListener('resize', () => {
+			clearTimeout(window.circleTypeTimeout);
+			window.circleTypeTimeout = setTimeout(updateRadius, 250);
+		});
+	}
+};
 
 // 12-Column masonry fallback with responsive design
 const initMasonry = () => {
@@ -388,17 +401,18 @@ const initVideoHover = () => {
 	});
 };
 
+// Single DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
-	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.2 } ))
-	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1 } ))
-	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1 } ))
+	// GSAP animations
+	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1.5, stagger: 0.2 } ))
+	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.5 } ))
+	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1.5 } ))
 	
-	// Initialize masonry immediately
+	// Initialize all functionality
+	initCircularText();
 	initMasonry();
-	
-	// Initialize video hover
 	initVideoHover();
 	
-	// Also try again after a delay as additional fallback
+	// Additional fallback for masonry
 	setTimeout(initMasonry, 1000);
 });

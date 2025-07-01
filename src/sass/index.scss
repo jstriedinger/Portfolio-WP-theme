@@ -90,6 +90,10 @@ html {
 
 		.navbar-item {
 			background-color: transparent !important;
+
+			&.logo-container {
+				padding: 0.5rem 0.75rem;
+			}
 		}
 
 		--bulma-navbar-height: 5rem;
@@ -268,10 +272,7 @@ section.section {
 		@include mixins.desktop {
 			//padding-bottom: 0;
 
-			.columns>.column:last-child {
-				//padding-bottom: 0;
-				//font-size: 0;
-			}
+
 		}
 
 		@include mixins.widescreen {
@@ -625,10 +626,6 @@ p.button {
 					top: 4px;
 					margin-left: 0.25rem;
 					font-size: 150%;
-
-					&:last-of-type {
-						margin: 0;
-					}
 				}
 			}
 		}
@@ -739,29 +736,79 @@ p.button {
 
 		// Widescreen: ALL grid span classes become active + responsive adjustments
 		@include mixins.widescreen {
+
 			// Force first two items to be exactly 50% width each (6 columns each)
 			.project-item:nth-child(1),
 			.project-item:nth-child(2) {
 				grid-column: span 6 !important; // Exactly 50% width each
 			}
 
-			.grid-span-1 { grid-column: span 1; }   // 8.33% width
-			.grid-span-2 { grid-column: span 2; }   // 16.67% width  
-			.grid-span-3 { grid-column: span 3; }   // 25% width
-			.grid-span-4 { grid-column: span 4; }   // 33.33% width
-			.grid-span-5 { grid-column: span 5; }   // 41.67% width
-			.grid-span-6 { grid-column: span 6; }   // 50% width
-			.grid-span-7 { grid-column: span 7; }   // 58.33% width
-			.grid-span-8 { grid-column: span 8; }   // 66.67% width
-			.grid-span-9 { grid-column: span 9; }   // 75% width
-			.grid-span-10 { grid-column: span 10; } // 83.33% width
-			.grid-span-11 { grid-column: span 11; } // 91.67% width
-			.grid-span-12 { grid-column: span 12; } // 100% width
+			.grid-span-1 {
+				grid-column: span 1;
+			}
+
+			// 8.33% width
+			.grid-span-2 {
+				grid-column: span 2;
+			}
+
+			// 16.67% width  
+			.grid-span-3 {
+				grid-column: span 3;
+			}
+
+			// 25% width
+			.grid-span-4 {
+				grid-column: span 4;
+			}
+
+			// 33.33% width
+			.grid-span-5 {
+				grid-column: span 5;
+			}
+
+			// 41.67% width
+			.grid-span-6 {
+				grid-column: span 6;
+			}
+
+			// 50% width
+			.grid-span-7 {
+				grid-column: span 7;
+			}
+
+			// 58.33% width
+			.grid-span-8 {
+				grid-column: span 8;
+			}
+
+			// 66.67% width
+			.grid-span-9 {
+				grid-column: span 9;
+			}
+
+			// 75% width
+			.grid-span-10 {
+				grid-column: span 10;
+			}
+
+			// 83.33% width
+			.grid-span-11 {
+				grid-column: span 11;
+			}
+
+			// 91.67% width
+			.grid-span-12 {
+				grid-column: span 12;
+			}
+
+			// 100% width
 		}
 	}
 
 	//title and text sizes
 	@include mixins.widescreen {
+
 		// Force sizing for first two items (exactly 50% width each)
 		.project-item:nth-child(1),
 		.project-item:nth-child(2) {
@@ -785,6 +832,7 @@ p.button {
 					h3 {
 						font-size: 0.9rem;
 					}
+
 					p {
 						font-size: 0.7rem;
 					}
@@ -798,6 +846,7 @@ p.button {
 					h3 {
 						font-size: 1.1rem;
 					}
+
 					p {
 						font-size: 0.8rem;
 					}
@@ -811,6 +860,7 @@ p.button {
 					h3 {
 						font-size: 1.3rem;
 					}
+
 					p {
 						font-size: 0.85rem;
 					}
@@ -825,6 +875,7 @@ p.button {
 					h3 {
 						font-size: 1.6rem;
 					}
+
 					p {
 						font-size: 0.9rem;
 					}
@@ -839,6 +890,7 @@ p.button {
 					h3 {
 						font-size: 1.8rem;
 					}
+
 					p {
 						font-size: 1rem;
 					}
@@ -855,6 +907,7 @@ p.button {
 					h3 {
 						font-size: 2.2rem;
 					}
+
 					p {
 						font-size: 1.1rem;
 					}
@@ -872,4 +925,48 @@ p.button {
 	}
 
 
+}
+
+// Circular Logo Animation
+.circular-logo {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.center-text {
+		position: absolute;
+		z-index: 10;
+		font-size: 3.5rem;
+		margin: 0;
+		pointer-events: none;
+		font-weight: 600;
+		line-height: 1;
+		margin-top: -5px;
+	}
+
+	.circular-text {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		font-size: 0.75rem;
+		font-weight: 300;
+		letter-spacing: 0.1em;
+		color: $theme-primary;
+		animation: rotate 20s linear infinite;
+		font-family: 'Canela', sans-serif;
+		line-height: 1;
+	}
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
 }

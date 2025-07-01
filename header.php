@@ -17,6 +17,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/assets/images/apple-touch-icon.png">
+	<link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/assets/images/site.webmanifest">
+
 	<?php wp_head(); ?>
 	
 	<link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
@@ -26,7 +32,7 @@
 		<script>
 				(function(h,o,t,j,a,r){
 						h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-						h._hjSettings={hjid:3689675,hjsv:6};
+						h._hjSettings={hjid:3689675,hjsv=6};
 						a=o.getElementsByTagName('head')[0];
 						r=o.createElement('script');r.async=1;
 						r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -45,16 +51,11 @@
 	<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
 		<div class="container">
 			<div class="navbar-brand">
-				<a class="navbar-item" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php 
-					$custom_logo_id = get_theme_mod( 'custom_logo' );
-					if ( $custom_logo_id ) {
-						$logo = wp_get_attachment_image_src( $custom_logo_id, 'full' );
-						echo '<img src="' . esc_url( $logo[0] ) . '" alt="' . get_bloginfo( 'name' ) . '" width="112" height="28">';
-					} else { ?>
-						<span class="title has-text-weight-bold gradient-text animated" style="margin-top:-15px">Jose</span>
-					<?php	}
-					?>
+				<a class="navbar-item logo-container" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+					<div class="circular-logo">
+						<span class="title has-text-weight-bold gradient-text animated center-text">J</span>
+						<div id="circular-text" class="circular-text">Game Engineer • Designer • Educator</div>
+					</div>
 				</a>
 				<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMain">
 					<span aria-hidden="true"></span>
