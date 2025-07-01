@@ -401,6 +401,7 @@ p.button {
 // Simple CSS Grid Masonry
 // 12-Column CSS Grid Masonry System with Mobile-First Responsive Design
 .masonry-grid {
+	position: relative;
 	display: grid;
 	gap: 1rem;
 
