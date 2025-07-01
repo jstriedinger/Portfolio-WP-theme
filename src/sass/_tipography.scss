@@ -41,10 +41,10 @@ h1,h2,h3,h4{
 	color: $theme-primary
 }
 
-h1,h2,h3, .title {
+.title {
 	font-family: "Canela", sans-serif;
 	font-optical-sizing: auto;
-	font-weight: 400 !important;
+	font-weight: 400;
 	font-style: normal;
 	line-height: 1.5;
 	
@@ -88,8 +88,24 @@ h1,h2,h3, .title, .subtitle, p{
 		}
 	}
 }
+.has-text-theme-primary {
+	color: $theme-primary;
+}
 .title {
 	line-height: 1.25;
+}
+.subtitle {
+	font-family: "Open Sans","sans-serif" !important;
+}
+.content {
+	h1,h2,h3{
+		font-family: "Canela", sans-serif;
+		font-optical-sizing: auto;
+		font-weight: 400;
+		font-style: normal;
+		line-height: 1.5;
+
+	}
 }
 h1,h2,h3,h4,h5,h6,p,.title, .subtitle, .content{
 	&.canela-font{

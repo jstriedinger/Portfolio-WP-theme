@@ -206,13 +206,13 @@ function projects_grid_masonry_shortcode($atts) {
 	$projects = get_posts($args);
 
 	if (empty($projects)) {
-		return '<div class="projects-grid-masonry"><p>No projects found.</p></div>';
+		return '<div class="masonry-grid"><p>No projects found.</p></div>';
 	}
 
 	// Start output buffering
 	ob_start();
 	?>
-	<div class="projects-grid-masonry">
+	<div class="masonry-grid projects-grid">
 		<?php
 		foreach ($projects as $project) :
 			$project_meta = get_fields($project->ID);
@@ -247,7 +247,7 @@ function projects_grid_masonry_shortcode($atts) {
 			// Add grid width class
 			$grid_class = 'grid-span-' . $grid_width;
 		?>
-		<div class="project-item <?php echo esc_attr($video_classes); ?> <?php echo esc_attr($grid_class); ?>" data-columns="<?php echo esc_attr($grid_width); ?>" <?php if ($preview_video) echo 'data-video="' . esc_url($preview_video) . '"'; ?>>
+		<div class="masonry-item <?php echo esc_attr($video_classes); ?> <?php echo esc_attr($grid_class); ?>" data-columns="<?php echo esc_attr($grid_width); ?>" <?php if ($preview_video) echo 'data-video="' . esc_url($preview_video) . '"'; ?>>
 		<?php if(!$without_link) : ?>
 			<a href="<?php echo esc_url($preview_link); ?>" title="<?php echo esc_attr($project->post_title); ?>">
 		<?php endif; ?>	

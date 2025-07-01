@@ -8,35 +8,32 @@ $contributions = $meta['contributions'];
 $summary       = $meta['summary'];
 $enlaces       = $meta['links'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
-$video_preview = isset( $meta['preview_video'] ) ? $meta['video_preview'] : null;
+$video_preview = isset( $meta['preview']['preview_video'] ) ? $meta['preview']['preview_video'] : null;
 $gif_preview   = isset( $meta['gif_preview'] ) ? $meta['gif_preview'] : null;
 $tags          = get_the_tags();
 
 
 ?>
 <section class="section ">
-	<div class="container my-4 mb-6">
-		<div class="columns is-vcentered is-centered anim-bottom-top">
+	<div class="container my-4 ">
+		<div class="columns is-vcentered is-centered anim-bottom-top is-6">
 			<div class="column is-half">
-				<div class="level mb-2" >
-					<div class="level-left" style="gap: 2rem">
-						<h1 class="title mb-0 is-size-2 is-size-1-desktop">
-							<?php the_title(); ?>
-							
-						</h1>
-					</div>
-				</div>
-				<div class="content has-text-justified">
+				<h1 class="title mb-0 is-size-2 is-size-1-desktop gradient-text has-text-weight-bold">
+					<?php the_title(); ?>
+				</h1>
+				<div class="content has-text-justified mt-4">
 					<?php echo $summary; ?>
 				</div>
 			
 				<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
+					<p>Get it on:</p>
 					<div class="buttons pt-2">
-	
 						<?php	foreach ( $enlaces as $enlace ) { ?>
 							<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-ghost">
 							<?php if ( str_contains( $enlace['url'], 'steam' ) ) : ?>
-									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/08/steam-btn.png" alt="steam download game" style="width:130px;" loading="lazy">
+									<img src="https://jstriedinger.com/wp-content/uploads/2025/07/steam_btn.png" alt="steam download game" style="width:130px;" loading="lazy">
+							<?php elseif ( str_contains( $enlace['url'], 'epicgames' ) ) : ?>
+									<img src="https://jstriedinger.com/wp-content/uploads/2025/07/egs_btn.png" alt="epic games download game" style="width:130px;" loading="lazy">
 							<?php else : ?>
 									<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="itch io play game" style="width:130px;" loading="lazy">
 							<?php endif; ?>
@@ -61,19 +58,10 @@ $tags          = get_the_tags();
 					?>
 			</div>
 		</div>
-		<?php if ( ! is_null( $contributions ) && ! empty( $contributions ) ) : ?>
-		<div class="columns is-vcentered is-centered has-text-justified m-1 mt-4 box anim-bottom-whole is-6">
-			<div class="column is-4 " >
-				<h2 class="title is-2">Role & contributions</h2>
-			</div>
-			<div class="column has-text-justified content is-size-5-widescreen">
-				<?php echo $contributions; ?>
-			</div>
-		</div>
-		<?php endif; ?>
+		
 	</div>
 </section>
-<section class="section">
+<section class="section pt-2">
 	<div class="container is-max-widescreen">
 		<div class="columns">
 			<div class="column is-full">

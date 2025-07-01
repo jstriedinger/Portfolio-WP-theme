@@ -54,7 +54,7 @@
 				<a class="navbar-item logo-container" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<div class="circular-logo">
 						<span class="title has-text-weight-bold gradient-text animated center-text">J</span>
-						<div id="circular-text" class="circular-text">Game Engineer • Designer • Educator</div>
+						<div id="circular-text" class="circular-text">• Game Engineer • Designer • Educator</div>
 					</div>
 				</a>
 				<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMain">

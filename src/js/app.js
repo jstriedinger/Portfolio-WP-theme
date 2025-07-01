@@ -53,25 +53,19 @@ const initCircularText = () => {
 	if (circularTextElement) {
 		const circleType = new CircleType(circularTextElement);
 		
-		// Set consistent radius for all screen sizes
-		const updateRadius = () => {
-			circleType.radius(50); // Always 60px radius
-		};
-		
-		// Initial setup
-		updateRadius();
-		
 		// Update on resize (still needed for CircleType recalculation)
 		window.addEventListener('resize', () => {
 			clearTimeout(window.circleTypeTimeout);
-			window.circleTypeTimeout = setTimeout(updateRadius, 250);
+			window.circleTypeTimeout = setTimeout(() => {
+				circleType.refresh();
+			}, 250);
 		});
 	}
 };
 
 // 12-Column masonry fallback with responsive design
 const initMasonry = () => {
-	const container = document.querySelector('.projects-grid-masonry');
+	const container = document.querySelector('.masonry-grid');
 	if (!container) return;
 	
 	// Check if browser supports CSS Grid masonry
@@ -79,7 +73,7 @@ const initMasonry = () => {
 	
 	if (!supportsMasonry) {
 		container.classList.add('js-masonry');
-		const items = container.querySelectorAll('.project-item');
+		const items = container.querySelectorAll('.masonry-item');
 		const gap = 16; // 1rem = 16px
 		
 		const layout = () => {
@@ -98,11 +92,12 @@ const initMasonry = () => {
 			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
 			const columnHeights = new Array(totalColumns).fill(0);
 			
-			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen
+			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen AND only for project grids
 			let maxHeightOfFirstTwo = 0;
+			const isProjectGrid = container.classList.contains('projects-grid');
 			
-			// Only apply special first-two logic on widescreen where we have 12 columns
-			if (totalColumns === 12) {
+			// Only apply special first-two logic on widescreen where we have 12 columns AND it's a project grid
+			if (totalColumns === 12 && isProjectGrid) {
 				items.forEach((item, index) => {
 					if (index < 2) {
 						const img = item.querySelector('img');
@@ -163,11 +158,11 @@ const initMasonry = () => {
 				
 				// ONLY on widescreen, use the grid-span data
 				if (totalColumns === 12) {
-					if (index < 2) {
-						// Both first items get exactly 6 columns (50% each)
+					if (index < 2 && isProjectGrid) {
+						// Both first items get exactly 6 columns (50% each) - ONLY for project grids
 						columns = 6;
 					} else {
-						columns = parseInt(item.getAttribute('data-columns')) || 1;
+						columns = parseInt(item.getAttribute('data-columns')) || 4; // Default to 4 columns instead of 1
 					}
 				}
 				// On all other screen sizes, columns stays 1
@@ -177,8 +172,8 @@ const initMasonry = () => {
 				item.classList.add('js-positioned');
 				item.style.width = itemWidth + 'px';
 				
-				// Special handling for first two items on widescreen only
-				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0) {
+				// Special handling for first two items on widescreen only AND only for project grids
+				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid) {
 					item.classList.add('large-item');
 					item.style.height = maxHeightOfFirstTwo + 'px';
 					
@@ -320,8 +315,8 @@ const initMasonry = () => {
 
 // Video hover functionality
 const initVideoHover = () => {
-	const hoverVideoItems = document.querySelectorAll('.project-item.has-video');
-	const autoVideoItems = document.querySelectorAll('.project-item.only-video');
+	const hoverVideoItems = document.querySelectorAll('.masonry-item.has-video');
+	const autoVideoItems = document.querySelectorAll('.masonry-item.only-video');
 	
 	// Handle hover videos
 	hoverVideoItems.forEach(item => {

@@ -4,6 +4,7 @@
 $theme-gradient: linear-gradient(45deg, #A47451 0.000%, #9C9881 16.667%, #73A09D 33.333%, #3B899A 50.000%, #095B79 66.667%, #002847 83.333%, #000116 100.000%);
 // PALETTE 1: Benjamin Moore
 $theme-bg: #fcede2;
+$theme-bg-darker: color.scale($theme-bg, $lightness: -2.5%);
 $theme-primary: #73A09D;
 $theme-primary-dark: color.scale($theme-primary, $lightness: -20%);
 $theme-text: #2c2c2c;
@@ -99,11 +100,11 @@ html {
 		--bulma-navbar-height: 5rem;
 		--bulma-navbar-background-color: $theme-bg;
 
-		@include mixins.tablet {
+		/*@include mixins.tablet {
 			.container {
 				border-bottom: 2px solid color.scale($theme-bg, $lightness: -3%);
 			}
-		}
+		}*/
 	}
 }
 
@@ -325,6 +326,7 @@ section.section {
 
 // Gradient Text Animation
 .gradient-text {
+	display: inline-block;
 	background: $theme-gradient;
 	//background: linear-gradient(30deg, rgba(106, 195, 203, 1.000) 0.000%, rgba(84, 169, 207, 1.000) 11.111%, rgba(62, 143, 214, 1.000) 22.222%, rgba(45, 117, 223, 1.000) 33.333%, rgba(38, 92, 233, 1.000) 44.444%, rgba(43, 68, 245, 1.000) 55.556%, rgba(59, 47, 255, 1.000) 66.667%, rgba(80, 27, 255, 1.000) 77.778%, rgba(103, 11, 255, 1.000) 88.889%, rgba(121, 0, 255, 1.000) 100.000%);
 	//background: linear-gradient(45deg, rgba(7, 174, 234, 1.000) 0.000%, rgba(43, 245, 152, 1.000) 100.000%);
@@ -364,8 +366,6 @@ p.button {
 		padding: 0;
 	}
 
-	border-radius: 0;
-
 	&.is-gold {
 		color: $dark-contrast-color;
 		background: $gold-color;
@@ -398,123 +398,9 @@ p.button {
 
 }
 
-// Projects Masonry Layout
-// NOTE: No project item should ever be 100% width on tablet/desktop to avoid unfillable gaps
-// Mobile-first approach: start with mobile (100% width) and progressively enhance
-.projects-masonry {
-	width: 100%;
-
-	.project-sizer,
-	.project-item {
-		width: 100%; // Mobile first - 1 column
-		padding: 1rem;
-		box-sizing: border-box;
-		width: 33.3%;
-		height: 400px;
-
-
-		.project-link {
-			display: block;
-			text-decoration: none;
-
-			&:hover {
-				.card {
-					transform: translateY(-5px);
-					box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-				}
-			}
-		}
-
-		a {
-			height: 100%;
-			display: block;
-		}
-
-		.card.project {
-			height: 100%; // Let content determine height
-			//min-height: 250px; // Base minimum height
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			border-radius: $card-radius;
-			overflow: hidden;
-			position: relative;
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-			// Variable heights for masonry effect
-			&.card-small {
-				min-height: 200px;
-				max-height: 250px;
-			}
-
-			&.card-medium {
-				min-height: 300px;
-				max-height: 350px;
-			}
-
-			&.card-large {
-				min-height: 400px;
-				max-height: 450px;
-			}
-
-			&.card-tall {
-				min-height: 500px;
-				max-height: 600px;
-			}
-
-			&::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: linear-gradient(to bottom,
-						rgba(0, 0, 0, 0.1) 0%,
-						rgba(0, 0, 0, 0.7) 100%);
-				z-index: 1;
-			}
-
-			.card-content {
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				padding: 1.5rem;
-				z-index: 2;
-
-				.project-title {
-					color: white;
-					margin-bottom: 0.5rem;
-					font-weight: bold;
-				}
-
-				.link {
-					color: rgba(255, 255, 255, 0.8);
-				}
-			}
-		}
-
-		// Horizontal projects get taller cards
-		&.horizontal .card.project {
-			height: 400px;
-		}
-	}
-}
-
-// Isotope transitions
-.projects-masonry .project-item {
-	transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.projects-masonry .project-item.isotope-hidden {
-	opacity: 0;
-	transform: scale(0.001);
-}
-
 // Simple CSS Grid Masonry
 // 12-Column CSS Grid Masonry System with Mobile-First Responsive Design
-.projects-grid-masonry {
+.masonry-grid {
 	display: grid;
 	gap: 1rem;
 
@@ -531,17 +417,10 @@ p.button {
 		grid-template-columns: repeat(12, 1fr);
 	}
 
-	.project-item {
+	.masonry-item {
 		position: relative;
 		overflow: hidden;
 		//cursor: pointer;
-
-		// Apply desaturation filter on tablet and up (not on mobile)
-		@include mixins.tablet {
-			//filter: saturate(0.2) brightness(0.8) contrast(1.1);
-			filter: grayscale(0.6);
-			transition: filter 0.4s ease;
-		}
 
 		&.js-positioned {
 			position: absolute;
@@ -560,111 +439,181 @@ p.button {
 			height: auto;
 			display: block;
 		}
+	}
 
-		// Overlay that appears on hover
-		.project-overlay {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			z-index: 10;
-
-			.overlay-content {
-				background: $theme-gradient;
-				background-size: 100% 100%; // Normal size by default
-				width: auto;
-				padding: 0.75rem 2rem;
-				transform: translateX(-1.5rem);
-				transition: transform 0.3s ease, background-size 0.3s ease;
-				display: inline-block;
-				border-top-right-radius: 50px;
-				border: 0px;
-				position: relative; // Required for pseudo-element
-
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-				width: fit-content;
-				padding-left: 2rem;
-
-				// Add noise texture over the gradient
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
-					opacity: 0.3; // Very subtle noise
-					mix-blend-mode: overlay;
-					pointer-events: none;
-					border-top-right-radius: 50px; // Match parent border radius
-					z-index: 1;
-				}
-
-				// Remove the dark overlay - filter will handle the dimming effect
-
-				h3,
-				p {
-					color: $theme-bg;
-					position: relative; // Ensure text stays above overlays
-					z-index: 3;
-				}
-
-				h3 {
-					font-size: 1rem;
-				}
-
-				p {
-					font-size: .75rem;
-					font-weight: 400;
-				}
-
-				[class^=devicon-] {
-					position: relative;
-					top: 4px;
-					margin-left: 0.25rem;
-					font-size: 150%;
-				}
-			}
-		}
-
-		// Show entire overlay content on hover with infinite gradient animation + remove filter
-		&:hover {
-
-			// Remove desaturation filter on hover for dramatic color reveal
+	// Project-specific overlay (only for project grids)
+	&.projects-grid {
+		.masonry-item {
+			// Apply grayscale filter to entire project items on tablet and up
 			@include mixins.tablet {
-				//filter: saturate(1) brightness(1) contrast(1);
-				filter: none;
+				filter: grayscale(0.6);
+				transition: filter 0.4s ease;
 			}
 
-			.project-overlay .overlay-content {
-				transform: translateX(0);
-				background-size: 200% 100%; // Only expand horizontally, keep height normal
-				animation: gradientShift 6s ease infinite;
+			&:hover {
+				// Remove grayscale filter on hover for dramatic color reveal
+				@include mixins.tablet {
+					filter: none;
+				}
+			}
 
-				// Slightly increase noise visibility on hover for more texture
-				&::before {
-					opacity: 0.5;
+			// Overlay that appears on hover
+			.project-overlay {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index: 10;
+
+				.overlay-content {
+					background: $theme-gradient;
+					background-size: 100% 100%; // Normal size by default
+					width: auto;
+					padding: 0.75rem 2rem;
+					transform: translateX(-1.5rem);
+					transition: transform 0.3s ease, background-size 0.3s ease;
+					display: inline-block;
+					border-top-right-radius: 50px;
+					border: 0px;
+					position: relative; // Required for pseudo-element
+
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+					width: fit-content;
+					padding-left: 2rem;
+
+					// Add noise texture over the gradient
+					&::before {
+						content: '';
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+						opacity: 0.3; // Very subtle noise
+						mix-blend-mode: overlay;
+						pointer-events: none;
+						border-top-right-radius: 50px; // Match parent border radius
+						z-index: 1;
+					}
+
+					h3,
+					p {
+						color: $theme-bg;
+						position: relative; // Ensure text stays above overlays
+						z-index: 3;
+					}
+
+					h3 {
+						font-size: 1rem;
+					}
+
+					p {
+						font-size: .75rem;
+						font-weight: 400;
+					}
+
+					[class^=devicon-] {
+						position: relative;
+						top: 4px;
+						margin-left: 0.25rem;
+						font-size: 150%;
+					}
+				}
+			}
+
+			&:hover {
+				// Remove grayscale filter on hover for dramatic color reveal
+				@include mixins.tablet {
+					filter: none;
+				}
+
+				.project-overlay .overlay-content {
+					transform: translateX(0);
+					background-size: 200% 100%; // Only expand horizontally, keep height normal
+					animation: gradientShift 6s ease infinite;
+
+					// Slightly increase noise visibility on hover for more texture
+					&::before {
+						opacity: 0.5;
+					}
 				}
 			}
 		}
+	}
 
-		// Gradient animation keyframes
-		@keyframes gradientShift {
-			0% {
-				background-position: 0% 50%;
+	// Blog-specific overlay (for non-project grids)
+	&:not(.projects-grid) {
+		.masonry-item {
+			border-radius: 0;
+			background: $theme-bg-darker;
+			overflow: hidden;
+
+			// Apply grayscale filter to images only in blog items on tablet and up
+			img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				
+				@include mixins.tablet {
+					filter: grayscale(0.6);
+					transition: filter 0.4s ease;
+				}
 			}
 
-			50% {
-				background-position: 100% 50%;
+			&:hover {
+				img {
+					@include mixins.tablet {
+						filter: none;
+					}
+				}
 			}
 
-			100% {
-				background-position: 0% 50%;
+			.blog-overlay {
+				position: static;
+				padding: 1rem;
+				background: $theme-bg-darker;
+				font-weight: 400;
+
+				.blog-content {
+					background: transparent;
+					padding: 0;
+					transform: none;
+					display: block;
+					border-radius: 0;
+
+
+					p {
+						color: $theme-text;
+						.datetime {
+							color: $theme-primary;
+							font-weight: 600;
+						}
+					}
+				}
 			}
 		}
+	}
+
+	// Gradient animation keyframes
+	@keyframes gradientShift {
+		0% {
+			background-position: 0% 50%;
+		}
+
+		50% {
+			background-position: 100% 50%;
+		}
+
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+
+	// Video styles (keep for both types)
+	.masonry-item {
 
 		// Only add video styles and transitions if item has video
 		&.has-video {
@@ -734,13 +683,26 @@ p.button {
 			grid-column: span 1;
 		}
 
+		// Default for items without grid-span class
+		.masonry-item:not([class*="grid-span-"]) {
+			grid-column: span 1;
+		}
+
 		// Widescreen: ALL grid span classes become active + responsive adjustments
 		@include mixins.widescreen {
 
-			// Force first two items to be exactly 50% width each (6 columns each)
-			.project-item:nth-child(1),
-			.project-item:nth-child(2) {
-				grid-column: span 6 !important; // Exactly 50% width each
+			// Default for items without grid-span class - span 4 columns (33.33% width)
+			.masonry-item:not([class*="grid-span-"]) {
+				grid-column: span 4;
+			}
+
+			// ONLY for project grids: Force first two items to be exactly 50% width each (6 columns each)
+			&.projects-grid {
+
+				.masonry-item:nth-child(1),
+				.masonry-item:nth-child(2) {
+					grid-column: span 6 !important; // Exactly 50% width each
+				}
 			}
 
 			.grid-span-1 {
@@ -809,17 +771,20 @@ p.button {
 	//title and text sizes
 	@include mixins.widescreen {
 
-		// Force sizing for first two items (exactly 50% width each)
-		.project-item:nth-child(1),
-		.project-item:nth-child(2) {
-			.project-overlay {
-				.overlay-content {
-					h3 {
-						font-size: 2rem;
-					}
+		// ONLY for project grids: Force sizing for first two items (exactly 50% width each)
+		&.projects-grid {
 
-					p {
-						font-size: 1rem;
+			.masonry-item:nth-child(1),
+			.masonry-item:nth-child(2) {
+				.project-overlay {
+					.overlay-content {
+						h3 {
+							font-size: 2rem;
+						}
+
+						p {
+							font-size: 1rem;
+						}
 					}
 				}
 			}
@@ -899,7 +864,20 @@ p.button {
 		}
 
 		.grid-span-9,
-		.grid-span-10,
+		.grid-span-10 {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 2rem;
+					}
+
+					p {
+						font-size: 1.1rem;
+					}
+				}
+			}
+		}
+
 		.grid-span-11,
 		.grid-span-12 {
 			.project-overlay {
@@ -909,22 +887,24 @@ p.button {
 					}
 
 					p {
-						font-size: 1.1rem;
+						font-size: 1.2rem;
 					}
 				}
 			}
 		}
 	}
 
-	// Fallback for non-masonry browsers
-	@supports not (grid-template-rows: masonry) {
-		&.js-masonry {
-			position: relative;
+	
+
+	@keyframes rotate {
+		from {
+			transform: rotate(0deg);
 		}
 
+		to {
+			transform: rotate(360deg);
+		}
 	}
-
-
 }
 
 // Circular Logo Animation
@@ -958,15 +938,5 @@ p.button {
 		animation: rotate 20s linear infinite;
 		font-family: 'Canela', sans-serif;
 		line-height: 1;
-	}
-}
-
-@keyframes rotate {
-	from {
-		transform: rotate(0deg);
-	}
-
-	to {
-		transform: rotate(360deg);
 	}
 }
