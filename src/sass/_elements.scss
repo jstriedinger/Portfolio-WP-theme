@@ -6,9 +6,20 @@
 	border-radius: 0;
 	background: $theme-bg-darker;
 	padding: 1rem
-
-	
 }
+
+.tag {
+	display: inline-block;
+}
+
+.header {
+    position: relative;
+}
+
+/**
+* Deprecated or unused elements
+**/
+
 .select {
     border: 1px solid $link;
     border-radius: 20px;
@@ -21,14 +32,6 @@
 			background: transparent;
 			border: none;
 		}
-}
-.tag {
-	display: inline-block;
-	&.is-gold {
-		border-color: $gold-color;
-		color: $gold-color;
-		background: transparent;
-	}
 }
 .select {
 	border-radius: 5px;
@@ -49,20 +52,6 @@
     margin-bottom: 0.5rem;
 }
 
-.header {
-    position: relative;
-    &.with-divider {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        
-        span {
-            flex: 1;
-            margin-right: 1rem;
-            border-top: 2px solid rgba($primary-color,0.5);
-        }
-    }
-}
 .about-me {
 		display: flex;
 		align-items: center;
@@ -289,6 +278,17 @@ button.button, .button {
 
 @keyframes gradientShift {
 	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
 		background-position: 0% 50%;
 	}
 

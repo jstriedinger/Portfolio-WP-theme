@@ -158,110 +158,6 @@ section.section {
 
 	position: relative;
 
-	&.colored-black {
-		background: $dark-color;
-
-		.title,
-		p,
-		h1,
-		h2,
-		h3,
-		strong {
-			color: white;
-		}
-
-		a:not(.button) {
-			color: #F2F2F2;
-			border-color: $dark-contrast-color;
-		}
-	}
-
-	&.gradient {
-		// Remove static background since we'll use a pseudo-element
-
-		// Gradient overlay on top of background image
-		&::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background-image: radial-gradient(ellipse at center, rgba(103, 49, 145, 1) 0%, rgba(103, 49, 145, 0.9) 30%, rgba(50, 0, 129, 0.7) 60%, rgba(50, 0, 129, 0) 100%);
-			//background: linear-gradient(45deg, rgba(182, 130, 92, 1.000) 0.000%, rgba(115, 64, 148, 1.000) 16.667%, rgba(64, 51, 200, 1.000) 33.333%, rgba(57, 101, 227, 1.000) 50.000%, rgba(97, 179, 222, 1.000) 66.667%, rgba(163, 231, 186, 1.000) 83.333%, rgba(222, 221, 131, 1.000) 100.000%);
-			//opacity: 0.8; // Adjust opacity as needed
-			//background: linear-gradient(-45deg, rgba(42, 0, 27, 0.9) 0.000%, rgba(120, 19, 12, 0.8) 16.667%, rgba(206, 72, 14, 0.7) 33.333%, rgba(255, 141, 34, 0.5) 50.000%, rgba(255, 213, 67, 0.6) 66.667%, rgba(255, 255, 105, 0.7) 83.333%, rgba(255, 255, 141, 0.8) 100.000%);
-			background-size: 100% 100%;
-			//animation: gradientShift 15s ease infinite;
-			z-index: 1;
-			pointer-events: none;
-		}
-
-		// Fade to white at the bottom (on top of gradient)
-		/*&::after {
-			content: '';
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			height: 250px; // Adjust height of fade
-			background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, whitesmoke 100%);
-			pointer-events: none;
-			z-index: 1;
-		}*/
-
-		// Ensure content stays above everything
-		.container * {
-			position: relative;
-			z-index: 10 !important;
-		}
-
-		@keyframes gradientShift {
-			0% {
-				background-position: 0% 50%;
-			}
-
-			50% {
-				background-position: 100% 50%;
-			}
-
-			100% {
-				background-position: 0% 50%;
-			}
-		}
-	}
-
-	&.with-image {
-		background-size: cover;
-		background-position: center center;
-		z-index: 0;
-
-		>* {
-			z-index: 2;
-		}
-
-		&.with-layer {
-
-			&:after {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				z-index: 1;
-				content: "";
-				background: $dark-color;
-				opacity: 0.4;
-			}
-		}
-
-		p,
-		h1,
-		h2 {
-			text-shadow: 1px 1px 2px rgba($dark-color, 0.5);
-		}
-	}
-
 	&#top-section {
 
 		//font-size: 0;
@@ -279,39 +175,6 @@ section.section {
 		@include mixins.widescreen {
 			img {
 				//max-width: 280px;
-			}
-		}
-	}
-
-	// Hero background image styling
-	.background-img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 0;
-		overflow: hidden;
-		background-image: var(--hero-bg-image);
-		background-repeat: repeat-x;
-		background-size: auto 100%;
-		width: 7680px;
-		height: 100%;
-		//background-position: 0 center;
-		animation: slide 60s linear infinite;
-
-		.hero-image {
-			display: none;
-		}
-
-		@keyframes slide {
-			0% {
-				transform: translate(0);
-			}
-
-			100% {
-				transform: translate(-3840px);
-				/* The image width */
 			}
 		}
 	}
@@ -362,29 +225,6 @@ button.button,
 a.button,
 .button a,
 p.button {
-	&.is-ghost {
-		padding: 0;
-	}
-
-	&.is-gold {
-		color: $dark-contrast-color;
-		background: $gold-color;
-		border-width: 0px;
-
-		&.is-outlined {
-			border-width: 1px;
-			border-color: $gold-color;
-			background: transparent;
-			color: $gold-color;
-
-			&:hover,
-			&:focus {
-				background: $gold-color;
-				color: $dark-contrast-color
-			}
-		}
-	}
-
 	span.wp-font-awesome-icon {
 		color: inherit;
 	}
@@ -445,6 +285,7 @@ p.button {
 	// Project-specific overlay (only for project grids)
 	&.projects-grid {
 		.masonry-item {
+
 			// Apply grayscale filter to entire project items on tablet and up
 			@include mixins.tablet {
 				filter: grayscale(0.6);
@@ -452,6 +293,7 @@ p.button {
 			}
 
 			&:hover {
+
 				// Remove grayscale filter on hover for dramatic color reveal
 				@include mixins.tablet {
 					filter: none;
@@ -526,6 +368,7 @@ p.button {
 			}
 
 			&:hover {
+
 				// Remove grayscale filter on hover for dramatic color reveal
 				@include mixins.tablet {
 					filter: none;
@@ -557,7 +400,7 @@ p.button {
 				width: 100%;
 				height: 200px;
 				object-fit: cover;
-				
+
 				@include mixins.tablet {
 					filter: grayscale(0.6);
 					transition: filter 0.4s ease;
@@ -588,6 +431,7 @@ p.button {
 
 					p {
 						color: $theme-text;
+
 						.datetime {
 							color: $theme-primary;
 							font-weight: 600;
@@ -895,7 +739,7 @@ p.button {
 		}
 	}
 
-	
+
 
 	@keyframes rotate {
 		from {
@@ -938,6 +782,7 @@ p.button {
 		color: $theme-primary;
 		font-family: 'Canela', sans-serif;
 		line-height: 1;
+
 		&.animated {
 			animation: rotate 20s linear infinite;
 		}

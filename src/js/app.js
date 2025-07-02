@@ -82,7 +82,7 @@ const initMasonry = () => {
 			let totalColumns = 1; // Mobile first
 			
 			// Determine column count based on screen size
-			if (containerWidth >= 1216) { // Widescreen
+			if (containerWidth >= 1150) { // Widescreen
 				totalColumns = 12;
 			} else if (containerWidth >= 769) { // Tablet AND Desktop
 				totalColumns = 2;
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initVideoHover();
 	
 	// Additional fallback for masonry
-	setTimeout(initMasonry, 1000);
+	//setTimeout(initMasonry, 1000);
 	setTimeout(initCircularText, 1000);
 
 });
