@@ -128,6 +128,45 @@ a {
 	&:hover {
 		color: darken($theme-accent, 10%);
 	}
+	
+	&.social {
+		text-decoration: none;
+		border: none;
+		//margin-left: 0.5rem;
+
+		i.icon {
+			height: 32px;
+			width: 32px;
+			display: inline-block;
+			border-radius: 100%;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			background: $theme-accent;
+			span {
+				color: $theme-bg
+			}
+		}
+
+		&:hover,
+		&:focus {
+			i.icon{
+				background: darken($theme-accent,10%);
+
+			}
+		}
+
+	}
+
+	&.no-border {
+		border: none;
+	}
+	&.is-gold:not(.button) {
+		color: $gold-color !important;
+		border-color: $gold-color !important;
+	}
+
 }
 strong {
 	color: $dark-color;
