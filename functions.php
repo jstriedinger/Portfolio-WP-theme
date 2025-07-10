@@ -367,3 +367,4 @@ function blog_posts_shortcode($atts) {
     return $output;
 }
 add_shortcode('blog_posts', 'blog_posts_shortcode');
+            

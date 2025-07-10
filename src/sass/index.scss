@@ -788,3 +788,61 @@ p.button {
 		}
 	}
 }
+
+// Loading Screen Styles
+.loading-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: $theme-bg;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 1;
+
+	.loading-content {
+		text-align: center;
+		color: $theme-primary;
+
+		.css-spinner {
+			width: 40px;
+			height: 40px;
+			margin: 0 auto 1.5rem;
+			border: 3px solid transparent;
+			border-top: 3px solid $theme-primary;
+			border-right: 3px solid $theme-accent;
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+		}
+
+		.loading-text {
+			font-family: "Canela", sans-serif;
+			font-size: 1.1rem;
+			margin: 0;
+			opacity: 0.8;
+			font-weight: 300;
+		}
+	}
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+// Hide body content initially - ONLY when loading screen is active
+body {
+	&.loaded {
+		.loading-overlay {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+}

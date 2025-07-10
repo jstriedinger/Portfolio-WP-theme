@@ -368,17 +368,101 @@ const initVideoHover = () => {
 	});
 };
 
-// Single DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', () => {
-	// GSAP animations
+// Loading screen management
+const initLoadingScreen = () => {
+	const loadingOverlay = document.getElementById('loading-overlay');
+	if (!loadingOverlay) return;
+
+	let resourcesLoaded = false;
+	let timeoutReached = false;
+	let animationsStarted = false;
+
+	const hideLoadingScreen = () => {
+		if ((resourcesLoaded || timeoutReached) && !animationsStarted) {
+			animationsStarted = true;
+			
+			// Use GSAP to fade out loading screen and fade in body, then start main animations
+			const loadingTimeline = gsap.timeline();
+			
+			loadingTimeline
+				.to(loadingOverlay, { 
+					opacity: 0, 
+					duration: 0.5, 
+					ease: "power2.out" 
+				})
+				.to(document.body, { 
+					opacity: 1, 
+					duration: 0.5, 
+					ease: "power2.out" 
+				}, "-=0.3") // Start body fade slightly before overlay finishes
+				.set(loadingOverlay, { display: 'none' }) // Remove from DOM
+				.call(() => {
+					document.body.classList.add('loaded');
+					startMainAnimations(); // Start main animations when fadeout completes
+				});
+		}
+	};
+
+	// Check if critical resources are loaded
+	const checkResourcesLoaded = () => {
+		const images = document.querySelectorAll('img');
+		let imageLoadCount = 0;
+		const totalImages = images.length;
+
+		if (totalImages === 0) {
+			resourcesLoaded = true;
+			hideLoadingScreen();
+			return;
+		}
+
+		const onImageLoad = () => {
+			imageLoadCount++;
+			if (imageLoadCount >= totalImages) {
+				resourcesLoaded = true;
+				hideLoadingScreen();
+			}
+		};
+
+		images.forEach(img => {
+			if (img.complete && img.naturalHeight !== 0) {
+				onImageLoad();
+			} else {
+				img.addEventListener('load', onImageLoad);
+				img.addEventListener('error', onImageLoad);
+			}
+		});
+	};
+
+	// Safety timeout - force show after 5 seconds
+	setTimeout(() => {
+		timeoutReached = true;
+		hideLoadingScreen();
+	}, 5000);
+
+	// Start checking resources
+	checkResourcesLoaded();
+};
+
+// Separate function for main animations
+const startMainAnimations = () => {
+	// Clear any existing timeline to prevent duplicates
+	tl.clear();
+	
+	// GSAP animations start immediately when called
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1.5, stagger: 0.2 } ))
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > img', { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.5 } ))
 	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1.5 } ))
 	
-	// Initialize all functionality
+	// Initialize functionality after animations start
 	initMasonry();
 	initVideoHover();
 	
 	// Initialize circular text after a short delay
-	setTimeout(initCircularText, 500);
+	setTimeout(initCircularText, 800);
+};
+
+// Updated DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', () => {
+	// Initialize loading screen first
+	initLoadingScreen();
 });

@@ -44,6 +44,15 @@
 
 <body <?php body_class(); ?> >
 <?php wp_body_open(); ?>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="loading-overlay">
+	<div class="loading-content">
+		<div class="css-spinner"></div>
+		<p class="loading-text">Loading...</p>
+	</div>
+</div>
+
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'arkdewp' ); ?></a>
 	<?php do_action( THEME_HOOK_PREFIX . 'before_header' ); ?>
