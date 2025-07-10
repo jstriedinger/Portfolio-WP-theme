@@ -79,6 +79,12 @@ const initMasonry = () => {
 		
 		const layout = () => {
 			const containerWidth = container.offsetWidth;
+			
+			// Skip layout if container is not visible or has zero width
+			if (containerWidth === 0) {
+				return;
+			}
+			
 			let totalColumns = 1; // Mobile first
 			
 			// Determine column count based on screen size
@@ -232,83 +238,48 @@ const initMasonry = () => {
 			container.style.height = maxHeight + 'px';
 		};
 
-		// Better image loading detection with visibility API support
-		const images = container.querySelectorAll('img');
-		let loadedCount = 0;
-		const totalImages = images.length;
-		let layoutExecuted = false;
-		
-		const executeLayout = () => {
-			if (!layoutExecuted) {
-				layoutExecuted = true;
-				// Use multiple requestAnimationFrame to ensure DOM is ready
-				requestAnimationFrame(() => {
+		// Enhanced visibility detection using IntersectionObserver
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					// Container is visible, trigger layout
 					requestAnimationFrame(() => {
-						layout();
+						requestAnimationFrame(() => {
+							layout();
+						});
 					});
-				});
-			}
-		};
-		
-		const onImageLoad = () => {
-			loadedCount++;
-			if (loadedCount === totalImages) {
-				executeLayout();
-			}
-		};
-		
-		// Handle page visibility changes
-		const handleVisibilityChange = () => {
-			if (!document.hidden) {
-				// Page became visible, re-layout after a short delay
-				setTimeout(() => {
-					layoutExecuted = false;
-					executeLayout();
-				}, 100);
-			}
-		};
-		
-		document.addEventListener('visibilitychange', handleVisibilityChange);
-		
-		if (totalImages === 0) {
-			executeLayout();
-		} else {
-			images.forEach(img => {
-				if (img.complete && img.naturalHeight !== 0) {
-					onImageLoad();
-				} else {
-					img.addEventListener('load', onImageLoad);
-					img.addEventListener('error', onImageLoad);
 				}
 			});
-		}
-		
-		// Multiple fallback attempts with longer delays for unfocused tabs
-		setTimeout(() => {
-			executeLayout();
-		}, 1000);
-		
-		setTimeout(() => {
-			layoutExecuted = false;
-			executeLayout();
-		}, 2000);
-		
-		// Additional fallback for when tab becomes focused
-		window.addEventListener('focus', () => {
+		}, { threshold: 0.1 });
+
+		// Start observing the container
+		observer.observe(container);
+
+		// Enhanced focus handler - force complete re-layout when tab gains focus
+		const handleWindowFocus = () => {
+			// Small delay to ensure images are loaded
 			setTimeout(() => {
-				layoutExecuted = false;
-				executeLayout();
-			}, 100);
-		});
-		
+				layout();
+			}, 150);
+		};
+
+		window.addEventListener('focus', handleWindowFocus);
+
 		// Layout on resize
 		window.addEventListener('resize', () => {
 			clearTimeout(window.resizeTimeout);
 			window.resizeTimeout = setTimeout(() => {
-				layoutExecuted = false;
 				layout();
 			}, 250);
 		});
+
+		// Initial layout attempt
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				layout();
+			});
+		});
+
 	} else {
 		// For browsers with native CSS Grid masonry, CSS handles responsiveness
 	}
@@ -405,12 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1.5 } ))
 	
 	// Initialize all functionality
-	//initCircularText();
 	initMasonry();
 	initVideoHover();
 	
-	// Additional fallback for masonry
-	//setTimeout(initMasonry, 1000);
-	setTimeout(initCircularText, 1000);
-
+	// Initialize circular text after a short delay
+	setTimeout(initCircularText, 500);
 });
