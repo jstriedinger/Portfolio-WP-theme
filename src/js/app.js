@@ -99,12 +99,13 @@ const initMasonry = () => {
 			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
 			const columnHeights = new Array(totalColumns).fill(0);
 			
-			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen AND only for project grids
+			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen AND only for project grids WITH featured-first class
 			let maxHeightOfFirstTwo = 0;
 			const isProjectGrid = container.classList.contains('projects-grid');
+			const isFeaturedFirst = container.classList.contains('featured-first');
 			
-			// Only apply special first-two logic on widescreen where we have 12 columns AND it's a project grid
-			if (totalColumns === 12 && isProjectGrid) {
+			// Only apply special first-two logic on widescreen where we have 12 columns AND it's a project grid WITH featured-first class
+			if (totalColumns === 12 && isProjectGrid && isFeaturedFirst) {
 				items.forEach((item, index) => {
 					if (index < 2) {
 						const img = item.querySelector('img');
@@ -165,8 +166,8 @@ const initMasonry = () => {
 				
 				// ONLY on widescreen, use the grid-span data
 				if (totalColumns === 12) {
-					if (index < 2 && isProjectGrid) {
-						// Both first items get exactly 6 columns (50% each) - ONLY for project grids
+					if (index < 2 && isProjectGrid && isFeaturedFirst) {
+						// Both first items get exactly 6 columns (50% each) - ONLY for project grids with featured-first
 						columns = 6;
 					} else {
 						columns = parseInt(item.getAttribute('data-columns')) || 4; // Default to 4 columns instead of 1
@@ -179,8 +180,8 @@ const initMasonry = () => {
 				item.classList.add('js-positioned');
 				item.style.width = itemWidth + 'px';
 				
-				// Special handling for first two items on widescreen only AND only for project grids
-				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid) {
+				// Special handling for first two items on widescreen only AND only for project grids with featured-first
+				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid && isFeaturedFirst) {
 					item.classList.add('large-item');
 					item.style.height = maxHeightOfFirstTwo + 'px';
 					
@@ -458,7 +459,7 @@ const startMainAnimations = () => {
 	initVideoHover();
 	
 	// Initialize circular text after a short delay
-	setTimeout(initCircularText, 800);
+	setTimeout(initCircularText, 200);
 };
 
 // Updated DOMContentLoaded event listener

@@ -178,6 +178,7 @@ function projects_grid_masonry_shortcode($atts) {
 		'posts_per_page' => -1,
 		'category' => '',
 		'tag' => '',
+		'featured_first' => 'false', // New parameter to enable 50% width for first two items
 	), $atts, 'projects_grid');
 
 	// Build query arguments
@@ -209,10 +210,13 @@ function projects_grid_masonry_shortcode($atts) {
 		return '<div class="masonry-grid"><p>No projects found.</p></div>';
 	}
 
+	// Determine additional classes
+	$featured_class = ($atts['featured_first'] === 'true') ? 'featured-first' : '';
+
 	// Start output buffering
 	ob_start();
 	?>
-	<div class="masonry-grid projects-grid">
+	<div class="masonry-grid projects-grid <?php echo esc_attr($featured_class); ?>">
 		<?php
 		foreach ($projects as $project) :
 			$project_meta = get_fields($project->ID);
@@ -367,4 +371,4 @@ function blog_posts_shortcode($atts) {
     return $output;
 }
 add_shortcode('blog_posts', 'blog_posts_shortcode');
-            
+

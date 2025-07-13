@@ -541,8 +541,8 @@ p.button {
 				grid-column: span 4;
 			}
 
-			// ONLY for project grids: Force first two items to be exactly 50% width each (6 columns each)
-			&.projects-grid {
+			// ONLY for project grids WITH featured-first class: Force first two items to be exactly 50% width each
+			&.projects-grid.featured-first {
 
 				.masonry-item:nth-child(1),
 				.masonry-item:nth-child(2) {
@@ -616,8 +616,8 @@ p.button {
 	//title and text sizes
 	@include mixins.widescreen {
 
-		// ONLY for project grids: Force sizing for first two items (exactly 50% width each)
-		&.projects-grid {
+		// ONLY for project grids WITH featured-first class: Force sizing for first two items
+		&.projects-grid.featured-first {
 
 			.masonry-item:nth-child(1),
 			.masonry-item:nth-child(2) {
@@ -832,6 +832,7 @@ p.button {
 	from {
 		transform: rotate(0deg);
 	}
+
 	to {
 		transform: rotate(360deg);
 	}
@@ -844,5 +845,22 @@ body {
 			opacity: 0;
 			pointer-events: none;
 		}
+	}
+}
+
+// Initial state for GSAP animated elements - hide them until animations start
+.anim-bottom-top .column>*,
+.anim-bottom-whole,
+#projects-grid>* {
+	opacity: 0;
+}
+
+// Override opacity once GSAP has initialized (GSAP will set autoAlpha)
+body.loaded {
+
+	.anim-bottom-top .column>*,
+	.anim-bottom-whole,
+	#projects-grid>* {
+		// Let GSAP handle the opacity from here
 	}
 }
