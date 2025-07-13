@@ -178,7 +178,8 @@ function projects_grid_masonry_shortcode($atts) {
 		'posts_per_page' => -1,
 		'category' => '',
 		'tag' => '',
-		'featured_first' => 'false', // New parameter to enable 50% width for first two items
+		'featured_first' => 'false', // Enable 50% width for first two items
+		'same_height_first' => 'false', // Enable same height for first row items
 	), $atts, 'projects_grid');
 
 	// Build query arguments
@@ -212,11 +213,12 @@ function projects_grid_masonry_shortcode($atts) {
 
 	// Determine additional classes
 	$featured_class = ($atts['featured_first'] === 'true') ? 'featured-first' : '';
+	$same_height_class = ($atts['same_height_first'] === 'true') ? 'same-height-first' : '';
 
 	// Start output buffering
 	ob_start();
 	?>
-	<div class="masonry-grid projects-grid <?php echo esc_attr($featured_class); ?>">
+	<div class="masonry-grid projects-grid <?php echo esc_attr($featured_class); ?> <?php echo esc_attr($same_height_class); ?>">
 		<?php
 		foreach ($projects as $project) :
 			$project_meta = get_fields($project->ID);

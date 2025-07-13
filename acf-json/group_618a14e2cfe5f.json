@@ -134,7 +134,7 @@
                     },
                     "default_value": 1,
                     "min": 1,
-                    "max": 5,
+                    "max": 10,
                     "step": "",
                     "prepend": "",
                     "append": ""
@@ -349,5 +349,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1751315713
+    "modified": 1752394246
 }

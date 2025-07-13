@@ -99,20 +99,21 @@ const initMasonry = () => {
 			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
 			const columnHeights = new Array(totalColumns).fill(0);
 			
-			// First pass: handle the first two items - force them to be exactly 50% width ONLY on widescreen AND only for project grids WITH featured-first class
+			// First pass: handle the first two items - calculate heights for same-height feature
 			let maxHeightOfFirstTwo = 0;
 			const isProjectGrid = container.classList.contains('projects-grid');
 			const isFeaturedFirst = container.classList.contains('featured-first');
+			const isSameHeightFirst = container.classList.contains('same-height-first');
 			
-			// Only apply special first-two logic on widescreen where we have 12 columns AND it's a project grid WITH featured-first class
-			if (totalColumns === 12 && isProjectGrid && isFeaturedFirst) {
+			// Calculate heights for first row items if same-height-first is enabled
+			if (totalColumns === 12 && isProjectGrid && isSameHeightFirst) {
 				items.forEach((item, index) => {
 					if (index < 2) {
 						const img = item.querySelector('img');
 						if (!img) return;
 						
-						// Both first items get exactly 6 columns (50% each)
-						const columns = 6;
+						// Determine columns based on featured-first setting
+						const columns = isFeaturedFirst ? 6 : (parseInt(item.getAttribute('data-columns')) || 4);
 						const itemWidth = (columnWidth * columns) + (gap * (columns - 1));
 						item.style.width = itemWidth + 'px';
 						item.style.height = 'auto';
@@ -180,25 +181,48 @@ const initMasonry = () => {
 				item.classList.add('js-positioned');
 				item.style.width = itemWidth + 'px';
 				
-				// Special handling for first two items on widescreen only AND only for project grids with featured-first
-				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid && isFeaturedFirst) {
+				// Special handling for first two items with same height
+				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid && isSameHeightFirst) {
 					item.classList.add('large-item');
 					item.style.height = maxHeightOfFirstTwo + 'px';
 					
-					if (index === 0) {
-						item.style.left = '0px';
-						item.style.top = '0px';
-						// First item spans columns 0-5
-						for (let i = 0; i < 6; i++) {
-							columnHeights[i] = maxHeightOfFirstTwo + gap;
+					// Position based on whether featured-first is also enabled
+					if (isFeaturedFirst) {
+						// Featured positioning (50% width each)
+						if (index === 0) {
+							item.style.left = '0px';
+							item.style.top = '0px';
+							// First item spans columns 0-5
+							for (let i = 0; i < 6; i++) {
+								columnHeights[i] = maxHeightOfFirstTwo + gap;
+							}
+						} else {
+							// Second item starts at column 6
+							item.style.left = (columnWidth * 6 + gap * 6) + 'px';
+							item.style.top = '0px';
+							// Second item spans columns 6-11
+							for (let i = 6; i < 12; i++) {
+								columnHeights[i] = maxHeightOfFirstTwo + gap;
+							}
 						}
 					} else {
-						// Second item starts at column 6
-						item.style.left = (columnWidth * 6 + gap * 6) + 'px';
-						item.style.top = '0px';
-						// Second item spans columns 6-11
-						for (let i = 6; i < 12; i++) {
-							columnHeights[i] = maxHeightOfFirstTwo + gap;
+						// Regular positioning with same height
+						if (index === 0) {
+							item.style.left = '0px';
+							item.style.top = '0px';
+							// Update column heights based on actual width
+							for (let i = 0; i < columns; i++) {
+								columnHeights[i] = maxHeightOfFirstTwo + gap;
+							}
+						} else {
+							// Second item positioned next to first
+							const firstItemWidth = parseInt(items[0].getAttribute('data-columns')) || 4;
+							item.style.left = (columnWidth * firstItemWidth + gap * firstItemWidth) + 'px';
+							item.style.top = '0px';
+							// Update remaining column heights
+							for (let i = firstItemWidth; i < firstItemWidth + columns; i++) {
+								columnHeights[i] = maxHeightOfFirstTwo + gap;
+							}
 						}
 					}
 				} else {

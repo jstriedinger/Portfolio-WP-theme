@@ -349,14 +349,14 @@ p.button {
 						z-index: 3;
 					}
 
-					h3 {
-						font-size: 1rem;
-					}
+					// Remove these default sizes - they're overriding the grid-span styles!
+					// h3 {
+					// 	font-size: 1rem;
+					// }
 
 					p {
-						font-size: .75rem;
-						font-weight: 400;
-					}
+					 	font-weight: 400;
+					 }
 
 					[class^=devicon-] {
 						position: relative;
@@ -616,20 +616,17 @@ p.button {
 	//title and text sizes
 	@include mixins.widescreen {
 
-		// ONLY for project grids WITH featured-first class: Force sizing for first two items
-		&.projects-grid.featured-first {
+		// Add default sizes for items without grid-span classes
+		.masonry-item:not([class*="grid-span-"]) {
+			.project-overlay {
+				.overlay-content {
+					h3 {
+						font-size: 1.3rem; // Default size for items without grid-span
+					}
 
-			.masonry-item:nth-child(1),
-			.masonry-item:nth-child(2) {
-				.project-overlay {
-					.overlay-content {
-						h3 {
-							font-size: 2rem;
-						}
-
-						p {
-							font-size: 1rem;
-						}
+					p {
+						font-size: 0.85rem;
+						font-weight: 400;
 					}
 				}
 			}
@@ -645,6 +642,7 @@ p.button {
 
 					p {
 						font-size: 0.7rem;
+						font-weight: 400;
 					}
 				}
 			}
