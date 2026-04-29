@@ -43,11 +43,11 @@
             "delay": 0
         },
         {
-            "key": "field_639d43b232355",
-            "label": "Ultima actualizacion",
-            "name": "last_update",
+            "key": "field_69f1413b75617",
+            "label": "Portfolio reel",
+            "name": "reel_url",
             "aria-label": "",
-            "type": "date_picker",
+            "type": "url",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -56,9 +56,28 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "m\/d\/Y",
-            "return_format": "m\/d\/Y",
-            "first_day": 1
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_69f1898734dd7",
+            "label": "Portfolio preview",
+            "name": "reel_preview",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4"
         }
     ],
     "location": [
@@ -79,5 +98,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1680132979
+    "modified": 1777485706
 }

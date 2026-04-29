@@ -16,26 +16,48 @@ $last_update      = $meta['last_update'];
 $month            = date( 'F', strtotime( $last_update ) );
 $year             = date( 'Y', strtotime( $last_update ) );
 $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+$video			  		= $meta['reel_url'];
+$preview_video	  = $meta['reel_preview'];
+$cv	  = $meta['cv'];
 ?>
 
 <section class="section  anim-bottom-top" id="top-section" style="--hero-bg-image: url('<?php echo esc_url( $featured_img_url ); ?>');">
 	
-	<div class="container is-max-widescreen">
-		<div class="columns is-centered has-text-centered is-variable is-multiline">
-			<div class="column is-full">
-				<h1 class="title is-size-0 canela-font gradient-text has-text-weight-bold">
-					<?php the_title(); ?>
-				</h1>
+	<?php $video_info = $video ? jrsp_parse_video_url( $video ) : null; ?>
+	<div class="container is-fullhd">
+		<div class="columns is-variable is-multiline is-vcentered <?= $video_info ? '' : 'is-centered' ?>">
+			<div class="column is-three-fifths-desktop <?= $video_info ? '' : 'has-text-centered' ?>">
+				<h2 class="title is-size-3 mb-0">Hello!👋 I'm</h2>
+				<h1 class="title is-size-0 gradient-text canela-font">Jose Striedinger</h1>
+				<h2 class="subtitle is-size-2 canela-font">A Game engineer and designer in L.A</h2>
+				<br>
+				<?php echo $bio; ?>
+				<?php if ( $cv ): ?>
+				<div class="mt-4">
+					<a href="<?= esc_url( $cv ) ?>" class="button" target="_blank" rel="noopener">
+						<span>Check my cv</span>
+						<i class="fa-solid fa-arrow-up-right-from-square"></i>
+					</a>
+					<?php endif; ?>
+				
 			</div>
-			<div class="column is-two-thirds-desktop">
-					<?php echo $bio; ?>
-				<div class="level is-justify-content-center mt-5">
-						<div class="level-item is-flex-grow-0">
-							<a href="<?php echo esc_url( home_url() . '/about-me' ); ?>" class="is-size-6">More about me</a>
-						</div>
-
+			<?php if ( $video_info ): ?>
+			<div class="column">
+				<div class="reel-box" data-embed="<?= esc_url( $video_info['embed_url'] ) ?>">
+					<?php if ( $preview_video ): ?>
+					<video class="reel-video" muted loop playsinline preload="auto">
+						<source src="<?= esc_url( $preview_video ) ?>" type="video/mp4">
+					</video>
+					<?php else: ?>
+					<div class="reel-thumbnail" style="background-image: url('<?= esc_url( $video_info['thumbnail'] ) ?>')"></div>
+					<?php endif; ?>
+					<div class="reel-overlay">
+						<i class="fas fa-play"></i>
+						<span>Watch my reel</span>
+					</div>
 				</div>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>
@@ -48,6 +70,16 @@ $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 		</div>
 	</div>
 </section>
-<?php
-get_footer(); ?>
+<?php if ( $video_info ): ?>
+<div class="modal" id="reel-modal">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="embed-container">
+			<iframe id="reel-iframe" src="" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+		</div>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>
+</div>
+<?php endif; ?>
+<?php get_footer(); ?>
 							

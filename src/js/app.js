@@ -1,8 +1,6 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CircleType from 'circletype';
 
-gsap.registerPlugin( ScrollTrigger )
 const tl = gsap.timeline();
 
 //set toop-section defaults.
@@ -312,8 +310,8 @@ const initMasonry = () => {
 
 // Video hover functionality
 const initVideoHover = () => {
-	const hoverVideoItems = document.querySelectorAll('.masonry-item.has-video');
-	const autoVideoItems = document.querySelectorAll('.masonry-item.only-video');
+	const hoverVideoItems = document.querySelectorAll('.masonry-item.has-video, .showcase-media-box.has-video');
+	const autoVideoItems = document.querySelectorAll('.masonry-item.only-video, .showcase-media-box.only-video');
 	
 	// Handle hover videos
 	hoverVideoItems.forEach(item => {
@@ -393,6 +391,54 @@ const initVideoHover = () => {
 	});
 };
 
+const initReelModal = () => {
+	const reelBox = document.querySelector('.reel-box');
+	if (!reelBox) return;
+
+	const modal  = document.getElementById('reel-modal');
+	const iframe = document.getElementById('reel-iframe');
+
+	reelBox.addEventListener('click', () => {
+		iframe.src = reelBox.dataset.embed + '?autoplay=1';
+		modal.classList.add('is-active');
+	});
+
+	const closeModal = () => {
+		modal.classList.remove('is-active');
+		iframe.src = '';
+	};
+
+	modal.querySelector('.modal-background').addEventListener('click', closeModal);
+	modal.querySelector('.modal-close').addEventListener('click', closeModal);
+};
+
+const initReelVideo = () => {
+	const video = document.querySelector('.reel-video');
+	if (!video) return;
+
+	video.play().catch(() => {});
+
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden) {
+			video.pause();
+		} else {
+			video.play().catch(() => {});
+		}
+	});
+
+	let retryTimer;
+	const retryPlay = () => {
+		clearTimeout(retryTimer);
+		retryTimer = setTimeout(() => {
+			video.load();
+			video.play().catch(() => {});
+		}, 2000);
+	};
+
+	video.addEventListener('error', retryPlay);
+	video.addEventListener('stalled', retryPlay);
+};
+
 // Loading screen management
 const initLoadingScreen = () => {
 	const loadingOverlay = document.getElementById('loading-overlay');
@@ -430,7 +476,8 @@ const initLoadingScreen = () => {
 
 	// Check if critical resources are loaded
 	const checkResourcesLoaded = () => {
-		const images = document.querySelectorAll('img');
+		// Only wait for eagerly-loaded images — lazy images aren't fetched on load
+		const images = document.querySelectorAll('img:not([loading="lazy"])');
 		let imageLoadCount = 0;
 		const totalImages = images.length;
 
@@ -481,7 +528,9 @@ const startMainAnimations = () => {
 	// Initialize functionality after animations start
 	initMasonry();
 	initVideoHover();
-	
+	initReelModal();
+	initReelVideo();
+
 	// Initialize circular text after a short delay
 	setTimeout(initCircularText, 200);
 };

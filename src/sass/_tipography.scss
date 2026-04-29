@@ -1,10 +1,7 @@
 @font-face {
 	font-family: 'Canela';
-	src: url('./webfonts/Canela-Regular.eot');
-	src: url('./webfonts/Canela-Regular.eot?#iefix') format('embedded-opentype'),
-		url('./webfonts/Canela-Regular.woff2') format('woff2'),
-		url('./webfonts/Canela-Regular.woff') format('woff'),
-		url('./webfonts/Canela-Regular.ttf') format('truetype');
+	src: url('./webfonts/Canela-Regular.woff2') format('woff2'),
+		url('./webfonts/Canela-Regular.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -12,11 +9,8 @@
 
 @font-face {
 	font-family: 'Canela';
-	src: url('./webfonts/Canela-Thin.eot');
-	src: url('./webfonts/Canela-Thin.eot?#iefix') format('embedded-opentype'),
-		url('./webfonts/Canela-Thin.woff2') format('woff2'),
-		url('./webfonts/Canela-Thin.woff') format('woff'),
-		url('./webfonts/Canela-Thin.ttf') format('truetype');
+	src: url('./webfonts/Canela-Thin.woff2') format('woff2'),
+		url('./webfonts/Canela-Thin.woff') format('woff');
 	font-weight: 100;
 	font-style: normal;
 	font-display: swap;
@@ -24,18 +18,12 @@
 
 @font-face {
 	font-family: 'Canela';
-	src: url('./webfonts/Canela-Medium.eot');
-	src: url('./webfonts/Canela-Medium.eot?#iefix') format('embedded-opentype'),
-		url('./webfonts/Canela-Medium.woff2') format('woff2'),
-		url('./webfonts/Canela-Medium.woff') format('woff'),
-		url('./webfonts/Canela-Medium.ttf') format('truetype');
+	src: url('./webfonts/Canela-Medium.woff2') format('woff2'),
+		url('./webfonts/Canela-Medium.woff') format('woff');
 	font-weight: 600;
 	font-style: normal;
 	font-display: swap;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 h1,h2,h3,h4{
 	color: $theme-primary
@@ -109,7 +97,7 @@ h1,h2,h3, .title, .subtitle, p{
 }
 h1,h2,h3,h4,h5,h6,p,.title, .subtitle, .content{
 	&.canela-font{
-		font-family: "Canela", sans-serif;
+		font-family: "Canela", sans-serif !important;
 		font-optical-sizing: auto;
 		font-weight: normal;
 		font-style: normal;

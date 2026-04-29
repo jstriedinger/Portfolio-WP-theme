@@ -3,9 +3,9 @@
 //@import "variables";
 $theme-gradient: linear-gradient(45deg, #A47451 0.000%, #9C9881 16.667%, #73A09D 33.333%, #3B899A 50.000%, #095B79 66.667%, #002847 83.333%, #000116 100.000%);
 // PALETTE 1: Benjamin Moore
-$theme-bg: #fcede2;
+$theme-bg: #f7f7f7;
 $theme-bg-darker: color.scale($theme-bg, $lightness: -2.5%);
-$theme-primary: #73A09D;
+$theme-primary: #353535;
 $theme-primary-dark: color.scale($theme-primary, $lightness: -20%);
 $theme-text: #2c2c2c;
 $theme-secondary: #d5e3e6;
@@ -46,6 +46,7 @@ $breakpoint-1600: 1600px;
 @forward "bulma/sass/elements/content" with ($content-heading-color: $primary-color,
 );
 @forward "bulma/sass/components/navbar";
+@forward "bulma/sass/components/modal";
 @forward "bulma/sass/elements/button";
 @forward "bulma/sass/elements/box" with ($box-padding: 1.2rem);
 @forward "bulma/sass/elements/tag";
@@ -59,11 +60,8 @@ $breakpoint-1600: 1600px;
 //custom typography
 $fa-font-path: "./webfonts";
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
-@import "@fortawesome/fontawesome-free/scss/regular";
 @import "@fortawesome/fontawesome-free/scss/solid";
 @import "@fortawesome/fontawesome-free/scss/brands";
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 //import my assets
 @import "tipography";
@@ -439,21 +437,6 @@ p.button {
 					}
 				}
 			}
-		}
-	}
-
-	// Gradient animation keyframes
-	@keyframes gradientShift {
-		0% {
-			background-position: 0% 50%;
-		}
-
-		50% {
-			background-position: 100% 50%;
-		}
-
-		100% {
-			background-position: 0% 50%;
 		}
 	}
 

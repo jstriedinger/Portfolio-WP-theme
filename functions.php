@@ -91,8 +91,7 @@ function jrsp_scripts() {
 	// Deregister the jquery version bundled with WordPress.
 	wp_deregister_script( 'jquery' );
 
-	// CDN hosted jQuery placed in the header, as some plugins require that jQuery is loaded in the header.
-	wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), '3.2.1', false );
+	wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), '3.2.1', true );
 	wp_enqueue_script( 'jrsp-js', get_template_directory_uri() . '/assets/js/main.js' );
 	
 	// Add inline script for mobile menu toggle
@@ -122,6 +121,11 @@ function jrsp_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'jrsp_scripts' );
 
+/**
+ * Legacy AJAX handler for the old JS-driven project grid.
+ * The current grid uses the [projects_grid] shortcode (server-rendered).
+ * Kept for backwards compatibility — do not remove.
+ */
 function get_projects() {
 	if ( ! wp_verify_nonce( $_POST['nonce'], 'ajax-jrsp-nonce' ) ) {
 		wp_send_json_error( 'Failed nonce check', 403 ); // received by JS as 'string'
@@ -373,4 +377,76 @@ function blog_posts_shortcode($atts) {
     return $output;
 }
 add_shortcode('blog_posts', 'blog_posts_shortcode');
+
+function jrsp_parse_video_url( $url ) {
+    $id       = '';
+    $platform = '';
+
+    if ( preg_match( '/youtube\.com\/watch\?v=([^&]+)/', $url, $m ) ||
+         preg_match( '/youtu\.be\/([^?]+)/', $url, $m ) ||
+         preg_match( '/youtube\.com\/embed\/([^?]+)/', $url, $m ) ) {
+        $platform = 'youtube';
+        $id       = $m[1];
+    } elseif ( preg_match( '/(?:vimeo\.com\/video\/|player\.vimeo\.com\/video\/|vimeo\.com\/)(\d+)/', $url, $m ) ) {
+        $platform = 'vimeo';
+        $id       = $m[1];
+    }
+
+    if ( ! $id ) {
+        return null;
+    }
+
+    if ( $platform === 'youtube' ) {
+        return array(
+            'platform'  => 'youtube',
+            'id'        => $id,
+            'thumbnail' => "https://img.youtube.com/vi/{$id}/maxresdefault.jpg",
+            'embed_url' => "https://www.youtube.com/embed/{$id}",
+        );
+    }
+
+    $cache_key = 'vimeo_thumb_' . $id;
+    $thumbnail = get_transient( $cache_key );
+
+    if ( ! $thumbnail ) {
+        $response = wp_remote_get( "https://vimeo.com/api/v2/video/{$id}.json" );
+        if ( ! is_wp_error( $response ) ) {
+            $data      = json_decode( wp_remote_retrieve_body( $response ), true );
+            $thumbnail = $data[0]['thumbnail_large'] ?? '';
+            if ( $thumbnail ) {
+                set_transient( $cache_key, $thumbnail, WEEK_IN_SECONDS );
+            }
+        }
+    }
+
+    return array(
+        'platform'  => 'vimeo',
+        'id'        => $id,
+        'thumbnail' => $thumbnail ?: '',
+        'embed_url' => "https://player.vimeo.com/video/{$id}",
+    );
+}
+
+// Projects Showcase Shortcode
+function projects_showcase_shortcode( $atts ) {
+	$atts = shortcode_atts( array(
+		'posts_per_page' => -1,
+	), $atts, 'projects_showcase' );
+
+	$projects = get_posts( array(
+		'post_type'      => 'project',
+		'posts_per_page' => intval( $atts['posts_per_page'] ),
+		'post_status'    => 'publish',
+		'tag'            => 'featured',
+	) );
+
+	if ( empty( $projects ) ) {
+		return '<div class="projects-showcase"><p>No projects found.</p></div>';
+	}
+
+	ob_start();
+	include get_template_directory() . '/template-parts/projects-showcase.php';
+	return ob_get_clean();
+}
+add_shortcode( 'projects_showcase', 'projects_showcase_shortcode' );
 

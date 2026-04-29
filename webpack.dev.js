@@ -7,6 +7,7 @@ const BrowserSyncPlugin = require('browser-sync-v3-webpack-plugin');
 
 module.exports = merge(common, {
   mode: 'development',
+  devtool: 'source-map',
   watch: true,
   plugins: [
     new BrowserSyncPlugin({
@@ -14,9 +15,9 @@ module.exports = merge(common, {
           './**/*.php',
           './**/*.twig'
         ],
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 3000,
-        proxy: 'http://jstriedinger.local/',
+        proxy: 'https://jstriedinger.local/',
         logPrefix: 'webpack',
         logLevel: 'debug',
         ghostMode: false

@@ -52,3 +52,4 @@ composer-setup.php
 !composer.lock
 !webpack.config.json
 !postcss.config.json
+!.github

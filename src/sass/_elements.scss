@@ -2,6 +2,10 @@
 * Reusable elements like cards, buttons etc
 **/
 
+@for $i from 2 through 8 {
+	.row-gap-#{$i} { row-gap: #{$i}rem; }
+}
+
 .card {
 	border-radius: 0;
 	background: $theme-bg-darker;
@@ -221,6 +225,7 @@ button.button, .button {
 	&:hover {
 		background-size: 200% 100%;
 		animation: gradientShift 6s ease infinite;
+		color: white;
 
 		&::before {
 			opacity: 0.5;
@@ -287,6 +292,171 @@ button.button, .button {
 
 	100% {
 		background-position: 0% 50%;
+	}
+}
+
+// Shared media box for showcase cards — thumbnail with optional hover-video
+.showcase-media-box {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+
+	.project-video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	&.has-video {
+		img { transition: opacity 0.3s ease; }
+
+		&:hover {
+			.project-video { opacity: 1; }
+			img { opacity: 0; }
+		}
+	}
+
+	&.only-video {
+		img { opacity: 0; }
+		.project-video { opacity: 1; }
+	}
+}
+
+.projects-showcase {
+	.showcase-card--main {
+		&.showcase-card--main-inverse {
+			@include mixins.desktop {
+				flex-direction: row-reverse;
+
+				.showcase-card__info {
+					text-align: right;
+
+					.subtitle {
+						justify-content: flex-end;
+					}
+				}
+			}
+		}
+
+		.showcase-card__info {
+			padding: 1.5rem 2rem;
+
+			.subtitle {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 0.4rem;
+			}
+
+			.title a {
+				color: inherit;
+				text-decoration: none;
+
+				&:hover { color: $theme-accent; }
+			}
+
+			.role-text {
+				color: $theme-accent;
+				font-weight: 600;
+				margin-bottom: 1rem;
+				display: block;
+			}
+		}
+	}
+
+	.showcase-card--regular {
+		a {
+			display: block;
+			text-decoration: none;
+			color: inherit;
+		}
+
+		.showcase-card__info {
+			padding: 0.5rem 0;
+
+			.title { margin-bottom: 0.25rem; }
+
+			.role-text {
+				color: $theme-accent;
+			}
+		}
+	}
+}
+
+.reel-box {
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
+	cursor: pointer;
+	aspect-ratio: 16 / 9;
+	width: 100%;
+
+	.reel-video {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.reel-thumbnail {
+		position: absolute;
+		inset: 0;
+		background-size: cover;
+		background-position: center;
+		transition: transform 0.4s ease;
+	}
+
+	.reel-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: transparent;
+		transition: background 0.3s ease;
+
+		i {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 4rem;
+			color: white;
+			filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
+		}
+
+		span {
+			position: absolute;
+			top: calc(50% + 2.5rem);
+			left: 50%;
+			transform: translateX(-50%);
+			color: white;
+			font-size: 1rem;
+			letter-spacing: 0.05em;
+			font-weight: 600;
+			white-space: nowrap;
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+	}
+
+	&:hover {
+		.reel-thumbnail    { transform: scale(1.04); }
+		.reel-overlay      { background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%); }
+		.reel-overlay span { opacity: 1; }
 	}
 }
 

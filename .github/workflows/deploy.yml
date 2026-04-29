@@ -1,0 +1,56 @@
+name: Deploy to Hostinger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production assets
+        run: npm run prod
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HOSTINGER_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.HOSTINGER_SSH_PORT }}" -H "${{ secrets.HOSTINGER_SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            --exclude='CLAUDE.md' \
+            --exclude='node_modules/' \
+            --exclude='src/' \
+            --exclude='webpack.common.js' \
+            --exclude='webpack.dev.js' \
+            --exclude='webpack.prod.js' \
+            --exclude='postcss.config.js' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='README.md' \
+            --exclude='.gitignore' \
+            --exclude='*.code-workspace' \
+            --exclude='*.log' \
+            --exclude='*.sql' \
+            --exclude='front-page-copy.php' \
+            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.HOSTINGER_SSH_PORT }}" \
+            ./ \
+            "${{ secrets.HOSTINGER_SSH_USER }}@${{ secrets.HOSTINGER_SSH_HOST }}:${{ secrets.HOSTINGER_REMOTE_PATH }}"

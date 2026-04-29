@@ -19,26 +19,6 @@
             "layout": "",
             "sub_fields": [
                 {
-                    "key": "field_68620433cb30f",
-                    "label": "Preview title",
-                    "name": "preview_title",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
                     "key": "field_6862076f9e61f",
                     "label": "Preview role",
                     "name": "preview_role",
@@ -99,47 +79,6 @@
                     "mime_types": ".mp4"
                 },
                 {
-                    "key": "field_6861c0e764436",
-                    "label": "video_only",
-                    "name": "video_only",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "",
-                    "default_value": 0,
-                    "ui": 0,
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
-                    "key": "field_6861da2898333",
-                    "label": "Grid width",
-                    "name": "grid_width",
-                    "aria-label": "",
-                    "type": "range",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 1,
-                    "min": 1,
-                    "max": 10,
-                    "step": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
                     "key": "field_686247be825b3",
                     "label": "Tech",
                     "name": "preview_tech",
@@ -160,7 +99,7 @@
                         "php-plain": "PHP"
                     },
                     "default_value": [],
-                    "return_format": "value",
+                    "return_format": "array",
                     "multiple": 1,
                     "allow_null": 1,
                     "ui": 0,
@@ -349,5 +288,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1752394246
+    "modified": 1777451336
 }
