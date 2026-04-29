@@ -12,9 +12,6 @@ $args             = array(
 );
 $projects         = get_posts( $args );
 $bio              = $meta['bio'];
-$last_update      = $meta['last_update'];
-$month            = date( 'F', strtotime( $last_update ) );
-$year             = date( 'Y', strtotime( $last_update ) );
 $featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
 $video			  		= $meta['reel_url'];
 $preview_video	  = $meta['reel_preview'];
@@ -35,8 +32,10 @@ $cv	  = $meta['cv'];
 				<?php if ( $cv ): ?>
 				<div class="mt-4">
 					<a href="<?= esc_url( $cv ) ?>" class="button" target="_blank" rel="noopener">
-						<span>Check my cv</span>
-						<i class="fa-solid fa-arrow-up-right-from-square"></i>
+						<span>Check my CV</span>
+						<span class="icon">
+							<i class="fa-solid fa-arrow-up-right-from-square"></i>
+						</span>
 					</a>
 					<?php endif; ?>
 				
