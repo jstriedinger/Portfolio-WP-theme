@@ -63,9 +63,7 @@
 				<?php if ( $preview_desc ) : ?>
 				<div><?= wp_kses_post( $preview_desc ) ?></div>
 				<?php endif; ?>
-				<?php if ( ! $without_link ) : ?><a href="<?= esc_url( $external_link ) ?>" class="button mt-5"><?php endif; ?>
-					Read more
-					<?php if ( ! $without_link ) : ?></a><?php endif; ?>
+				<?php if ( ! $without_link ) : ?><a href="<?= esc_url( $external_link ) ?>" class="button mt-5">Read More</a><?php endif; ?>
 			</div>
 		</div>
 	</div>
@@ -82,7 +80,18 @@
 				<?php endif; ?>
 			</div>
 			<div class="showcase-card__info content">
-				<h3 class="title is-4 canela-font mb-1 gradient-text"><?= esc_html( $project->post_title ) ?></h3>
+				<div class="is-flex is-flex-wrap-wrap is-align-items-center">
+					<h3 class="title is-4 canela-font mb-1 gradient-text"><?= esc_html( $project->post_title ) ?></h3>
+					<?php if (!empty($preview_tech)) : ?>
+						<div class="is-flex is-flex-wrap-wrap" style="gap: 0.25rem;">
+							<?php foreach ($preview_tech as $tech) : ?>
+								<?php if (!empty($tech)) : ?>
+									<i class="ml-2 is-size-4 devicon-<?php echo esc_attr($tech["value"]); ?>" title="<?php echo esc_attr($tech["label"]); ?>"></i>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</div>
+					<?php endif; ?>
+				</div>
 				<?php if ( $preview_role ) : ?>
 				<p class="subtitle role-text is-size-6"><?= esc_html( $preview_role ) ?></p>
 				<?php endif; ?>

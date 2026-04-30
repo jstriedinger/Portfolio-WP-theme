@@ -26,7 +26,7 @@ $cv	  = $meta['cv'];
 			<div class="column is-three-fifths-desktop <?= $video_info ? '' : 'has-text-centered' ?>">
 				<h2 class="title is-size-3 mb-0">Hello!👋 I'm</h2>
 				<h1 class="title is-size-0 gradient-text canela-font">Jose Striedinger</h1>
-				<h2 class="subtitle is-size-2 canela-font">A Game engineer and designer in L.A</h2>
+				<h2 class="subtitle is-size-2 canela-font">Game engineer and designer in L.A</h2>
 				<br>
 				<?php echo $bio; ?>
 				<?php if ( $cv ): ?>
