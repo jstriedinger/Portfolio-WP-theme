@@ -268,6 +268,72 @@
             "max_size": "",
             "mime_types": ".gif",
             "preview_size": "medium"
+        },
+        {
+            "key": "field_682e480a0010",
+            "label": "Page sections",
+            "name": "page_sections",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Add sidebar nav items. Set the matching HTML id on the heading or block in the post body.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add nav item",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_682e480a0011",
+                    "label": "Label",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Text shown in the sidebar",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "e.g. My Work",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_682e480a0010"
+                },
+                {
+                    "key": "field_682e480a0012",
+                    "label": "Section ID",
+                    "name": "section_id",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "The HTML id on the target heading/block in the post body (no # prefix)",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "e.g. my-work",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_682e480a0010"
+                }
+            ]
         }
     ],
     "location": [
@@ -288,5 +354,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1777529037
+    "modified": 1778803200
 }

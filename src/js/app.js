@@ -439,6 +439,74 @@ const initReelVideo = () => {
 	video.addEventListener('stalled', retryPlay);
 };
 
+const initSidebarSticky = () => {
+	const sidebar = document.getElementById('project-sidebar');
+	if (!sidebar) return;
+
+	const section   = document.getElementById('project-content-section');
+	const container = section && section.querySelector('.container');
+	if (!section || !container) return;
+
+	const OFFSET = 32; // px from viewport top when sticking
+
+	const update = () => {
+		const sectionRect   = section.getBoundingClientRect();
+		const containerRect = container.getBoundingClientRect();
+
+		// Position left: right edge of sidebar aligns with left edge of container
+		sidebar.style.left = (containerRect.left - sectionRect.left - sidebar.offsetWidth - 24) + 'px';
+
+		// Sticky top: offset relative to section (absolute positioning context)
+		const scrolledPast = -(sectionRect.top - OFFSET); // how far past OFFSET we've scrolled
+		const maxTop       = section.offsetHeight - sidebar.offsetHeight; // can't go past section bottom
+
+		sidebar.style.top = Math.min(Math.max(scrolledPast, 0), maxTop) + 'px';
+	};
+
+	window.addEventListener('scroll', update, { passive: true });
+	window.addEventListener('resize', update);
+	update();
+};
+
+const initSectionScrollSpy = () => {
+	const sidebar = document.getElementById('project-sidebar');
+	if (!sidebar) return;
+
+	const links = Array.from(sidebar.querySelectorAll('.panel-block'));
+	if (!links.length) return;
+
+	const sections = links
+		.map(l => document.getElementById(l.getAttribute('href').slice(1)))
+		.filter(Boolean);
+	if (!sections.length) return;
+
+	const setActive = (id) => {
+		links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + id));
+	};
+
+	const onScroll = () => {
+		const threshold = window.innerHeight * 0.25;
+		let current = sections[0].id;
+		for (const section of sections) {
+			if (section.getBoundingClientRect().top <= threshold) {
+				current = section.id;
+			}
+		}
+		setActive(current);
+	};
+
+	links.forEach(link => {
+		link.addEventListener('click', (e) => {
+			e.preventDefault();
+			const target = document.getElementById(link.getAttribute('href').slice(1));
+			if (target) target.scrollIntoView({ behavior: 'smooth' });
+		});
+	});
+
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+};
+
 // Loading screen management
 const initLoadingScreen = () => {
 	const loadingOverlay = document.getElementById('loading-overlay');
@@ -530,6 +598,8 @@ const startMainAnimations = () => {
 	initVideoHover();
 	initReelModal();
 	initReelVideo();
+	initSidebarSticky();
+	initSectionScrollSpy();
 
 	// Initialize circular text after a short delay
 	setTimeout(initCircularText, 200);

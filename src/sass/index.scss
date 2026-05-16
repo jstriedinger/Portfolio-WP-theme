@@ -47,6 +47,7 @@ $breakpoint-1600: 1600px;
 );
 @forward "bulma/sass/components/navbar";
 @forward "bulma/sass/components/modal";
+@forward "bulma/sass/components/panel";
 @forward "bulma/sass/elements/button";
 @forward "bulma/sass/elements/box" with ($box-padding: 1.2rem);
 @forward "bulma/sass/elements/tag";

@@ -11,6 +11,7 @@ $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null
 $video_preview = isset( $meta['preview']['preview_video'] ) ? $meta['preview']['preview_video'] : null;
 $gif_preview   = isset( $meta['gif_preview'] ) ? $meta['gif_preview'] : null;
 $tags          = get_the_tags();
+$page_sections = isset( $meta['page_sections'] ) ? $meta['page_sections'] : [];
 
 
 ?>
@@ -61,14 +62,20 @@ $tags          = get_the_tags();
 		
 	</div>
 </section>
-<section class="section pt-2">
+<section class="section pt-2" id="project-content-section">
+	<?php if ( ! empty( $page_sections ) ) : ?>
+	<nav class="panel project-sidebar" id="project-sidebar">
+		<p class="panel-heading">On this page: </p>
+		<?php foreach ( $page_sections as $item ) : ?>
+			<a href="#<?php echo esc_attr( $item['section_id'] ); ?>" class="panel-block">
+				<?php echo esc_html( $item['label'] ); ?>
+			</a>
+		<?php endforeach; ?>
+	</nav>
+	<?php endif; ?>
 	<div class="container is-max-widescreen">
-		<div class="columns">
-			<div class="column is-full">
-				<div class="content">
-					<?php the_content(); ?>
-				</div>
-			</div>
+		<div class="content">
+			<?php the_content(); ?>
 		</div>
 	</div>
 </section>

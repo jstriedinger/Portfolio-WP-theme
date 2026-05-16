@@ -395,6 +395,31 @@ button.button, .button {
 	}
 }
 
+#project-content-section {
+	position: relative;
+}
+
+.project-sidebar {
+	position: absolute;
+	top: 0;
+	width: 220px;
+
+	@media (max-width: 1279px) {
+		display: none;
+	}
+
+	.panel-heading {
+		background-color: $theme-accent;
+		color: white;
+		font-size: 0.7rem;
+		letter-spacing: 0.05em;
+	}
+
+	.panel-block {
+		font-size: 0.75rem;
+	}
+}
+
 .reel-box {
 	position: relative;
 	overflow: hidden;
