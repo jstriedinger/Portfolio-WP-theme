@@ -64,12 +64,19 @@ $page_sections = isset( $meta['page_sections'] ) ? $meta['page_sections'] : [];
 </section>
 <section class="section pt-2" id="project-content-section">
 	<?php if ( ! empty( $page_sections ) ) : ?>
-	<nav class="panel project-sidebar" id="project-sidebar">
-		<p class="panel-heading">On this page: </p>
+	<nav class="project-sidebar" id="project-sidebar">
+		<p class="">On this page: </p>
 		<?php foreach ( $page_sections as $item ) : ?>
 			<a href="#<?php echo esc_attr( $item['section_id'] ); ?>" class="panel-block">
 				<?php echo esc_html( $item['label'] ); ?>
 			</a>
+			<?php if ( ! empty( $item['children'] ) ) : ?>
+				<?php foreach ( $item['children'] as $child ) : ?>
+					<a href="#<?php echo esc_attr( $child['section_id'] ); ?>" class="panel-block is-child">
+						<?php echo esc_html( $child['label'] ); ?>
+					</a>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		<?php endforeach; ?>
 	</nav>
 	<?php endif; ?>

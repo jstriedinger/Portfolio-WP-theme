@@ -480,8 +480,23 @@ const initSectionScrollSpy = () => {
 		.filter(Boolean);
 	if (!sections.length) return;
 
+	const getParentLink = (link) => {
+		if (!link.classList.contains('is-child')) return null;
+		let prev = link.previousElementSibling;
+		while (prev) {
+			if (prev.classList.contains('panel-block') && !prev.classList.contains('is-child')) return prev;
+			prev = prev.previousElementSibling;
+		}
+		return null;
+	};
+
 	const setActive = (id) => {
-		links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + id));
+		links.forEach(l => l.classList.remove('is-active', 'has-active-child'));
+		const active = links.find(l => l.getAttribute('href') === '#' + id);
+		if (!active) return;
+		active.classList.add('is-active');
+		const parent = getParentLink(active);
+		if (parent) parent.classList.add('has-active-child');
 	};
 
 	const onScroll = () => {

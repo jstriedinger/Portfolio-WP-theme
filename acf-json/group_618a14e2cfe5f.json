@@ -332,6 +332,73 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_682e480a0010"
+                },
+                {
+                    "key": "field_682e480a0013",
+                    "label": "Children",
+                    "name": "children",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Optional sub-items under this section",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "table",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "",
+                    "button_label": "Add child item",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_682e480a0010",
+                    "sub_fields": [
+                        {
+                            "key": "field_682e480a0014",
+                            "label": "Label",
+                            "name": "label",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "e.g. Character",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_682e480a0013"
+                        },
+                        {
+                            "key": "field_682e480a0015",
+                            "label": "Section ID",
+                            "name": "section_id",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "e.g. character",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_682e480a0013"
+                        }
+                    ]
                 }
             ]
         }
@@ -354,5 +421,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1778803200
+    "modified": 1778890000
 }
