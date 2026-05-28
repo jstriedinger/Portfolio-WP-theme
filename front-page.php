@@ -60,6 +60,7 @@ $cv	  = $meta['cv'];
 		</div>
 	</div>
 </section>
+
 <section class="section" id="projects-section">
 	<div class="container is-fluid">
 		<div class="columns ">
@@ -69,6 +70,7 @@ $cv	  = $meta['cv'];
 		</div>
 	</div>
 </section>
+<?php get_template_part( 'template-parts/arkde-showcase' ); ?>
 <?php if ( $video_info ): ?>
 <div class="modal" id="reel-modal">
 	<div class="modal-background"></div>

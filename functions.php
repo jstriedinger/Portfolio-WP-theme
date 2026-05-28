@@ -450,3 +450,4 @@ function projects_showcase_shortcode( $atts ) {
 }
 add_shortcode( 'projects_showcase', 'projects_showcase_shortcode' );
 
+

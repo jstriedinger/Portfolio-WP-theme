@@ -279,6 +279,19 @@ button.button, .button {
 		border: none;
 		font-weight: inherit;
 	}
+
+	&.is-arkde {
+		background: #fcb316;
+		color: white;
+
+		&::before { display: none; }
+
+		&:hover {
+			background: darken(#fcb316, 10%);
+			animation: none;
+			color: white;
+		}
+	}
 }
 
 @keyframes gradientShift {
@@ -444,6 +457,68 @@ button.button, .button {
 		}
 	}
 }
+
+.arkde-showcase {
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		pointer-events: none;
+		background: linear-gradient(to right, rgba(252, 179, 22,0.3), rgba(74, 0, 224,1) 46%);
+	}
+
+	&__wave {
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 4;
+		line-height: 0;
+
+		svg {
+			display: block;
+			width: 100%;
+			height: 80px;
+		}
+
+		svg path { fill: $theme-bg; }
+
+		&--top { top: 0; }
+		&--bottom { bottom: 0; }
+	}
+
+	&__bg-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 50vw;
+		height: 100%;
+		object-fit: cover;
+		z-index: 1;
+		pointer-events: none;
+	}
+
+	.container {
+		position: relative;
+		z-index: 3;
+	}
+
+	&__col-text {
+		color: white;
+
+		*, .title { color: white; }
+	}
+
+	&__title-img {
+		display: block;
+		max-width: 40%;
+		margin: 0 auto 1.5rem;
+	}
+}
+
 
 .reel-box {
 	position: relative;

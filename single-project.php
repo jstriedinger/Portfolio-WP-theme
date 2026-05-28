@@ -27,7 +27,6 @@ $page_sections = isset( $meta['page_sections'] ) ? $meta['page_sections'] : [];
 				</div>
 			
 				<?php if ( $enlaces && count( $enlaces ) > 0 ) : ?>
-					<p>Get it on:</p>
 					<div class="buttons pt-2">
 						<?php	foreach ( $enlaces as $enlace ) { ?>
 							<a href="<?php echo esc_url( $enlace['url'] ); ?>" class="button is-ghost">
