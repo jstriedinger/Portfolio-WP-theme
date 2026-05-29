@@ -3,8 +3,9 @@
 <footer class="footer">
 	<div class="container mt-3 mb-3">
 		<div class="columns is-variable is-8">
-			<div class="column is-flex is-alignt-items-center">
+			<div class="column is-alignt-items-center">
 				<p class="is-size-7">© José Rafael Striedinger Pinilla  🇨🇴</p>
+				<p class="is-size-7">PS: this website also developed by me. Because Im stubborn and I don't like generic wordpess themes.</p>
 			</div>
 			<div class="column has-text-right-desktop">
 				<p>

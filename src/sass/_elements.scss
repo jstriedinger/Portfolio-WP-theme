@@ -468,7 +468,7 @@ button.button, .button {
 		inset: 0;
 		z-index: 2;
 		pointer-events: none;
-		background: linear-gradient(to right, rgba(252, 179, 22,0.3), rgba(74, 0, 224,1) 46%);
+		background: linear-gradient(to right, rgba(252, 179, 22,0.3), rgba(74, 0, 224,1) 60%);
 	}
 
 	&__wave {
@@ -480,21 +480,26 @@ button.button, .button {
 
 		svg {
 			display: block;
-			width: 100%;
+			width: 200%;
 			height: 80px;
+			animation: arkde-wave 8s linear infinite;
+			will-change: transform;
 		}
 
 		svg path { fill: $theme-bg; }
 
 		&--top { top: 0; }
-		&--bottom { bottom: 0; }
+		&--bottom {
+			bottom: 0;
+			svg { animation-duration: 14s; }
+		}
 	}
 
 	&__bg-image {
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 50vw;
+		width: 60vw;
 		height: 100%;
 		object-fit: cover;
 		z-index: 1;
@@ -519,6 +524,10 @@ button.button, .button {
 	}
 }
 
+@keyframes arkde-wave {
+	from { transform: translateX(-50%); }
+	to   { transform: translateX(0); }
+}
 
 .reel-box {
 	position: relative;

@@ -15,8 +15,8 @@ $arkde_bg_image = $arkde['arkde_bg_image'] ?? '';
 </div>
 <section class="arkde-showcase section">
 	<div class="arkde-showcase__wave arkde-showcase__wave--top">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
-			<path d="M0,0 L1440,0 L1440,50 C1080,80 360,0 0,30 Z"/>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 80" preserveAspectRatio="none">
+			<path d="M0,40 C360,5 1080,75 1440,40 C1800,5 2520,75 2880,40 L2880,0 L0,0 Z"/>
 		</svg>
 	</div>
 
@@ -48,8 +48,8 @@ $arkde_bg_image = $arkde['arkde_bg_image'] ?? '';
 	</div>
 
 	<div class="arkde-showcase__wave arkde-showcase__wave--bottom">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" preserveAspectRatio="none">
-			<path d="M0,50 C360,80 1080,0 1440,30 L1440,80 L0,80 Z"/>
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 80" preserveAspectRatio="none">
+			<path d="M0,40 C360,75 1080,5 1440,40 C1800,75 2520,5 2880,40 L2880,80 L0,80 Z"/>
 		</svg>
 	</div>
 </section>
