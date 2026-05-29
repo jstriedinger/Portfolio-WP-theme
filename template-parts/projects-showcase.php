@@ -1,4 +1,4 @@
-<div class="projects-showcase columns is-multiline row-gap-4">
+<div class="projects-showcase columns is-multiline row-gap-4 is-centered">
 	<?php foreach ( $projects as $project ) :
 		$project_meta  = get_fields( $project->ID );
 		$preview_video = $project_meta['preview']['preview_video'] ?? null;
