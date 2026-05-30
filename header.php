@@ -93,7 +93,7 @@
 				</div>
 				<div class="navbar-end">
 					<div class="navbar-item">
-						<a href="https://github.com/jstriedinger" class="social" >
+						<a href="https://github.com/jstriedinger/CodeSamples" class="social" >
 							<i class="icon">
 								<span class="fab fa-github"></span>
 							</i>

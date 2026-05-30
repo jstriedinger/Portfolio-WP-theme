@@ -9,7 +9,7 @@
 			</div>
 			<div class="column has-text-right-desktop">
 				<p>
-					<a href="https://github.com/jstriedinger" class="social">
+					<a href="https://github.com/jstriedinger/CodeSamples" class="social">
 						<i class="icon">
 							<span class="fab fa-github"></span>
 						</i>
