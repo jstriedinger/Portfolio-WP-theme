@@ -450,4 +450,10 @@ function projects_showcase_shortcode( $atts ) {
 }
 add_shortcode( 'projects_showcase', 'projects_showcase_shortcode' );
 
+function arkde_showcase_shortcode() {
+	ob_start();
+	get_template_part( 'template-parts/arkde-showcase' );
+	return ob_get_clean();
+}
+add_shortcode( 'arkde_showcase', 'arkde_showcase_shortcode' );
 

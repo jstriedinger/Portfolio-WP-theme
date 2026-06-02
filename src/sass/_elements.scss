@@ -461,6 +461,8 @@ button.button, .button {
 .arkde-showcase {
 	position: relative;
 	overflow: hidden;
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
 
 	&::before {
 		content: '';
