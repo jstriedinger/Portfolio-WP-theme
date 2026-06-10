@@ -496,7 +496,10 @@ $arkde-bg: 'https://jstriedinger.com/wp-content/uploads/2026/05/arkde_frontpage.
 		inset: 0;
 		z-index: 2;
 		pointer-events: none;
-		background: linear-gradient(to right, rgba(252, 179, 22, 0.6), rgba(74, 0, 224, 0.6) 60%);
+		background-image: url('images/gradient-bg.svg');
+		background-size: cover;
+		background-position: center;
+		opacity: 0.8;
 	}
 
 	&__wave {

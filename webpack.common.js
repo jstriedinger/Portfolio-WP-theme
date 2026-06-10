@@ -47,7 +47,8 @@ module.exports = {
     new MiniCssExtractPlugin({ filename: "[name].css" }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/fonts', to: 'webfonts' }
+        { from: 'src/fonts', to: 'webfonts' },
+        { from: 'src/images', to: 'images' }
       ],
     })
   ]
