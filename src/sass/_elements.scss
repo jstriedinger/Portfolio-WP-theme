@@ -286,7 +286,8 @@ button.button, .button, .wp-block-button__link {
 		font-weight: inherit;
 	}
 
-	&.is-arkde {
+	&.is-arkde,
+	.wp-block-button.is-arkde & {
 		background: #fcb316;
 		color: white;
 
