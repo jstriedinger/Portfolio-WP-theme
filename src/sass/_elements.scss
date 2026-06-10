@@ -348,23 +348,37 @@ button.button, .button {
 }
 
 .projects-showcase {
+	.showcase-card--main,
+	.showcase-card--regular {
+		.showcase-media-box {
+			position: relative;
+
+			.tag.is-released {
+				position: absolute;
+				top: 0.75rem;
+				left: 0.75rem;
+				z-index: 2;
+				background: #23d160;
+				color: white;
+				font-weight: 600;
+				pointer-events: none;
+			}
+		}
+	}
+
 	.showcase-card--main {
-		&.showcase-card--main-inverse {
-			@include mixins.desktop {
-				flex-direction: row-reverse;
+		.showcase-media-box {
+			aspect-ratio: 16 / 9;
 
-				.showcase-card__info {
-					text-align: right;
-
-					.subtitle {
-						justify-content: flex-end;
-					}
-				}
+			img, video {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
 			}
 		}
 
 		.showcase-card__info {
-			padding: 1.5rem 2rem;
+			padding: 1rem 0;
 
 			.subtitle {
 				display: flex;
@@ -401,9 +415,7 @@ button.button, .button {
 
 			.title { margin-bottom: 0.25rem; }
 
-			.role-text {
-				color: $theme-accent;
-			}
+			.role-text { color: $theme-accent; }
 		}
 	}
 }
@@ -458,11 +470,18 @@ button.button, .button {
 	}
 }
 
+// Change this URL to update the Arkde section background image
+$arkde-bg: 'https://jstriedinger.com/wp-content/uploads/2026/05/arkde_frontpage.jpg';
+
 .arkde-showcase {
 	position: relative;
 	overflow: hidden;
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
+	background-image: url(#{$arkde-bg});
+	background-size: auto 100% !important;
+	background-repeat: repeat-x !important;
+	background-position: center !important;
 
 	&::before {
 		content: '';
@@ -470,7 +489,7 @@ button.button, .button {
 		inset: 0;
 		z-index: 2;
 		pointer-events: none;
-		background: linear-gradient(to right, rgba(252, 179, 22,0.3), rgba(74, 0, 224,1) 60%);
+		background: linear-gradient(to right, rgba(252, 179, 22, 0.4), rgba(74, 0, 224, 0.4) 60%);
 	}
 
 	&__wave {
@@ -497,20 +516,34 @@ button.button, .button {
 		}
 	}
 
-	&__bg-image {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 60vw;
+	> :not(.arkde-showcase__wave):not(.wp-block-cover__image-background):not(.wp-block-cover__background) {
+		position: relative;
+		z-index: 3;
+	}
+
+	// Cover block support
+	.wp-block-cover__background {
+		display: none;
+	}
+
+	.wp-block-cover__image-background {
+		position: absolute !important;
+		inset: 0;
+		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		z-index: 1;
-		pointer-events: none;
 	}
 
-	.container {
+	.wp-block-cover__inner-container {
 		position: relative;
 		z-index: 3;
+		width: 100%;
+	}
+
+	color: white;
+	h1, h2, h3, h4, h5, h6, p, li, a {
+		color: white;
 	}
 
 	&__col-text {

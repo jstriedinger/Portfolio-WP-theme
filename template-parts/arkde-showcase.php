@@ -13,16 +13,12 @@ $arkde_bg_image = $arkde['arkde_bg_image'] ?? '';
 	<h2 class="title is-size-1 has-text-centered">Early years <strong>developing the game industry</strong>	<br>in Latin America</h2>
 
 </div>
-<section class="arkde-showcase section">
+<section class="arkde-showcase section"<?php if ( $arkde_bg_image ) : ?> style="background-image: url('<?php echo esc_url( $arkde_bg_image ); ?>')"<?php endif; ?>>
 	<div class="arkde-showcase__wave arkde-showcase__wave--top">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 80" preserveAspectRatio="none">
 			<path d="M0,40 C360,5 1080,75 1440,40 C1800,5 2520,75 2880,40 L2880,0 L0,0 Z"/>
 		</svg>
 	</div>
-
-	<?php if ( $arkde_bg_image ) : ?>
-	<img class="arkde-showcase__bg-image" src="<?php echo esc_url( $arkde_bg_image ); ?>" alt="" aria-hidden="true">
-	<?php endif; ?>
 
 	<div class="container is-fluid my-6 py-3">
 		<div class="columns is-vcentered">

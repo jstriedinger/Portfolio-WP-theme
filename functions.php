@@ -457,3 +457,4 @@ function arkde_showcase_shortcode() {
 }
 add_shortcode( 'arkde_showcase', 'arkde_showcase_shortcode' );
 
+
