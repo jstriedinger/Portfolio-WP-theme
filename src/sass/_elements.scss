@@ -130,6 +130,12 @@ hr {
 }
 
 
+.wp-block-button__link {
+	border-radius: var(--bulma-control-radius) !important;
+	padding: 0.5em 1em !important;
+	font-size: inherit !important;
+}
+
 .wp-block-columns.wp-block-columns-is-layout-flex
 {
 	@include mixins.desktop {
@@ -188,7 +194,7 @@ hr {
 }
 
 // Default button styling with gradient and noise texture
-button.button, .button {
+button.button, .button, .wp-block-button__link {
 	background: $theme-gradient;
 	color: $theme-bg;
 	border: none;
