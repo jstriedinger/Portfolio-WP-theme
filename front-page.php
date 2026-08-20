@@ -31,12 +31,21 @@ $cv	  = $meta['cv'];
 				<?php echo $bio; ?>
 				<?php if ( $cv ): ?>
 				<div class="mt-4">
-					<a href="<?= esc_url( $cv ) ?>" class="button" target="_blank" rel="noopener">
-						<span>Check my CV</span>
-						<span class="icon">
-							<i class="fa-solid fa-arrow-up-right-from-square"></i>
-						</span>
-					</a>
+					<div class="buttons centered" style="justify-content: center;">
+						<a href="<?= esc_url( $cv ) ?>" class="button" target="_blank" rel="noopener">
+							<span>Check my CV</span>
+							<span class="icon">
+								<i class="fa-solid fa-arrow-up-right-from-square"></i>
+							</span>
+						</a>
+						<a href="https://github.com/jstriedinger/CodeSamples" class="button" target="_blank" rel="noopener">
+							<span>Code samples</span>
+							<span class="icon">
+								<i class="fa-brands fa-github"></i>
+							</span>
+						</a>
+
+					</div>
 					<?php endif; ?>
 				
 			</div>
