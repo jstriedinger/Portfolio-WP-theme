@@ -1,94 +1,58 @@
 <?php
 /**
- * The main template file
+ * Front page: intro, project bento grid, other skills.
  */
 
 get_header();
-$meta             = get_fields();
-$args             = array(
-	'post_type'      => 'project',
-	'posts_per_page' => -1,
-	'post_status' => 'publish'
-);
-$projects         = get_posts( $args );
-$bio              = $meta['bio'];
-$featured_img_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
-$video			  		= $meta['reel_url'];
-$preview_video	  = $meta['reel_preview'];
-$cv	  = $meta['cv'];
 ?>
 
-<section class="section  anim-bottom-top" id="top-section" style="--hero-bg-image: url('<?php echo esc_url( $featured_img_url ); ?>');">
-	
-	<?php $video_info = $video ? jrsp_parse_video_url( $video ) : null; ?>
+<section class="section intro" id="top-section">
 	<div class="container is-fullhd">
-		<div class="columns is-variable is-multiline is-vcentered <?= $video_info ? '' : 'is-centered' ?>">
-			<div class="column is-three-fifths-desktop <?= $video_info ? '' : 'has-text-centered' ?>">
-				<h2 class="title is-size-3 mb-0">Hello!👋 I'm</h2>
-				<h1 class="title is-size-0 gradient-text canela-font">Jose Striedinger</h1>
-				<h2 class="subtitle is-size-2 canela-font">Game engineer and designer in L.A</h2>
-				<br>
-				<?php echo $bio; ?>
-				<?php if ( $cv ): ?>
-				<div class="mt-4">
-					<div class="buttons centered" style="justify-content: center;">
-						<a href="<?= esc_url( $cv ) ?>" class="button" target="_blank" rel="noopener">
-							<span>Check my CV</span>
-							<span class="icon">
-								<i class="fa-solid fa-arrow-up-right-from-square"></i>
-							</span>
-						</a>
-						<a href="https://github.com/jstriedinger/CodeSamples" class="button" target="_blank" rel="noopener">
-							<span>Code samples</span>
-							<span class="icon">
-								<i class="fa-brands fa-github"></i>
-							</span>
-						</a>
-
-					</div>
-					<?php endif; ?>
-				
+		<div class="columns is-vcentered">
+			<div class="column is-three-fifths">
+				<h1 class="title is-size-0 canela-font gradient-text">Jose Striedinger</h1>
+				<p class="subtitle is-size-4">
+					Game engineer and technical designer, with a focus on exploring curiosity. 
+					Previously an award-winning educator and entrepreneur.
+				</p>
 			</div>
-			<?php if ( $video_info ): ?>
+
 			<div class="column">
-				<div class="reel-box" data-embed="<?= esc_url( $video_info['embed_url'] ) ?>">
-					<?php if ( $preview_video ): ?>
-					<video class="reel-video" muted loop playsinline preload="auto">
-						<source src="<?= esc_url( $preview_video ) ?>" type="video/mp4">
-					</video>
-					<?php else: ?>
-					<div class="reel-thumbnail" style="background-image: url('<?= esc_url( $video_info['thumbnail'] ) ?>')"></div>
-					<?php endif; ?>
-					<div class="reel-overlay">
-						<i class="fas fa-play"></i>
-						<span>Watch my reel</span>
-					</div>
+				<div class="buttons is-justify-content-end">
+					<a class="button is-rounded is-outlined is-link" href="https://github.com/jstriedinger/CodeSamples" aria-label="GitHub">
+						<span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+					</a>
+					<a class="button is-rounded is-outlined is-link" href="https://www.linkedin.com/in/jstriedinger/" aria-label="LinkedIn">
+						<span class="icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
+					</a>
+					<a class="button is-rounded is-outlined is-link" href="https://jstriedinger.itch.io/" aria-label="itch.io">
+						<span class="icon"><i class="fa-brands fa-itch-io" aria-hidden="true"></i></span>
+					</a>
 				</div>
 			</div>
-			<?php endif; ?>
 		</div>
 	</div>
 </section>
 
+<?php $special = do_shortcode( '[project_special tag="special"]' ); ?>
 <section class="section" id="projects-section">
-	<div class="container is-fluid">
-		<div class="columns ">
-			<div class="column is-full content">
-				<?php the_content(); ?>
-			</div>
-		</div>
+	<div class="container is-fullhd">
+		<h2 class="title is-2 canela-font section-title">Selected work</h2>
+		<?php echo do_shortcode( '[projects_grid tag="featured"]' ); ?>
+		<?php echo do_shortcode( '[projects_grid_small tag="other"]' ); ?>
+		<?php if ( ! empty( $special ) ) :
+			echo $special; 
+		endif; ?>
+
 	</div>
 </section>
-<?php if ( $video_info ): ?>
-<div class="modal" id="reel-modal">
-	<div class="modal-background"></div>
-	<div class="modal-content">
-		<div class="embed-container">
-			<iframe id="reel-iframe" src="" frameborder="0" allowfullscreen allow="autoplay"></iframe>
-		</div>
+
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+<section class="section" id="page-content-section">
+	<div class="container is-fullhd content">
+		<?php the_content(); ?>
 	</div>
-	<button class="modal-close is-large" aria-label="close"></button>
-</div>
-<?php endif; ?>
+</section>
+<?php endwhile; endif; ?>
+
 <?php get_footer(); ?>
-							

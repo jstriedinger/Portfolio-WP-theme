@@ -1,111 +1,98 @@
 <?php
-$main_projects    = [];
-$regular_projects = [];
+/**
+ * Renders $projects (array of WP_Post `project` posts) as a stack of
+ * full-width rows — media on the left, title/role/summary on the right.
+ *
+ * Shared by [projects_grid] (front page) and [projects_showcase] (about-me);
+ * both shortcodes just query $projects and include this file.
+ */
+?>
+<div class="projects-showcase">
+	<?php foreach ( $projects as $project ) :
+		$project_meta = get_fields( $project->ID );
+		$thumbnail    = get_the_post_thumbnail_url( $project->ID, 'large' );
 
-foreach ( $projects as $project ) {
-	$project_meta = get_fields( $project->ID );
-	$thumbnail    = get_the_post_thumbnail_url( $project->ID, 'large' );
-	if ( ! $thumbnail ) continue;
+		if ( ! $thumbnail ) {
+			continue;
+		}
 
-	$tags     = wp_get_post_tags( $project->ID, array( 'fields' => 'slugs' ) );
-	$is_main  = in_array( 'main', $tags, true ) || in_array( 'main-inverse', $tags, true );
+		$preview_video      = $project_meta['preview']['preview_video'] ?? null;
+		$preview_role       = $project_meta['preview']['preview_role'] ?? null;
+		$preview_desc       = $project_meta['preview']['preview_desc'] ?? null;
+		$preview_only_video = $project_meta['preview']['video_only'] ?? false;
+		$external_link      = ! empty( $project_meta['preview']['external_link'] )
+							   ? $project_meta['preview']['external_link']
+							   : get_permalink( $project->ID );
+		$without_link       = $project_meta['preview']['without_link'] ?? false;
 
-	$entry = compact( 'project', 'project_meta', 'thumbnail', 'tags', 'is_main' );
+		$preview_tech = $project_meta['preview']['preview_tech'] ?? [];
+		if ( ! is_array( $preview_tech ) ) {
+			$preview_tech = ! empty( $preview_tech ) ? [ $preview_tech ] : [];
+		}
 
-	if ( $is_main ) {
-		$main_projects[] = $entry;
-	} else {
-		$regular_projects[] = $entry;
-	}
-}
-
-$render_card = function( $entry, $size_class ) {
-	$project      = $entry['project'];
-	$project_meta = $entry['project_meta'];
-	$thumbnail    = $entry['thumbnail'];
-	$tags         = $entry['tags'];
-	$is_main      = $entry['is_main'];
-
-	$preview_video = $project_meta['preview']['preview_video'] ?? null;
-	$preview_role  = $project_meta['preview']['preview_role']  ?? null;
-	$external_link = ! empty( $project_meta['preview']['external_link'] )
-					 ? $project_meta['preview']['external_link']
-					 : get_permalink( $project->ID );
-	$without_link  = $project_meta['preview']['without_link'] ?? false;
-	$preview_desc  = $project_meta['preview']['preview_desc'] ?? null;
-	$is_released   = in_array( 'released', $tags, true );
-
-	$preview_tech = $project_meta['preview']['preview_tech'] ?? [];
-	if ( ! is_array( $preview_tech ) ) {
-		$preview_tech = ! empty( $preview_tech ) ? [ $preview_tech ] : [];
-	}
-
-	$video_class = '';
-	if ( $preview_video ) {
-		$video_class = $is_main ? 'only-video' : 'has-video';
-	}
-
-	$card_class = $is_main ? 'showcase-card--main' : 'showcase-card--regular';
+		// Video class lives on the whole row, not just the media box — hovering
+		// anywhere in the row (including the text side) plays it.
+		$video_class = '';
+		if ( $preview_video ) {
+			$video_class = $preview_only_video ? 'only-video' : 'has-video';
+		}
 	?>
-	<div class="column <?= esc_attr( $size_class ) ?>">
-		<div class="showcase-card <?= $card_class ?>">
-			<?php if ( ! $without_link ) : ?><a href="<?= esc_url( $external_link ) ?>"><?php endif; ?>
-			<div class="showcase-media-box <?= esc_attr( $video_class ) ?>" <?= $preview_video ? 'data-video="' . esc_url( $preview_video ) . '"' : '' ?>>
+	<div class="showcase-row columns is-variable is-8 <?= esc_attr( $video_class ) ?>" <?= $preview_video ? 'data-video="' . esc_url( $preview_video ) . '"' : '' ?>>
+		<div class="column is-half">
+			<?php if ( ! $without_link ) : ?><a href="<?= esc_url( $external_link ) ?>" class="showcase-media-link"><?php endif; ?>
+			<div class="showcase-media is-aspect-ratio-16by9">
 				<img src="<?= esc_url( $thumbnail ) ?>" alt="<?= esc_attr( $project->post_title ) ?>" loading="lazy">
 				<?php if ( $preview_video ) : ?>
 				<video class="project-video" muted loop preload="none" poster="<?= esc_url( $thumbnail ) ?>">
 					<source src="<?= esc_url( $preview_video ) ?>" type="video/mp4">
 				</video>
 				<?php endif; ?>
-				<?php if ( $is_released ) : ?>
-				<span class="tag is-released">Released</span>
-				<?php endif; ?>
 			</div>
 			<?php if ( ! $without_link ) : ?></a><?php endif; ?>
-			<div class="showcase-card__info content">
-				<div class="is-flex is-flex-wrap-wrap is-align-items-center">
-					<h3 class="title <?= $is_main ? 'is-size-2 is-size-1-fullhd' : 'is-4' ?> canela-font mb-1 gradient-text mt-0"><?= esc_html( $project->post_title ) ?></h3>
+		</div>
+		<div class="column showcase-content content ">
+			<div class="content py-5">
+				<h3 class="title is-3 is-size-2-fullhd canela-font showcase-title is-flex is-align-items-center mb-4">
+					<?php if ( ! $without_link ) : ?>
+					<a href="<?= esc_url( $external_link ) ?>"><?= esc_html( $project->post_title ) ?></a>
+					<?php else : ?>
+					<?= esc_html( $project->post_title ) ?>
+					<?php endif; ?>
 					<?php if ( ! empty( $preview_tech ) ) : ?>
-					<div class="is-flex is-flex-wrap-wrap ml-4" style="gap: 0.25rem;">
+					<span class="showcase-tech">
 						<?php foreach ( $preview_tech as $tech ) : ?>
-							<?php if ( ! empty( $tech ) ) : ?>
-							<i class="ml-2 is-size-4 devicon-<?= esc_attr( $tech['value'] ) ?>" title="<?= esc_attr( $tech['label'] ) ?>"></i>
-							<?php if ( $is_main ) : ?><?= esc_html( $tech['label'] ) ?><?php endif; ?>
+							<?php if ( ! empty( $tech['value'] ) ) : ?>
+							<i class="devicon-<?= esc_attr( $tech['value'] ) ?>" title="<?= esc_attr( $tech['label'] ) ?>"></i>
 							<?php endif; ?>
 						<?php endforeach; ?>
-					</div>
+					</span>
 					<?php endif; ?>
-				</div>
+				</h3>
 				<?php if ( $preview_role ) : ?>
-				<p class="role-text <?= ! $is_main ? 'subtitle is-size-6' : '' ?>"><?= esc_html( $preview_role ) ?></p>
+				<p class="role-text subtitle is-4"><?= esc_html( $preview_role ) ?></p>
 				<?php endif; ?>
 				<?php if ( $preview_desc ) : ?>
-				<div><?= wp_kses_post( $preview_desc ) ?></div>
+				<p class="showcase-desc"><?= nl2br( esc_html( $preview_desc ) ) ?></p>
 				<?php endif; ?>
-				<?php if ( ! $without_link && $is_main ) : ?>
-				<a href="<?= esc_url( $external_link ) ?>" class="button mt-5">Read More</a>
+				<?php if ( ! empty( $project_meta['links'] ) ) : ?>
+				<div class="buttons showcase-links mt-4">
+					<?php foreach ( $project_meta['links'] as $link ) : ?>
+						<?php if ( empty( $link['url'] ) ) continue; ?>
+						<a href="<?= esc_url( $link['url'] ) ?>" class="button is-ghost">
+							<?php if ( str_contains( $link['url'], 'steam' ) ) : ?>
+							<img src="https://jstriedinger.com/wp-content/uploads/2025/07/steam_btn.png" alt="Play on Steam" loading="lazy">
+							<?php elseif ( str_contains( $link['url'], 'epicgames' ) ) : ?>
+							<img src="https://jstriedinger.com/wp-content/uploads/2025/07/egs_btn.png" alt="Play on Epic Games" loading="lazy">
+							<?php else : ?>
+							<img src="https://www.jstriedinger.com/wp-content/uploads/2024/07/itchbadge-min.png" alt="Play on itch.io" loading="lazy">
+							<?php endif; ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
 				<?php endif; ?>
+
 			</div>
 		</div>
 	</div>
-	<?php
-};
-?>
-
-<?php if ( ! empty( $main_projects ) ) : ?>
-<div class="projects-showcase columns is-multiline row-gap-4 is-centered">
-	<?php foreach ( $main_projects as $entry ) : ?>
-		<?php $render_card( $entry, 'is-half-desktop' ); ?>
 	<?php endforeach; ?>
 </div>
-<?php endif; ?>
-
-<?php if ( ! empty( $regular_projects ) ) : ?>
-<div class="projects-showcase columns is-multiline row-gap-4 is-centered mt-6">
-	<?php foreach ( $regular_projects as $entry ) : ?>
-		<?php $render_card( $entry, 'is-full-mobile is-one-third-desktop' ); ?>
-	<?php endforeach; ?>
-</div>
-<?php endif; ?>
-
-<?php wp_reset_postdata(); ?>

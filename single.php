@@ -15,7 +15,7 @@ if (have_posts()) :
     <div class="container is-max-desktop">
         <div class="columns is-centered">
             <div class="column is-full">
-                <h1 class="title is-size-1 canela-font gradient-text has-text-weight-bold">
+                <h1 class="title is-size-1 canela-font has-text-weight-bold">
                     <?php the_title(); ?>
                 </h1>
                 <p class="subtitle mt-2 has-text-weight-bold has-text-theme-primary">

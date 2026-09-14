@@ -64,12 +64,6 @@
 	<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
 		<div class="container">
 			<div class="navbar-brand">
-				<a class="navbar-item logo-container" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<div class="circular-logo">
-						<span class="title has-text-weight-bold gradient-text animated center-text">J</span>
-						<div id="circular-text" class="circular-text">• Game Engineer • Designer </div>
-					</div>
-				</a>
 				<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMain">
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
@@ -88,27 +82,22 @@
 						'fallback_cb'    => false,
 						'items_wrap'     => '%3$s',
 						'walker'         => new Bulma_Nav_Walker(),
+						'menu_half'      => 'left',
 					) );
 					?>
 				</div>
 				<div class="navbar-end">
-					<div class="navbar-item">
-						<a href="https://github.com/jstriedinger/CodeSamples" class="social" >
-							<i class="icon">
-								<span class="fab fa-github"></span>
-							</i>
-						</a>
-						<a href="https://www.linkedin.com/in/jstriedinger/" class="social" style="margin-left: 0.5rem;">
-							<i class="icon">
-								<span class="fab fa-linkedin-in"></span>
-							</i>
-						</a>
-						<a href="https://jstriedinger.itch.io/" class="social" style="margin-left: 0.5rem;">
-							<i class="icon">
-								<span class="fa-brands fa-itch-io"></span>
-							</i>
-						</a>
-					</div>
+					<?php
+					wp_nav_menu( array(
+						'theme_location' => 'primary',
+						'menu_class'     => '',
+						'container'      => false,
+						'fallback_cb'    => false,
+						'items_wrap'     => '%3$s',
+						'walker'         => new Bulma_Nav_Walker(),
+						'menu_half'      => 'right',
+					) );
+					?>
 				</div>
 			</div>
 		</div>

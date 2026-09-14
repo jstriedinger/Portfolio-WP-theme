@@ -19,7 +19,7 @@ $page_sections = isset( $meta['page_sections'] ) ? $meta['page_sections'] : [];
 	<div class="container my-4 ">
 		<div class="columns is-vcentered is-centered anim-bottom-top is-6">
 			<div class="column is-half">
-				<h1 class="title mb-0 is-size-2 is-size-1-desktop gradient-text has-text-weight-bold">
+				<h1 class="title mb-0 is-size-2 is-size-1-desktop has-text-weight-bold">
 					<?php the_title(); ?>
 				</h1>
 				<div class="content has-text-justified mt-4">
@@ -63,7 +63,7 @@ $page_sections = isset( $meta['page_sections'] ) ? $meta['page_sections'] : [];
 </section>
 <section class="section pt-2" id="project-content-section">
 	<?php if ( ! empty( $page_sections ) ) : ?>
-	<nav class="project-sidebar" id="project-sidebar">
+	<nav class="project-sidebar is-hidden-touch" id="project-sidebar">
 		<p class="">On this page: </p>
 		<?php foreach ( $page_sections as $item ) : ?>
 			<a href="#<?php echo esc_attr( $item['section_id'] ); ?>" class="panel-block">

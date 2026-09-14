@@ -82,6 +82,46 @@ add_filter( 'show_admin_bar', '__return_false' );
 require_once get_template_directory() . '/inc/class-bulma-nav-walker.php';
 
 /**
+ * Split the primary menu's top-level items in half so a single WP menu can be
+ * rendered on both sides of the centered site name. Pass 'menu_half' =>
+ * 'left'|'right' to wp_nav_menu(); both calls share one cached split.
+ */
+function jrsp_split_primary_menu_items( $sorted_menu_items, $args ) {
+	if ( empty( $args->menu_half ) || empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+		return $sorted_menu_items;
+	}
+
+	static $halves = null;
+
+	if ( null === $halves ) {
+		$top_level_ids = array();
+		foreach ( $sorted_menu_items as $item ) {
+			if ( empty( $item->menu_item_parent ) || '0' === (string) $item->menu_item_parent ) {
+				$top_level_ids[] = (int) $item->ID;
+			}
+		}
+
+		$split      = (int) ceil( count( $top_level_ids ) / 2 );
+		$left_roots = array_slice( $top_level_ids, 0, $split );
+		$halves     = array(
+			'left'  => array(),
+			'right' => array(),
+		);
+
+		foreach ( $sorted_menu_items as $item ) {
+			$root_id = ( empty( $item->menu_item_parent ) || '0' === (string) $item->menu_item_parent )
+				? (int) $item->ID
+				: (int) $item->menu_item_parent;
+
+			$halves[ in_array( $root_id, $left_roots, true ) ? 'left' : 'right' ][] = $item;
+		}
+	}
+
+	return isset( $halves[ $args->menu_half ] ) ? $halves[ $args->menu_half ] : $sorted_menu_items;
+}
+add_filter( 'wp_nav_menu_objects', 'jrsp_split_primary_menu_items', 10, 2 );
+
+/**
  * Enqueue scripts and styles.
  */
 function jrsp_scripts() {
@@ -182,8 +222,6 @@ function projects_grid_masonry_shortcode($atts) {
 		'posts_per_page' => -1,
 		'category' => '',
 		'tag' => '',
-		'featured_first' => 'false', // Enable 50% width for first two items
-		'same_height_first' => 'false', // Enable same height for first row items
 	), $atts, 'projects_grid');
 
 	// Build query arguments
@@ -211,94 +249,102 @@ function projects_grid_masonry_shortcode($atts) {
 
 	$projects = get_posts($args);
 
+	// A row needs artwork, so drop anything without a thumbnail.
+	$projects = array_values( array_filter( $projects, function ( $project ) {
+		return (bool) get_the_post_thumbnail_url( $project->ID, 'large' );
+	} ) );
+
 	if (empty($projects)) {
-		return '<div class="masonry-grid"><p>No projects found.</p></div>';
+		return '<div class="projects-showcase"><p>No projects found.</p></div>';
 	}
 
-	// Determine additional classes
-	$featured_class = ($atts['featured_first'] === 'true') ? 'featured-first' : '';
-	$same_height_class = ($atts['same_height_first'] === 'true') ? 'same-height-first' : '';
-
-	// Start output buffering
+	// Rendering lives in template-parts/projects-showcase.php, which reads $projects.
 	ob_start();
-	?>
-	<div class="masonry-grid projects-grid <?php echo esc_attr($featured_class); ?> <?php echo esc_attr($same_height_class); ?>">
-		<?php
-		foreach ($projects as $project) :
-			$project_meta = get_fields($project->ID);
-			$preview_video = isset($project_meta['preview']['preview_video']) ? $project_meta['preview']['preview_video'] : null;
-			$preview_tech = isset($project_meta['preview']['preview_tech']) ? $project_meta['preview']['preview_tech'] : array();
-			$preview_desc = isset($project_meta['preview']['preview_desc']) ? $project_meta['preview']['preview_desc'] : null;
-			$preview_role = isset($project_meta['preview']['preview_role']) ? $project_meta['preview']['preview_role'] : null;
-			$preview_only_video = isset($project_meta['preview']['video_only']) ? $project_meta['preview']['video_only'] : false;
-			$preview_link = isset($project_meta['preview']['external_link']) && !empty($project_meta['preview']['external_link']) ? $project_meta['preview']['external_link'] : get_permalink($project->ID);
-			$without_link = isset($project_meta['preview']['without_link']) ? $project_meta['preview']['without_link'] : false;
-			$grid_width = isset($project_meta['preview']['grid_width']) ? $project_meta['preview']['grid_width'] : 1;
-			$thumbnail = get_the_post_thumbnail_url($project->ID, 'large');
-
-			if (!$thumbnail) {
-				continue; // Skip if no thumbnail is available
-			}
-			// Ensure preview_tech is always an array
-			if (!is_array($preview_tech)) {
-				$preview_tech = !empty($preview_tech) ? array($preview_tech) : array();
-			}
-			
-			// Determine classes based on video settings
-			$video_classes = '';
-			if ($preview_video) {
-				if ($preview_only_video) {
-					$video_classes = 'only-video';
-				} else {
-					$video_classes = 'has-video';
-				}
-			}
-			
-			// Add grid width class
-			$grid_class = 'grid-span-' . $grid_width;
-		?>
-		<div class="masonry-item <?php echo esc_attr($video_classes); ?> <?php echo esc_attr($grid_class); ?>" data-columns="<?php echo esc_attr($grid_width); ?>" <?php if ($preview_video) echo 'data-video="' . esc_url($preview_video) . '"'; ?>>
-		<?php if(!$without_link) : ?>
-			<a href="<?php echo esc_url($preview_link); ?>" title="<?php echo esc_attr($project->post_title); ?>">
-		<?php endif; ?>	
-				<img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($project->post_title); ?>" loading="lazy">
-				<?php if ($preview_video) : ?>
-					<video class="project-video" muted loop preload="none" poster="<?php echo esc_url($thumbnail); ?>">
-						<source src="<?php echo esc_url($preview_video); ?>" type="video/mp4">
-					</video>
-				<?php endif; ?>
-				<div class="project-overlay">
-					<div class="overlay-content">
-						<h3 class="title canela-font mb-0" style="line-height: 1.1;">
-							<?php echo esc_html($project->post_title); ?>
-						</h3>
-						<?php if ($preview_role) : ?>
-						<p>
-						<span class="role-text"><?php echo esc_html($preview_role); ?></span>
-						<?php if (!empty($preview_tech)) : ?>
-								<?php foreach ($preview_tech as $tech) : ?>
-									<?php if (!empty($tech)) : ?>
-										<i class="devicon-<?php echo esc_attr($tech); ?>"></i>
-									<?php endif; ?>
-								<?php endforeach; ?>
-							<?php endif; ?>
-						</p>
-						<?php endif; ?>
-					</div>
-				</div>
-			<?php if(!$without_link) : ?>
-			</a>
-			<?php endif; ?>
-		</div>
-		<?php 
-		endforeach;
-		wp_reset_postdata();
-		?>
-	</div>
-	<?php
+	include get_template_directory() . '/template-parts/projects-showcase.php';
 	return ob_get_clean();
 }
 add_shortcode('projects_grid', 'projects_grid_masonry_shortcode');
+
+// Compact Projects Grid Shortcode — vertical cards, several per row.
+// Same underlying project data as [projects_grid]; only the rendered
+// template differs. Tag-driven: point this at a different tag than
+// [projects_grid] so a project only ever shows up in one of the two.
+function projects_grid_small_shortcode($atts) {
+	$atts = shortcode_atts(array(
+		'posts_per_page' => -1,
+		'category' => '',
+		'tag' => '',
+	), $atts, 'projects_grid_small');
+
+	$args = array(
+		'post_type' => 'project',
+		'posts_per_page' => intval($atts['posts_per_page']),
+		'post_status' => 'publish'
+	);
+
+	if (!empty($atts['category'])) {
+		$args['meta_query'] = array(
+			array(
+				'key' => 'category',
+				'value' => $atts['category'],
+				'compare' => 'LIKE'
+			)
+		);
+	}
+
+	if (!empty($atts['tag'])) {
+		$args['tag'] = $atts['tag'];
+	}
+
+	$projects = get_posts($args);
+
+	// A card needs artwork, so drop anything without a thumbnail.
+	$projects = array_values( array_filter( $projects, function ( $project ) {
+		return (bool) get_the_post_thumbnail_url( $project->ID, 'large' );
+	} ) );
+
+	if (empty($projects)) {
+		return '<div class="projects-grid-small"><p>No projects found.</p></div>';
+	}
+
+	// Rendering lives in template-parts/projects-grid-small.php, which reads $projects.
+	ob_start();
+	include get_template_directory() . '/template-parts/projects-grid-small.php';
+	return ob_get_clean();
+}
+add_shortcode('projects_grid_small', 'projects_grid_small_shortcode');
+
+// Special Project Feature Shortcode — its own dedicated card style
+// (template-parts/project-special.php), exclusive to a single project: the
+// first one carrying the given tag, even if more than one gets tagged by mistake.
+function project_special_shortcode($atts) {
+	$atts = shortcode_atts(array(
+		'tag' => 'special',
+	), $atts, 'project_special');
+
+	$projects = get_posts(array(
+		'post_type' => 'project',
+		'posts_per_page' => 1,
+		'post_status' => 'publish',
+		'tag' => $atts['tag'],
+	));
+
+	$projects = array_values( array_filter( $projects, function ( $project ) {
+		return (bool) get_the_post_thumbnail_url( $project->ID, 'large' );
+	} ) );
+
+	if (empty($projects)) {
+		return '';
+	}
+
+	$project = $projects[0];
+
+	// Rendering lives in template-parts/project-special.php, which reads $project.
+	ob_start();
+	include get_template_directory() . '/template-parts/project-special.php';
+	return ob_get_clean();
+}
+add_shortcode('project_special', 'project_special_shortcode');
 
 // Blog Posts Shortcode
 function blog_posts_shortcode($atts) {

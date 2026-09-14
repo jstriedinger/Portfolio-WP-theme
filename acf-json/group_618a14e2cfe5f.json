@@ -40,11 +40,11 @@
                 },
                 {
                     "key": "field_6861b5523ceef",
-                    "label": "Previo desc",
+                    "label": "Preview description",
                     "name": "preview_desc",
                     "aria-label": "",
-                    "type": "wysiwyg",
-                    "instructions": "",
+                    "type": "textarea",
+                    "instructions": "Two-line summary of main accomplishments — shown on card hover.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -53,10 +53,10 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "full",
-                    "media_upload": 1,
-                    "delay": 0
+                    "maxlength": "",
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": ""
                 },
                 {
                     "key": "field_67d8cdf2e5d7f",
@@ -140,6 +140,26 @@
                     "message": "",
                     "default_value": 0,
                     "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_68b4e2f1a7c30",
+                    "label": "Full-width card?",
+                    "name": "full_width_card",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "Always renders as its own full-width row in the bento grid, regardless of position among other projects.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
                     "ui_on_text": "",
                     "ui_off_text": ""
                 }
@@ -421,5 +441,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1778890000
+    "modified": 1789412911
 }

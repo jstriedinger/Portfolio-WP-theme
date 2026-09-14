@@ -1,5 +1,4 @@
 import { gsap } from 'gsap';
-import CircleType from 'circletype';
 
 const tl = gsap.timeline();
 
@@ -43,24 +42,6 @@ const getProjects = async (cat, projectsNode) => {
 		tl.add(gsap.fromTo("#projects-grid article", {autoAlpha: 0, y: 120}, {autoAlpha: 1, y: 0, duration: 1,stagger: 0.15}));
 	}
 }
-
-// Initialize Circular Text
-const initCircularText = () => {
-	const circularTextElement = document.getElementById('circular-text');
-	
-	if (circularTextElement) {
-		const circleType = new CircleType(circularTextElement);
-
-		circularTextElement.classList.add('animated');
-		// Update on resize (still needed for CircleType recalculation)
-		window.addEventListener('resize', () => {
-			clearTimeout(window.circleTypeTimeout);
-			window.circleTypeTimeout = setTimeout(() => {
-				circleType.refresh();
-			}, 250);
-		});
-	}
-};
 
 // 12-Column masonry fallback with responsive design
 const initMasonry = () => {
@@ -310,8 +291,8 @@ const initMasonry = () => {
 
 // Video hover functionality
 const initVideoHover = () => {
-	const hoverVideoItems = document.querySelectorAll('.masonry-item.has-video, .showcase-media-box.has-video');
-	const autoVideoItems = document.querySelectorAll('.masonry-item.only-video, .showcase-media-box.only-video');
+	const hoverVideoItems = document.querySelectorAll('.showcase-row.has-video, .showcase-card.has-video, .project-special.has-video');
+	const autoVideoItems = document.querySelectorAll('.showcase-row.only-video, .showcase-card.only-video, .project-special.only-video');
 	
 	// Handle hover videos
 	hoverVideoItems.forEach(item => {
@@ -615,9 +596,6 @@ const startMainAnimations = () => {
 	initReelVideo();
 	initSidebarSticky();
 	initSectionScrollSpy();
-
-	// Initialize circular text after a short delay
-	setTimeout(initCircularText, 200);
 };
 
 const initArkdeWaves = () => {
