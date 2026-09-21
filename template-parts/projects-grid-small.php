@@ -51,7 +51,7 @@
 			</div>
 			<?php if ( ! $without_link ) : ?></a><?php endif; ?>
 			<div class="showcase-card-content content">
-				<h3 class="title is-4 canela-font showcase-title mb-1">
+				<h3 class="title is-4 canela-font showcase-title mb-1 is-flex">
 					<?php if ( ! $without_link ) : ?>
 					<a href="<?= esc_url( $external_link ) ?>"><?= esc_html( $project->post_title ) ?></a>
 					<?php else : ?>
