@@ -604,14 +604,15 @@ body:not(.theme-light) {
 		}
 	}
 
-	// Award badges above a bento card's title (ACF preview_accolades). Fixed height, natural
-	// width, so wide laurels and square logos line up on one baseline. The global
-	// .showcase-media img rules don't reach these (they're outside .showcase-media).
+	// Award badges above a bento card's title (ACF preview_accolades). At most 100px tall or 200px
+	// wide, whichever limit is reached first, natural proportions. The global .showcase-media img
+	// rules don't reach these (they're outside .showcase-media).
 	.showcase-accolades img {
 		display: block;
-		height: 3rem;
+		height: auto;
+		max-height: 6.25rem; // 100px
 		width: auto;
-		max-width: 10rem;
+		max-width: 12.5rem; // 200px
 		object-fit: contain;
 	}
 

@@ -63,7 +63,7 @@ $project_count = count( $projects );
 					<?php if ( ! empty( $accolades ) ) : ?>
 					<div class="showcase-accolades is-flex is-align-items-center is-flex-wrap-wrap is-gap-2 mb-4">
 						<?php foreach ( $accolades as $accolade ) : ?>
-						<img src="<?= esc_url( $accolade['url'] ) ?>" alt="<?= esc_attr( $accolade['alt'] ?: $accolade['title'] ) ?>" loading="lazy">
+						<img src="<?= esc_url( $accolade['url'] ) ?>" alt="<?= esc_attr( $accolade['alt'] ?: $accolade['title'] ) ?>" width="<?= (int) $accolade['width'] ?>" height="<?= (int) $accolade['height'] ?>" data-no-lazy="1">
 						<?php endforeach; ?>
 					</div>
 					<?php endif; ?>

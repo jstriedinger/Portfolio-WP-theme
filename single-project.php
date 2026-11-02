@@ -56,7 +56,7 @@ $has_tabs = count( $disciplines ) > 1;
 					<?php if ( ! empty( $accolades ) ) : ?>
 					<div class="showcase-accolades is-flex is-align-items-center is-flex-wrap-wrap is-gap-2 mb-4">
 						<?php foreach ( $accolades as $accolade ) : ?>
-						<img src="<?php echo esc_url( $accolade['url'] ); ?>" alt="<?php echo esc_attr( $accolade['alt'] ?: $accolade['title'] ); ?>" loading="lazy">
+						<img src="<?php echo esc_url( $accolade['url'] ); ?>" alt="<?php echo esc_attr( $accolade['alt'] ?: $accolade['title'] ); ?>" width="<?php echo (int) $accolade['width']; ?>" height="<?php echo (int) $accolade['height']; ?>" data-no-lazy="1">
 						<?php endforeach; ?>
 					</div>
 					<?php endif; ?>
