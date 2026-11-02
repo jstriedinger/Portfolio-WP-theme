@@ -1,0 +1,64 @@
+{
+    "key": "group_6a0b1c2d3e4f5",
+    "title": "About me page",
+    "fields": [
+        {
+            "key": "field_6a0b1c2d00014",
+            "label": "Get in touch: title",
+            "name": "about_contact_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Want to talk games, work or ideas?",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a0b1c2d00016",
+            "label": "Contact email",
+            "name": "contact_email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "Never printed on the page: it ships scrambled and is only decoded when someone clicks 'Email me'.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page",
+                "operator": "==",
+                "value": "9"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793601576
+}

@@ -1,0 +1,712 @@
+// ============================================================
+// Dark theme — 2026 redesign (from the Claude Design artifact)
+// ============================================================
+// Site-wide default. Add the `theme-light` class to <body> (body_class filter) to opt a template
+// out. `body:not(.theme-light)` rather than plain `body` on purpose: it keeps the (0,1,1)
+// specificity these rules had when they were scoped to `body.home`, so they still beat the light
+// rules in index.scss without an !important war.
+//
+// Rule of thumb for this file: tokens + Bulma CSS-variable wiring only. Layout always
+// comes from Bulma classes/helpers in the templates (.columns, .grid/.cell, .buttons, ...);
+// only add a rule here when Bulma has no equivalent.
+
+// ------------------------------------------------------------
+// Tokens
+// ------------------------------------------------------------
+$dk-bg-0: #0b1124; // page ground: dark navy
+$dk-bg-1: #111a31; // raised surface
+$dk-bg-2: #18223c; // card / hover surface
+$dk-line: #27304a;
+$dk-ink: #f4f6fb;
+$dk-ink-muted: #9aa3b8;
+$dk-ink-faint: #4a5268;
+
+// Accent: warm sand, used sparingly — primary buttons, links, the active tab and hover
+// underlines. Solid only: no gradients or glows (that blue-violet look reads as AI-made).
+$dk-accent: #e8dcc8;
+$dk-accent-hover: #f3eadb;
+$dk-on-accent: $dk-bg-0; // navy text on sand
+$dk-scrim: rgba($dk-bg-0, 0.8);
+
+// Background grain strength (body::before/::after below). 0 = off, 1 = full.
+$dk-grain: 0.8; // grain inside colour (the front page shape, video edges)
+$dk-grain-specks: 0.0; // faint light specks on the plain background
+
+$dk-radius-sm: 6px;
+$dk-radius-md: 14px;
+$dk-radius-lg: 24px;
+
+// ------------------------------------------------------------
+// Canvas — html needs its own rule: index.scss/_base.scss paint it with the light bg,
+// and body's background only propagates to the canvas when html has none.
+// ------------------------------------------------------------
+html:has(body:not(.theme-light)) {
+	color-scheme: dark;
+
+	// Flat ground. The grain (body::before/::after) blends against this, so it has to live on html.
+	background: $dk-bg-0;
+}
+
+body:not(.theme-light) {
+	// Custom properties for the few hand-written rules (hover borders, underlines).
+	--bg-0: #{$dk-bg-0};
+	--bg-1: #{$dk-bg-1};
+	--bg-2: #{$dk-bg-2};
+	--line: #{$dk-line};
+	--ink: #{$dk-ink};
+	--ink-muted: #{$dk-ink-muted};
+	--ink-faint: #{$dk-ink-faint};
+	--accent: #{$dk-accent};
+
+	// Bulma's own variables, so .title/.subtitle/.box/.button/.navbar pick up the palette
+	// with no extra classes in the markup.
+	--bulma-scheme-main: #{$dk-bg-0};
+	--bulma-scheme-main-bis: #{$dk-bg-1};
+	--bulma-scheme-main-ter: #{$dk-bg-2};
+	--bulma-background: #{$dk-bg-1};
+	--bulma-border: #{$dk-line};
+	--bulma-hr-background-color: #{$dk-line}; // About page row dividers
+	--bulma-hr-height: 1px;
+	--bulma-hr-margin: 0;
+	--bulma-border-weak: #{$dk-line};
+	--bulma-text: #{$dk-ink-muted};
+	--bulma-text-strong: #{$dk-ink};
+	--bulma-text-weak: #{$dk-ink-muted};
+	--bulma-body-background-color: #{$dk-bg-0};
+	--bulma-body-color: #{$dk-ink-muted};
+	--bulma-box-background-color: #{$dk-bg-1};
+	--bulma-box-radius: #{$dk-radius-lg};
+
+	// Sand as the link/accent color (hsl(37, 41%, 85%)). Bulma derives --bulma-link from
+	// the h/s/l parts at :root, so the derived value has to be set directly as well.
+	--bulma-link-h: 37deg;
+	--bulma-link-s: 41%;
+	--bulma-link-l: 85%;
+	--bulma-link: #{$dk-accent};
+	--bulma-link-text: #{$dk-accent};
+	--bulma-link-invert: #{$dk-on-accent};
+
+	background-color: transparent; // the ground lives on html (above)
+	color: $dk-ink-muted;
+	overflow-x: clip; // the front page's grain shape hangs off the right edge
+
+	// Film grain, background only: both layers sit at z-index -1, under every piece of content
+	// and over the ground (and the front page's grain shape at -2). SVG noise, no image request.
+	// ::before — faint light specks so the flat black has texture.
+	// ::after — greyscale noise, contrast-boosted, overlay-blended: black stays black, colour gets grain.
+	&::before,
+	&::after {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+	}
+
+	&::before {
+		opacity: $dk-grain-specks;
+		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='s'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 4 -2.1'/></filter><rect width='100%' height='100%' filter='url(%23s)'/></svg>");
+	}
+
+	&::after {
+		opacity: $dk-grain;
+		mix-blend-mode: overlay;
+		background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='.33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1'/><feComponentTransfer><feFuncR type='linear' slope='2' intercept='-0.5'/><feFuncG type='linear' slope='2' intercept='-0.5'/><feFuncB type='linear' slope='2' intercept='-0.5'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+	}
+
+	// Beat the light rules in index.scss (`html .title`, `html .subtitle`, `html .content`)
+	// and _elements.scss (`h1,h2,h3,h4`), which use the light Sass vars.
+	h1, h2, h3, h4, h5, h6,
+	.title,
+	strong,
+	.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+		color: $dk-ink;
+		--bulma-title-color: #{$dk-ink};
+	}
+
+	.subtitle {
+		--bulma-subtitle-color: #{$dk-ink-muted};
+		color: $dk-ink-muted;
+	}
+
+	.content {
+		color: $dk-ink-muted;
+	}
+
+	a:hover {
+		color: $dk-ink;
+	}
+
+	// Navbar: "JS" monogram left, WP menu right (header.php). Bulma's .navbar-brand /
+	// .navbar-end already do the left/right split; these are only color + overrides.
+	.navbar {
+		background-color: transparent;
+		--bulma-navbar-height: 5.5rem;
+		--bulma-navbar-background-color: transparent;
+
+		// Mobile dropdown still needs a solid panel behind the links.
+		@include mixins.touch {
+			.navbar-menu {
+				background-color: $dk-bg-1;
+			}
+		}
+
+		// Solid white over the hero video — muted grey got lost on bright frames.
+		--bulma-navbar-item-color: #fff;
+		--bulma-navbar-item-hover-color: #fff;
+		--bulma-navbar-item-hover-background-color: transparent;
+		--bulma-navbar-burger-color: #{$dk-ink};
+
+		// index.scss pins the brand to the center of the row on desktop (old centered-name
+		// layout); put it back in the normal flow so it sits on the left.
+		.navbar-brand {
+			position: static;
+			transform: none;
+		}
+
+		// Monogram: artifact `nav .mark { font: 500 20px Canela }` (Canela Medium is weight 600 in
+		// _tipography.scss). Don't change this without checking the artifact's CSS.
+		.navbar-name {
+			color: #fff;
+			font-size: 20px;
+			font-weight: 600;
+
+			&:hover {
+				color: #fff;
+			}
+		}
+
+		// Menu links (WP walker: div.navbar-item > a) — artifact's .lnk: muted text that turns
+		// to full ink on hover while a 1px accent underline grows in from the left. Direct
+		// children only (> .navbar-item) so dropdown items keep their own spacing. The underline
+		// is ::before because Bulma draws a dropdown link's chevron with ::after.
+		.navbar-end > .navbar-item {
+			padding: 0.5rem 1rem; // 32px between links, like the artifact's nav gap
+			font-weight: 400;
+			font-size: 0.875rem;
+			transition: color 0.2s ease;
+
+			> a {
+				position: relative;
+				color: inherit;
+				font-weight: 400;
+
+				&::before {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: -3px;
+					width: 100%;
+					height: 1px;
+					background: var(--accent);
+					transform: scaleX(0);
+					transform-origin: left;
+					transition: transform 0.2s ease-out;
+				}
+			}
+
+			&:hover > a::before,
+			> a:focus-visible::before {
+				transform: scaleX(1);
+			}
+
+			// Dropdown parent: Bulma stretches it (and its link) to the full navbar height, which drops
+			// the underline to the bottom of the bar and the panel far below the text. Center the item
+			// instead: the panel opens at the item's bottom edge, so this padding IS the gap between
+			// the text and the panel (and the pointer stays over the item while crossing it).
+			&.has-dropdown {
+				align-self: center;
+				align-items: center;
+				padding-block: 1rem;
+			}
+		}
+
+		// Dropdown parent: Bulma gives .navbar-link a light hover fill and a blue chevron.
+		--bulma-navbar-dropdown-arrow: #fff;
+
+		// Padding moves from the link to the chevron's room, so the link box (and its underline)
+		// is as tight around the text as a plain link's.
+		.navbar-link {
+			padding: 0 1.5rem 0 0;
+
+			&::after {
+				inset-inline-end: 0.25rem;
+			}
+		}
+
+		.navbar-link,
+		.navbar-link:hover,
+		.navbar-link:focus,
+		.navbar-link:focus-within {
+			background: transparent;
+		}
+
+		// Dropdown items: muted -> ink on hover, the whole row is the link.
+		.navbar-dropdown .navbar-item {
+			padding: 0;
+			color: $dk-ink-muted;
+			background: transparent;
+			transition: color 0.2s ease;
+
+			&:hover,
+			&:focus-within {
+				color: $dk-ink;
+				background: transparent;
+			}
+
+			> a {
+				display: block;
+				padding: 0.375rem 1.5rem;
+				color: inherit;
+				font-weight: 400;
+				white-space: nowrap;
+			}
+		}
+
+		// Desktop: floating panel — same dark surface, hairline and shadow as the cards.
+		@include mixins.desktop {
+			.navbar-dropdown {
+				background: $dk-bg-1;
+				border: 1px solid $dk-line;
+				border-radius: $dk-radius-md;
+				box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+				margin-top: 0; // no gap: Bulma's :hover needs the pointer to stay on the item or panel
+				padding: 0.5rem 0;
+			}
+		}
+
+		// Touch: the dropdown opens inline inside the (already dark) mobile menu panel.
+		@include mixins.touch {
+			.navbar-dropdown {
+				background: transparent;
+				border: 0;
+				box-shadow: none;
+			}
+		}
+	}
+
+	// Hero (front-page.php .intro) — layout is Bulma .columns; these are the bits Bulma has no class for.
+	.intro {
+
+		.title {
+			line-height: 0.95;
+			word-spacing: 0;
+
+			// Bigger than the global .is-size-0 scale in _tipography.scss
+			&.is-size-0 {
+				font-size: 4rem;
+
+				@include mixins.tablet {
+					font-size: 5rem;
+				}
+
+				// Artifact: 112px. Any bigger and "Striedinger" no longer fits the half-width
+				// copy column and breaks mid-word.
+				@include mixins.desktop {
+					font-size: 7rem;
+				}
+			}
+		}
+
+		.subtitle strong {
+			color: $dk-ink;
+		}
+
+		// Role line, just under the name (the title has no bottom margin here, so this is the
+		// whole gap). Plain ink: the accent is reserved for buttons and links.
+		.title + .subtitle {
+			margin-top: 0.75rem;
+			line-height: 1.4;
+			color: $dk-ink-muted;
+		}
+	}
+
+	// Neutral buttons (social/utility icons): grey ring + icon, brightening to white on hover —
+	// the accent is kept for primary CTAs (below). #contact is the About page's get-in-touch row.
+	.intro .button:not(.is-link),
+	#contact .button:not(.is-link) {
+		background: transparent;
+		border-color: $dk-line;
+		color: $dk-ink-muted;
+		transition: color 0.2s ease, border-color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			border-color: $dk-ink;
+			color: $dk-ink;
+		}
+	}
+
+	// Primary CTA: solid sand with navy text, a touch lighter on hover. No gradient, glow or lift.
+	// Site-wide: every .button.is-link is a primary action.
+	.button.is-link:not(.is-outlined) {
+		border: 0;
+		color: $dk-on-accent;
+		background: $dk-accent;
+		transition: background-color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			color: $dk-on-accent;
+			background: $dk-accent-hover;
+		}
+	}
+
+	// Front page grain shape: one irregular, heavily blurred warm blob hanging off the right edge
+	// behind "Selected work". z-index -2 puts it under the grain (-1), so it gets textured, and
+	// under all content.
+	&.home #projects-section {
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0; // fully below the hero: the reel clip's baked-in dark bar would cut it in a hard line
+			right: -10vw;
+			width: 34vw;
+			aspect-ratio: 1;
+			z-index: -2;
+			pointer-events: none;
+			border-radius: 46% 54% 60% 40% / 42% 48% 52% 58%;
+			background:
+				radial-gradient(circle at 30% 70%, #ff6a3d, transparent 55%),
+				radial-gradient(circle at 70% 60%, #ff3d7f, transparent 55%),
+				radial-gradient(circle at 55% 30%, #8b5cff, transparent 60%),
+				radial-gradient(circle at 80% 20%, #3d4dff, transparent 60%);
+			filter: blur(80px) saturate(0.9);
+			opacity: 0.35; // a quiet accent, not a focal point
+		}
+	}
+
+	// Hero: full-bleed reel video behind the copy (front-page.php .intro-video). Bulma's
+	// .is-overlay pins it to the section; the copy sits above it.
+	.intro .container {
+		position: relative;
+		z-index: 1;
+	}
+
+	.intro .columns {
+		position: relative;
+		z-index: 2;
+		min-height: 38.75rem; // 620px, the artifact's hero height
+	}
+
+	.intro-video {
+		z-index: 0;
+		overflow: hidden;
+		// Reach up behind the (transparent) navbar so header + hero read as one scene. The navbar
+		// stays in header.php (shared by every page) and stacks above via Bulma's own z-index.
+		top: -5.5rem; // navbar height (set on .navbar above; Bulma's root default is shorter)
+		// Bottom fade as a mask, not a solid-colour gradient, so the hero melts into the lit ground.
+		// The bottom 12% stays fully transparent: the reel clip has a dark bar baked into its
+		// bottom edge that would otherwise show as a hard line over the background.
+		-webkit-mask-image: linear-gradient(to top, transparent 0%, transparent 12%, #000 50%);
+		mask-image: linear-gradient(to top, transparent 0%, transparent 12%, #000 50%);
+
+		video {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			filter: brightness(0.5); // tame bright clips so they read as a backdrop
+		}
+
+		// Scrim over the video: a huge ellipse anchored on the left edge, so the whole left side
+		// stays dark top to bottom and only the fade's edge curves. Eased stops keep the falloff
+		// gradual enough that no ring shows over bright frames.
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			background:
+				radial-gradient(
+					ellipse 85% 130% at 0% 55%,
+					rgba($dk-bg-0, 0.95) 0%,
+					rgba($dk-bg-0, 0.95) 35%,
+					rgba($dk-bg-0, 0.8) 48%,
+					rgba($dk-bg-0, 0.55) 60%,
+					rgba($dk-bg-0, 0.3) 72%,
+					rgba($dk-bg-0, 0.12) 85%,
+					transparent 100%
+				);
+
+			// Copy spans the full width on mobile, so darken evenly instead of just the left.
+			@include mixins.mobile {
+				background: rgba($dk-bg-0, 0.65);
+			}
+		}
+	}
+
+	// Section headings — artifact's `.sh h2::after`: short bar under the title
+	// instead of the light theme's full-width hairline.
+	.section-title {
+		border-bottom: 0;
+		padding-bottom: 0;
+		margin-bottom: 2rem;
+
+		&::after {
+			content: "";
+			display: block;
+			width: 56px;
+			height: 3px;
+			margin-top: 14px;
+			border-radius: 2px;
+			background: $dk-ink-faint; // neutral: accent colors are for buttons and links only
+		}
+	}
+
+	// Selected work bento (template-parts/projects-bento.php). Grid/spans are Bulma's
+	// .fixed-grid/.cell; this is only the card skin: fixed height, artwork scrim, lift + glow on hover.
+	.projects-bento {
+		.grid {
+			--bulma-grid-gap: 1.75rem; // artifact: 28px
+		}
+
+		.showcase-card {
+			height: 31.25rem; // artifact: 500px
+			font-weight: 400; // the card is an <a>; global `a` is bold
+			border: 0;
+			border-radius: $dk-radius-lg;
+			background: $dk-bg-1;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+			&:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.7); // neutral lift — the artwork carries the color
+			}
+		}
+
+		// index.scss gives .showcase-media position:relative, which beats Bulma's .is-overlay
+		// and collapses it to 0 height — pin it to the card explicitly.
+		.showcase-media {
+			position: absolute;
+			inset: 0;
+			border-radius: 0;
+			background: transparent;
+
+			// Bottom scrim so the copy reads over any artwork.
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(to top, rgba($dk-bg-0, 0.92) 0%, rgba($dk-bg-0, 0.7) 30%, transparent 58%);
+				pointer-events: none;
+			}
+		}
+
+		.title {
+			line-height: 1.05;
+		}
+
+		.role-text {
+			color: $dk-ink-muted;
+		}
+
+		.showcase-desc {
+			color: $dk-ink;
+			opacity: 0.9;
+			max-width: 37.5rem;
+		}
+
+		.showcase-tech i[class*="devicon-"] {
+			color: $dk-ink-muted;
+			transition: color 0.3s ease;
+		}
+
+		.showcase-card:hover .showcase-tech i[class*="devicon-"] {
+			color: $dk-ink;
+		}
+	}
+
+	// Single project hero: trailer / preview / key art gets the card radius and shadow.
+	// The oEmbed iframe ships fixed width/height attributes that would push the column wider
+	// than the container, so it's sized to fill the (Bulma 16:9) wrapper instead.
+	.project-feature-thing {
+		.embed-container,
+		video,
+		> img {
+			border-radius: $dk-radius-lg;
+			overflow: hidden;
+			box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+		}
+
+		.embed-container iframe,
+		video,
+		> img {
+			display: block;
+			width: 100%;
+		}
+
+		.embed-container iframe {
+			height: 100%;
+		}
+	}
+
+	// About page photo (featured image) fills its 3:4 Bulma ratio box with the card radius.
+	#about-hero .image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: $dk-radius-lg;
+	}
+
+	// Single project store links ("Available on"): same neutral ring as the hero social icons.
+	.project-stores .button {
+		background: transparent;
+		border-color: $dk-line;
+		color: $dk-ink-muted;
+		font-weight: 400;
+		transition: color 0.2s ease, border-color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			border-color: $dk-ink;
+			color: $dk-ink;
+		}
+	}
+
+	// Single project Engineering / Design tabs — Bulma .tabs, recolored. The sand accent only
+	// marks the active tab.
+	.project-tabs {
+		--bulma-tabs-border-bottom-color: #{$dk-line};
+		--bulma-tabs-link-color: #{$dk-ink-muted};
+		--bulma-tabs-link-hover-color: #{$dk-ink};
+		--bulma-tabs-link-hover-border-bottom-color: #{$dk-ink-faint};
+		--bulma-tabs-link-active-color: #{$dk-ink};
+		--bulma-tabs-link-active-border-bottom-color: #{$dk-accent};
+
+		a {
+			font-weight: 400;
+		}
+	}
+
+	// Award badges above a bento card's title (ACF preview_accolades). Fixed height, natural
+	// width, so wide laurels and square logos line up on one baseline. The global
+	// .showcase-media img rules don't reach these (they're outside .showcase-media).
+	.showcase-accolades img {
+		display: block;
+		height: 3rem;
+		width: auto;
+		max-width: 10rem;
+		object-fit: contain;
+	}
+
+	// Project name on bento + "More projects" cards (first span of the title; the engine
+	// icons/.tag pills follow it) — same accent underline as the navbar links, grown in
+	// while the card is hovered.
+	.projects-bento,
+	.projects-list,
+	.project-nav {
+		.title > span:first-child {
+			position: relative;
+
+			&::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				bottom: -3px;
+				width: 100%;
+				height: 1px;
+				background: var(--accent);
+				transform: scaleX(0);
+				transform-origin: left;
+				transition: transform 0.2s ease-out;
+			}
+		}
+
+		.showcase-card:hover .title > span:first-child::after,
+		.showcase-card:focus-visible .title > span:first-child::after,
+		a:hover .title > span:first-child::after,
+		a:focus-visible .title > span:first-child::after {
+			transform: scaleX(1);
+		}
+	}
+
+	// More projects (template-parts/projects-list.php) — small cards in Bulma columns. Only the
+	// skin lives here: rounded thumbnail, muted text.
+	.projects-list {
+		.showcase-card {
+			font-weight: 400; // cards are <a>; global `a` is bold
+		}
+
+		.showcase-media {
+			border-radius: $dk-radius-md;
+			background: $dk-bg-1;
+		}
+
+		.title {
+			color: $dk-ink;
+			line-height: 1.15;
+		}
+
+		.tag {
+			font-family: "Open Sans", sans-serif;
+			font-size: 0.625rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			color: $dk-ink-muted;
+			background: transparent;
+			border: 1px solid $dk-line;
+		}
+
+		.showcase-desc {
+			color: $dk-ink-muted;
+		}
+	}
+
+	// .box: keep the hairline edge, swap to the dark line color.
+	.box {
+		border-color: $dk-line;
+	}
+
+	// Footer: transparent so the page's ambient glow runs through it; text muted, social
+	// icons are the same grey ring -> white on hover as the hero buttons.
+	footer.footer {
+		background: transparent;
+		color: $dk-ink-muted;
+
+		.columns {
+			border-top-color: $dk-line;
+		}
+
+		a.social {
+			i.icon {
+				background: transparent;
+				border: 1px solid $dk-line;
+				transition: border-color 0.2s ease, color 0.2s ease;
+
+				span {
+					color: $dk-ink-muted;
+					transition: color 0.2s ease;
+				}
+			}
+
+			&:hover,
+			&:focus-visible {
+				i.icon {
+					background: transparent;
+					border-color: $dk-ink;
+
+					span {
+						color: $dk-ink;
+					}
+				}
+			}
+		}
+	}
+
+	// Loading screen
+	.loading-overlay {
+		background-color: $dk-bg-0;
+
+		.loading-content {
+			color: $dk-ink;
+
+			.css-spinner {
+				border-top-color: $dk-ink;
+				border-right-color: $dk-ink-muted;
+			}
+		}
+	}
+}

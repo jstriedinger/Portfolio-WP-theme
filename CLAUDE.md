@@ -28,33 +28,26 @@ This is a custom WordPress theme. There is no separate plugin — all shortcodes
 
 Filtered by WordPress tags (not categories). All metadata comes from ACF (`get_fields()`). ACF field definitions are version-controlled in `acf-json/`.
 
-**`preview` group** (drives the masonry grid card):
+**`preview` group** (drives the front-page project cards):
 - `preview_video` — mp4 URL; plays on hover (`has-video`) or auto-plays (`video_only`)
 - `preview_role`, `preview_tech` — overlay text; `preview_tech` is a multi-select of devicon slugs (`unity-plain`, `unrealengine-original`, `javascript-plain`, `php-plain`)
-- `grid_width` — integer 1–10 mapping to CSS `grid-span-{n}` class (widescreen only; default 4 columns out of 12)
+- `preview_accolades` — gallery of award badges, shown above the title on bento cards and the project page
 - `external_link` — overrides the card `<a>` href
 - `without_link` — renders card with no anchor at all
 
 **Single project page** (`single-project.php`) fields: `summary`, `contributions`, `links` (repeater of platform URLs — Steam/Epic/itch.io detected by URL string), `video_trailer` (oEmbed), `gif_preview`.
 
-### Masonry grid
+### Front-page project grids
 
-`[projects_grid]` shortcode renders `.masonry-grid.projects-grid` in PHP (`functions.php`). The JS in `app.js` (`initMasonry`) takes over layout for browsers without native CSS Grid masonry support:
-
-- Mobile: 1 column
-- Tablet/Desktop: 2 columns
-- Widescreen (≥1150px): 12-column grid; each item spans `data-columns` columns (from `grid_width` ACF field, default 4)
-- `featured-first` class: forces first two items to span 6 columns each (50/50)
-- `same-height-first` class: equalises height of the first two items using image aspect ratio
-
-Browsers with native `grid-template-rows: masonry` support skip the JS layout entirely — CSS handles it via `@supports`.
+`[projects_grid]` renders `template-parts/projects-bento.php`: a Bulma `.fixed-grid.has-12-cols` bento whose rows alternate 7+5 / 5+7 columns (a lone last card spans 12). `[projects_grid_small]` renders `template-parts/projects-list.php` ("More projects", Bulma `.columns`). Both are server-rendered; there is no JS layout.
 
 ### JS initialisation flow (`src/js/app.js`)
 
 1. `DOMContentLoaded` → `initLoadingScreen()`
 2. Loading screen waits for all `<img>` to load (5s safety timeout)
 3. GSAP fades out loading overlay, then calls `startMainAnimations()`
-4. `startMainAnimations()` runs entrance animations, then calls `initMasonry()`, `initVideoHover()`, `initCircularText()`
+4. `startMainAnimations()` runs the entrance animations (`initHeroIntro()` on the front page), then calls `initVideoHover()`, the reel helpers and the project-page sidebar helpers
+5. `initProjectTabs()` (single-project Engineering / Design tabs) and `initEmailReveal()` (About page email button) run on `DOMContentLoaded`
 
 ### SCSS structure
 
@@ -63,12 +56,14 @@ Browsers with native `grid-template-rows: masonry` support skip the JS layout en
 - `src/sass/_tipography.scss` — custom font faces (Canela, LDW)
 - `src/sass/_elements.scss` — component styles
 - `src/sass/_base.scss` — base/reset overrides
+- `src/sass/_theme-dark.scss` — the dark theme (site-wide default; opt a page out with `body.theme-light`). Tokens at the top: background, sand accent, grain strength. Imported last so it wins the cascade
 
 ### Shortcodes
 
 | Shortcode | Key attributes |
 |---|---|
-| `[projects_grid]` | `tag`, `posts_per_page`, `featured_first`, `same_height_first` |
+| `[projects_grid]` | `tag`, `posts_per_page` |
+| `[projects_grid_small]` | `tag`, `posts_per_page` |
 | `[blog_posts]` | `posts_per_page`, `orderby`, `order`, `category` |
 
 ### AJAX

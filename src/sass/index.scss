@@ -1,12 +1,11 @@
 @use "sass:color";
 
 // ============================================================
-// Variables — palette, gradient, Bulma variable overrides
+// Variables — palette, Bulma variable overrides
 // ============================================================
 
 //@import "variables";
-// Dark stops removed — the tail (#002847 → #000116) disappears against a dark ground.
-$theme-gradient: linear-gradient(45deg, #A47451 0.000%, #9C9881 16.667%, #73A09D 33.333%, #3B899A 50.000%, #095B79 66.667%, #002847 83.333%, #000116 100.000%);// LIGHT PALETTE — bone-white ground, dark text. Reversed from the earlier dark
+// LIGHT PALETTE — bone-white ground, dark text. Reversed from the earlier dark
 // redesign: the old dark bg/bg-darker tones are reused as the new primary/primary-dark
 // text colors, and the old light text tones are gone in favor of a bone-white ground.
 $theme-bg: #efeee5;
@@ -29,7 +28,6 @@ $primary-color: $theme-primary; //#050409;
 $text: $theme-text;
 $dark-color: $theme-primary;
 $dark-contrast-color: $theme-bg;
-$gold-color: #c29b63;
 $tag-color: $theme-surface-hi;
 $link: $theme-accent;
 $navbar-height: 10rem;
@@ -55,6 +53,7 @@ $breakpoint-1600: 1600px;
 @forward "bulma/sass/elements/title" with ($title-color: $dark-color);
 @forward "bulma/sass/elements/content" with ($content-heading-color: $primary-color);
 @forward "bulma/sass/components/navbar";
+@forward "bulma/sass/components/tabs"; // single-project Engineering / Design tabs
 @forward "bulma/sass/elements/button";
 @forward "bulma/sass/elements/box" with ($box-padding: 1.2rem);
 @forward "bulma/sass/elements/tag"; // the "Released" badge on showcase-row media
@@ -157,10 +156,6 @@ html {
 
 		.navbar-item {
 			background-color: transparent !important;
-
-			&.logo-container {
-				padding: 0.5rem 0.75rem;
-			}
 		}
 
 		.navbar-name {
@@ -194,37 +189,12 @@ html {
 // ============================================================
 // Front page
 // ============================================================
-// Three things below aren't stock Bulma: the small-caps eyebrow label, a
-// heading divider rule, and the gradient hero title. Everything else in
-// front-page.php is columns/buttons/box/title.
-
-.gradient-text {
-	background: $theme-gradient;
-	background-clip: text;
-	-webkit-background-clip: text;
-	color: transparent;
-	-webkit-text-fill-color: transparent;
-}
-
-.eyebrow {
-	font-size: 0.72rem;
-	font-weight: 700;
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	color: $theme-muted;
-	margin-bottom: 1.25rem;
-}
+// The heading divider rule isn't stock Bulma. Everything else in front-page.php is
+// columns/buttons/box/title.
 
 .section-title {
 	padding-bottom: 1rem;
 	border-bottom: 1px solid $theme-line;
-}
-
-.section
-{
-	.container {
-		
-	}
 }
 
 // ============================================================
@@ -243,9 +213,7 @@ html {
 	border-radius: $theme-card-radius;
 	background: $theme-surface;
 
-	// :not() excludes badges like .project-special-badge — they aren't the
-	// full-bleed background image and shouldn't inherit its sizing/position.
-	img:not(.project-special-badge),
+	img,
 	.project-video {
 		position: absolute;
 		inset: 0;
@@ -258,13 +226,6 @@ html {
 	.project-video {
 		opacity: 0;
 		transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
-
-	.tag.is-released {
-		position: absolute;
-		top: 1rem;
-		left: 1rem;
-		z-index: 2;
 	}
 }
 
@@ -280,7 +241,7 @@ html {
 	opacity: 1;
 }
 
-:is(.showcase-row, .showcase-card):hover .showcase-media img:not(.project-special-badge),
+:is(.showcase-row, .showcase-card):hover .showcase-media img,
 :is(.showcase-row, .showcase-card):hover .showcase-media .project-video {
 	transform: scale(1.04);
 }
@@ -393,172 +354,6 @@ html {
 }
 
 // ============================================================
-// Compact project grid — [projects_grid_small] shortcode output
-// ============================================================
-// Same card language as the rows above, just vertical: media on top, text
-// stacked below, several cards per row (Bulma .columns.is-multiline).
-
-.projects-grid-small {
-	.showcase-card {
-		height: 100%;
-	}
-
-	.showcase-media {
-		margin-bottom: 1rem;
-	}
-
-	.showcase-desc {
-		font-size: 0.9rem;
-	}
-}
-
-// ============================================================
-// Special project feature — template-parts/project-special.php
-// ============================================================
-// NOT currently wired up — [project_special] renders as a normal row
-// instead (see functions.php). Kept for whoever picks this back up: one
-// full-width hero card, image/video fills the whole thing, title/role sit
-// on a bottom scrim always, description reveals on hover.
-
-.project-special {
-	position: relative;
-	overflow: hidden;
-	border-radius: $theme-card-radius;
-	background: $theme-surface;
-	aspect-ratio: 21 / 9;
-
-	@include mixins.mobile {
-		aspect-ratio: 4 / 5;
-	}
-
-	// :not() excludes the top-left badge — it isn't the full-bleed background
-	// image and shouldn't inherit its sizing/position/hover-zoom.
-	img:not(.project-special-badge),
-	.project-video {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
-
-	.project-video {
-		opacity: 0;
-		transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
-
-	&.only-video .project-video,
-	&:hover .project-video {
-		opacity: 1;
-	}
-
-	&:hover img:not(.project-special-badge),
-	&:hover .project-video {
-		transform: scale(1.04);
-	}
-
-	.showcase-media-link {
-		position: absolute;
-		inset: 0;
-	}
-}
-
-// Flat dark layer across the whole image — not just a bottom gradient — so
-// the centered text stays legible over any key art. A real element (not a
-// ::after on .project-special) placed between the image and the text in the
-// markup: img/video → scrim → text, so plain DOM order stacks it correctly
-// without fighting the media link's own stacking.
-.project-special-scrim {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	background: rgba(8, 12, 14, 0.5);
-	transition: background 0.32s ease;
-}
-
-.project-special:hover .project-special-scrim {
-	background: rgba(8, 12, 14, 0.6);
-}
-
-// White-on-transparent badge (the PNG's own RGB is solid white, shape lives
-// in alpha) — sits on the dark scrim, so it reads regardless of the key art.
-// Sits inline to the right of the headline text, not overlaid on the media.
-.project-special-badge {
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 1rem;
-	width: 100px;
-	height: 100px;
-	object-fit: contain;
-
-	@include mixins.mobile {
-		width: 70px;
-		height: 70px;
-	}
-}
-
-.project-special-overlay {
-	position: absolute;
-	inset: auto 0 0 0;
-	z-index: 2;
-	padding: 2.5rem;
-	pointer-events: none;
-	text-align: center;
-
-	@include mixins.mobile {
-		padding: 1.5rem;
-	}
-
-	// Plain text, not a link — the whole card is one <a> already.
-	.showcase-title {
-		color: #fff;
-	}
-
-	.role-text {
-		color: rgba(255, 255, 255, 0.85);
-	}
-
-	.showcase-tech i[class*="devicon-"] {
-		color: rgba(255, 255, 255, 0.8);
-	}
-}
-
-// The description is the "other stuff" that shows on hover — hidden and
-// collapsed against the role line until then, growing open bottom-to-top.
-.project-special-desc {
-	max-height: 0;
-	opacity: 0;
-	overflow: hidden;
-	transform: translateY(10px);
-	transition: max-height 0.4s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s ease, transform 0.4s ease;
-	margin: 0 auto;
-	padding-top: 0;
-	color: rgba(255, 255, 255, 0.85);
-	max-width: 42rem;
-}
-
-.project-special:hover .project-special-desc,
-.project-special:focus-within .project-special-desc {
-	max-height: 6em;
-	opacity: 1;
-	transform: translateY(0);
-	padding-top: 0.5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.project-special img,
-	.project-special .project-video {
-		transition: opacity 0.3s ease;
-	}
-
-	.project-special:hover img,
-	.project-special:hover .project-video {
-		transform: none;
-	}
-}
-
-// ============================================================
 // Loading screen — header.php #loading-overlay
 // ============================================================
 
@@ -637,7 +432,6 @@ body.loaded .loading-overlay {
 	> p {
 		font-weight: 700;
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
 		font-size: 0.72rem;
 		color: $theme-muted;
 		margin-bottom: 0.5rem;
@@ -668,3 +462,8 @@ body.loaded .loading-overlay {
 		}
 	}
 }
+
+// ============================================================
+// Dark theme — site-wide default (opt out with body.theme-light). Last so it wins the cascade.
+// ============================================================
+@import "theme-dark";

@@ -162,6 +162,34 @@
                     "ui": 1,
                     "ui_on_text": "",
                     "ui_off_text": ""
+                },
+                {
+                    "key": "field_68c1a0b2d4e51",
+                    "label": "Accolades",
+                    "name": "preview_accolades",
+                    "aria-label": "",
+                    "type": "gallery",
+                    "instructions": "Award / grant badges (e.g. Epic MegaGrants). Shown in a row above the title on featured cards. Use transparent PNGs or SVGs; set each image's alt text in the media library.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min": "",
+                    "max": "",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "png,svg,webp",
+                    "insert": "append",
+                    "preview_size": "medium"
                 }
             ]
         },
@@ -441,5 +469,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1789412911
+    "modified": 1793583984
 }

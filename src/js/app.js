@@ -6,6 +6,13 @@ const tl = gsap.timeline();
 gsap.set( '.anim-bottom-top .column > *', { autoAlpha: 0 } )
 gsap.set( '#projects-grid > *', { autoAlpha: 0 } )
 
+// Front-page hero intro: start hidden so nothing flashes once the loading overlay fades.
+const heroReducedMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
+const heroTextTargets = '.home .intro .title, .home .intro .subtitle, .home .intro .buttons > *'
+if ( ! heroReducedMotion ) {
+	gsap.set( [ heroTextTargets, '.home .intro-video', '.home .navbar .navbar-item' ], { autoAlpha: 0 } )
+}
+
 
 const getProjects = async (cat, projectsNode) => {
 	const fetchData = new FormData()
@@ -43,256 +50,10 @@ const getProjects = async (cat, projectsNode) => {
 	}
 }
 
-// 12-Column masonry fallback with responsive design
-const initMasonry = () => {
-	const container = document.querySelector('.masonry-grid');
-	if (!container) return;
-	
-	// Check if browser supports CSS Grid masonry
-	const supportsMasonry = CSS.supports('grid-template-rows', 'masonry');
-	
-	if (!supportsMasonry) {
-		container.classList.add('js-masonry');
-		const items = container.querySelectorAll('.masonry-item');
-		const gap = 16; // 1rem = 16px
-		
-		const layout = () => {
-			const containerWidth = container.offsetWidth;
-			
-			// Skip layout if container is not visible or has zero width
-			if (containerWidth === 0) {
-				return;
-			}
-			
-			let totalColumns = 1; // Mobile first
-			
-			// Determine column count based on screen size
-			if (containerWidth >= 1150) { // Widescreen
-				totalColumns = 12;
-			} else if (containerWidth >= 769) { // Tablet AND Desktop
-				totalColumns = 2;
-			} else { // Mobile
-				totalColumns = 1;
-			}
-			
-			const columnWidth = (containerWidth - (gap * (totalColumns - 1))) / totalColumns;
-			const columnHeights = new Array(totalColumns).fill(0);
-			
-			// First pass: handle the first two items - calculate heights for same-height feature
-			let maxHeightOfFirstTwo = 0;
-			const isProjectGrid = container.classList.contains('projects-grid');
-			const isFeaturedFirst = container.classList.contains('featured-first');
-			const isSameHeightFirst = container.classList.contains('same-height-first');
-			
-			// Calculate heights for first row items if same-height-first is enabled
-			if (totalColumns === 12 && isProjectGrid && isSameHeightFirst) {
-				items.forEach((item, index) => {
-					if (index < 2) {
-						const img = item.querySelector('img');
-						if (!img) return;
-						
-						// Determine columns based on featured-first setting
-						const columns = isFeaturedFirst ? 6 : (parseInt(item.getAttribute('data-columns')) || 4);
-						const itemWidth = (columnWidth * columns) + (gap * (columns - 1));
-						item.style.width = itemWidth + 'px';
-						item.style.height = 'auto';
-						
-						// Better height calculation that works when tab is not focused
-						let calculatedHeight = 0;
-						
-						if (img.naturalWidth && img.naturalHeight) {
-							// Use natural dimensions if available
-							const aspectRatio = img.naturalHeight / img.naturalWidth;
-							calculatedHeight = itemWidth * aspectRatio;
-						} else if (img.width && img.height) {
-							// Fallback to current dimensions
-							const aspectRatio = img.height / img.width;
-							calculatedHeight = itemWidth * aspectRatio;
-						} else {
-							// Final fallback: force image to load and calculate
-							const tempImg = new Image();
-							tempImg.onload = () => {
-								const aspectRatio = tempImg.height / tempImg.width;
-								const newHeight = itemWidth * aspectRatio;
-								if (newHeight > maxHeightOfFirstTwo) {
-									maxHeightOfFirstTwo = newHeight;
-									// Re-run layout after image loads
-									requestAnimationFrame(() => layout());
-								}
-							};
-							tempImg.src = img.src;
-							// Use a reasonable default for now
-							calculatedHeight = itemWidth * 0.6; // Assume 16:10 aspect ratio
-						}
-						
-						if (calculatedHeight > maxHeightOfFirstTwo) {
-							maxHeightOfFirstTwo = calculatedHeight;
-						}
-					}
-				});
-				
-				// Ensure we have a minimum height if calculations failed
-				if (maxHeightOfFirstTwo === 0) {
-					maxHeightOfFirstTwo = columnWidth * 0.6; // Default aspect ratio
-				}
-			}
-			
-			// Second pass: position all items
-			items.forEach((item, index) => {
-				const img = item.querySelector('img');
-				if (!img) return;
-				
-				let columns = 1; // Default: all items are 1 column
-				
-				// ONLY on widescreen, use the grid-span data
-				if (totalColumns === 12) {
-					if (index < 2 && isProjectGrid && isFeaturedFirst) {
-						// Both first items get exactly 6 columns (50% each) - ONLY for project grids with featured-first
-						columns = 6;
-					} else {
-						columns = parseInt(item.getAttribute('data-columns')) || 4; // Default to 4 columns instead of 1
-					}
-				}
-				// On all other screen sizes, columns stays 1
-				
-				const itemWidth = (columnWidth * columns) + (gap * (columns - 1));
-				
-				item.classList.add('js-positioned');
-				item.style.width = itemWidth + 'px';
-				
-				// Special handling for first two items with same height
-				if (totalColumns === 12 && index < 2 && maxHeightOfFirstTwo > 0 && isProjectGrid && isSameHeightFirst) {
-					item.classList.add('large-item');
-					item.style.height = maxHeightOfFirstTwo + 'px';
-					
-					// Position based on whether featured-first is also enabled
-					if (isFeaturedFirst) {
-						// Featured positioning (50% width each)
-						if (index === 0) {
-							item.style.left = '0px';
-							item.style.top = '0px';
-							// First item spans columns 0-5
-							for (let i = 0; i < 6; i++) {
-								columnHeights[i] = maxHeightOfFirstTwo + gap;
-							}
-						} else {
-							// Second item starts at column 6
-							item.style.left = (columnWidth * 6 + gap * 6) + 'px';
-							item.style.top = '0px';
-							// Second item spans columns 6-11
-							for (let i = 6; i < 12; i++) {
-								columnHeights[i] = maxHeightOfFirstTwo + gap;
-							}
-						}
-					} else {
-						// Regular positioning with same height
-						if (index === 0) {
-							item.style.left = '0px';
-							item.style.top = '0px';
-							// Update column heights based on actual width
-							for (let i = 0; i < columns; i++) {
-								columnHeights[i] = maxHeightOfFirstTwo + gap;
-							}
-						} else {
-							// Second item positioned next to first
-							const firstItemWidth = parseInt(items[0].getAttribute('data-columns')) || 4;
-							item.style.left = (columnWidth * firstItemWidth + gap * firstItemWidth) + 'px';
-							item.style.top = '0px';
-							// Update remaining column heights
-							for (let i = firstItemWidth; i < firstItemWidth + columns; i++) {
-								columnHeights[i] = maxHeightOfFirstTwo + gap;
-							}
-						}
-					}
-				} else {
-					// Regular items - use auto height
-					item.style.height = 'auto';
-					item.classList.remove('large-item');
-					
-					// Find the best position for this item
-					let bestColumn = 0;
-					let minHeight = Infinity;
-					
-					for (let col = 0; col <= totalColumns - columns; col++) {
-						let maxHeightInSpan = 0;
-						for (let spanCol = col; spanCol < col + columns; spanCol++) {
-							maxHeightInSpan = Math.max(maxHeightInSpan, columnHeights[spanCol]);
-						}
-						
-						if (maxHeightInSpan < minHeight) {
-							minHeight = maxHeightInSpan;
-							bestColumn = col;
-						}
-					}
-					
-					const x = bestColumn * (columnWidth + gap);
-					const y = minHeight;
-					
-					item.style.left = x + 'px';
-					item.style.top = y + 'px';
-					
-					const itemHeight = item.offsetHeight;
-					for (let spanCol = bestColumn; spanCol < bestColumn + columns; spanCol++) {
-						columnHeights[spanCol] = y + itemHeight + gap;
-					}
-				}
-			});
-			
-			const maxHeight = Math.max(...columnHeights) - gap;
-			container.style.height = maxHeight + 'px';
-		};
-
-		// Enhanced visibility detection using IntersectionObserver
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					// Container is visible, trigger layout
-					requestAnimationFrame(() => {
-						requestAnimationFrame(() => {
-							layout();
-						});
-					});
-				}
-			});
-		}, { threshold: 0.1 });
-
-		// Start observing the container
-		observer.observe(container);
-
-		// Enhanced focus handler - force complete re-layout when tab gains focus
-		const handleWindowFocus = () => {
-			// Small delay to ensure images are loaded
-			setTimeout(() => {
-				layout();
-			}, 150);
-		};
-
-		window.addEventListener('focus', handleWindowFocus);
-
-		// Layout on resize
-		window.addEventListener('resize', () => {
-			clearTimeout(window.resizeTimeout);
-			window.resizeTimeout = setTimeout(() => {
-				layout();
-			}, 250);
-		});
-
-		// Initial layout attempt
-		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-				layout();
-			});
-		});
-
-	} else {
-		// For browsers with native CSS Grid masonry, CSS handles responsiveness
-	}
-};
-
 // Video hover functionality
 const initVideoHover = () => {
-	const hoverVideoItems = document.querySelectorAll('.showcase-row.has-video, .showcase-card.has-video, .project-special.has-video');
-	const autoVideoItems = document.querySelectorAll('.showcase-row.only-video, .showcase-card.only-video, .project-special.only-video');
+	const hoverVideoItems = document.querySelectorAll('.showcase-row.has-video, .showcase-card.has-video');
+	const autoVideoItems = document.querySelectorAll('.showcase-row.only-video, .showcase-card.only-video');
 	
 	// Handle hover videos
 	hoverVideoItems.forEach(item => {
@@ -418,6 +179,64 @@ const initReelVideo = () => {
 
 	video.addEventListener('error', retryPlay);
 	video.addEventListener('stalled', retryPlay);
+};
+
+// About page "Get in touch": the address is never in the HTML. PHP ships it reversed + base64 in
+// data-email; it's only decoded here, on click, so scrapers that don't run JS and click never
+// see it. "Email me" opens the visitor's mail app, the copy button covers people without one.
+const initEmailReveal = () => {
+	const decode = ( el ) => atob( el.dataset.email ).split( '' ).reverse().join( '' );
+
+	document.querySelectorAll( '.js-email-open' ).forEach( ( btn ) => {
+		btn.addEventListener( 'click', () => { window.location.href = 'mailto:' + decode( btn ); } );
+	} );
+
+	document.querySelectorAll( '.js-email-copy' ).forEach( ( btn ) => {
+		const icon = btn.querySelector( 'i' );
+		btn.addEventListener( 'click', async () => {
+			try {
+				await navigator.clipboard.writeText( decode( btn ) );
+			} catch ( e ) {
+				return;
+			}
+			icon.className = 'fa-solid fa-check';
+			setTimeout( () => { icon.className = 'fa-regular fa-copy'; }, 2000 );
+		} );
+	} );
+};
+
+// Single project Engineering / Design tabs (single-project.php). Each tab's panel is the Group
+// block with that HTML anchor; the others get Bulma's is-hidden. The URL hash picks the tab, so
+// /project/x/#engineering deep-links straight to it. Without JS every section just shows.
+const initProjectTabs = () => {
+	const tabs = Array.from(document.querySelectorAll('.project-tabs li[data-tab]'));
+	if (!tabs.length) return;
+
+	const show = (id) => {
+		tabs.forEach(tab => {
+			const active = tab.dataset.tab === id;
+			tab.classList.toggle('is-active', active);
+			const panel = document.getElementById(tab.dataset.tab);
+			if (panel) panel.classList.toggle('is-hidden', !active);
+		});
+	};
+
+	const fromHash = () => {
+		const hash = window.location.hash.slice(1);
+		return tabs.some(tab => tab.dataset.tab === hash) ? hash : tabs[0].dataset.tab;
+	};
+
+	tabs.forEach(tab => {
+		tab.querySelector('a').addEventListener('click', (e) => {
+			e.preventDefault();
+			show(tab.dataset.tab);
+			history.replaceState(null, '', '#' + tab.dataset.tab);
+			window.dispatchEvent(new Event('scroll')); // sidebar + scroll-spy re-measure
+		});
+	});
+
+	window.addEventListener('hashchange', () => show(fromHash()));
+	show(fromHash());
 };
 
 const initSidebarSticky = () => {
@@ -579,10 +398,35 @@ const initLoadingScreen = () => {
 	checkResourcesLoaded();
 };
 
+// Hero intro: reel video fades up behind while the copy sweeps in left to right.
+// Kept subtle — short distances, one soft ease, ~1.5s total.
+const initHeroIntro = () => {
+	// Reduced motion: no intro, and hold the background reel on its first frame.
+	if ( heroReducedMotion ) {
+		const reel = document.querySelector( '.home .intro-video video' )
+		if ( reel ) reel.pause()
+		return
+	}
+	if ( ! document.querySelector( '.home .intro' ) ) return
+
+	const intro = gsap.timeline( { defaults: { ease: 'power3.out' } } )
+
+	intro
+		.fromTo( '.home .navbar .navbar-item', { autoAlpha: 0, y: -8 }, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0 )
+		.fromTo( '.home .intro-video', { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 2, ease: 'power2.out' }, 0 )
+		// Name: wiped in from the left (clip-path) while sliding a touch — padded top/bottom so descenders aren't clipped.
+		.fromTo( '.home .intro .title',
+			{ autoAlpha: 0, x: -32, clipPath: 'inset(-10% 100% -10% 0)' },
+			{ autoAlpha: 1, x: 0, clipPath: 'inset(-10% -2% -10% 0)', duration: 1.3, ease: 'power2.out', clearProps: 'clipPath' }, 0.3 )
+		.fromTo( '.home .intro .subtitle', { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: 1 }, 0.6 )
+		.fromTo( '.home .intro .buttons > *', { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.8, stagger: 0.1 }, 0.8 )
+}
+
 // Separate function for main animations
 const startMainAnimations = () => {
 	// Clear any existing timeline to prevent duplicates
 	tl.clear();
+		initHeroIntro();
 	
 	// GSAP animations start immediately when called
 	tl.add(gsap.fromTo( '.anim-bottom-top .column > *:not(img)', { autoAlpha: 0, y: 50 }, { autoAlpha: 1, y: 0, duration: 1.5, stagger: 0.2 } ))
@@ -590,7 +434,6 @@ const startMainAnimations = () => {
 	tl.add(gsap.fromTo( '.anim-bottom-whole', { autoAlpha: 0, y:50 }, { autoAlpha: 1, y:0, duration: 1.5 } ))
 	
 	// Initialize functionality after animations start
-	initMasonry();
 	initVideoHover();
 	initReelModal();
 	initReelVideo();
@@ -621,6 +464,8 @@ const initArkdeWaves = () => {
 // Updated DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
 	initArkdeWaves();
+	initProjectTabs(); // before the loading screen lifts, so the hidden tab never flashes
+	initEmailReveal();
 	// Initialize loading screen first
 	initLoadingScreen();
 });

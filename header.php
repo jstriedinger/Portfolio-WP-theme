@@ -18,10 +18,12 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
 	<!-- Favicon -->
+	<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon.ico" sizes="48x48">
 	<link rel="icon" type="image/png" sizes="32x32" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon-16x16.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/assets/images/apple-touch-icon.png">
 	<link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/assets/images/site.webmanifest">
+	<meta name="theme-color" content="#0a0c12">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +38,7 @@
 		<script>
 				(function(h,o,t,j,a,r){
 						h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-						h._hjSettings={hjid:3689675,hjsv=6};
+						h._hjSettings={hjid:3689675,hjsv:6};
 						a=o.getElementsByTagName('head')[0];
 						r=o.createElement('script');r.async=1;
 						r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -64,6 +66,7 @@
 	<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
 		<div class="container">
 			<div class="navbar-brand">
+				<a class="navbar-item navbar-name" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Jose Striedinger, home">JS</a>
 				<a class="navbar-burger" role="button" aria-label="menu" aria-expanded="false" data-target="navbarMain">
 					<span aria-hidden="true"></span>
 					<span aria-hidden="true"></span>
@@ -73,19 +76,6 @@
 			</div>
 
 			<div id="navbarMain" class="navbar-menu">
-				<div class="navbar-start">
-					<?php
-					wp_nav_menu( array(
-						'theme_location' => 'primary',
-						'menu_class'     => '',
-						'container'      => false,
-						'fallback_cb'    => false,
-						'items_wrap'     => '%3$s',
-						'walker'         => new Bulma_Nav_Walker(),
-						'menu_half'      => 'left',
-					) );
-					?>
-				</div>
 				<div class="navbar-end">
 					<?php
 					wp_nav_menu( array(
@@ -95,7 +85,6 @@
 						'fallback_cb'    => false,
 						'items_wrap'     => '%3$s',
 						'walker'         => new Bulma_Nav_Walker(),
-						'menu_half'      => 'right',
 					) );
 					?>
 				</div>

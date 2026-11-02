@@ -76,50 +76,14 @@ if ( ! function_exists( 'jrsp_setup' ) ) :
 endif;
 add_action( 'after_setup_theme', 'jrsp_setup' );
 
+// The favicon is the theme's own JS monogram (header.php + src/images). Drop the Customizer "Site
+// Icon" tags WordPress would otherwise add to <head>, so the old uploaded icon can't override it.
+remove_action( 'wp_head', 'wp_site_icon', 99 );
+
 add_filter( 'show_admin_bar', '__return_false' );
 
 // Include custom nav walker
 require_once get_template_directory() . '/inc/class-bulma-nav-walker.php';
-
-/**
- * Split the primary menu's top-level items in half so a single WP menu can be
- * rendered on both sides of the centered site name. Pass 'menu_half' =>
- * 'left'|'right' to wp_nav_menu(); both calls share one cached split.
- */
-function jrsp_split_primary_menu_items( $sorted_menu_items, $args ) {
-	if ( empty( $args->menu_half ) || empty( $args->theme_location ) || 'primary' !== $args->theme_location ) {
-		return $sorted_menu_items;
-	}
-
-	static $halves = null;
-
-	if ( null === $halves ) {
-		$top_level_ids = array();
-		foreach ( $sorted_menu_items as $item ) {
-			if ( empty( $item->menu_item_parent ) || '0' === (string) $item->menu_item_parent ) {
-				$top_level_ids[] = (int) $item->ID;
-			}
-		}
-
-		$split      = (int) ceil( count( $top_level_ids ) / 2 );
-		$left_roots = array_slice( $top_level_ids, 0, $split );
-		$halves     = array(
-			'left'  => array(),
-			'right' => array(),
-		);
-
-		foreach ( $sorted_menu_items as $item ) {
-			$root_id = ( empty( $item->menu_item_parent ) || '0' === (string) $item->menu_item_parent )
-				? (int) $item->ID
-				: (int) $item->menu_item_parent;
-
-			$halves[ in_array( $root_id, $left_roots, true ) ? 'left' : 'right' ][] = $item;
-		}
-	}
-
-	return isset( $halves[ $args->menu_half ] ) ? $halves[ $args->menu_half ] : $sorted_menu_items;
-}
-add_filter( 'wp_nav_menu_objects', 'jrsp_split_primary_menu_items', 10, 2 );
 
 /**
  * Enqueue scripts and styles.
@@ -258,9 +222,9 @@ function projects_grid_masonry_shortcode($atts) {
 		return '<div class="projects-showcase"><p>No projects found.</p></div>';
 	}
 
-	// Rendering lives in template-parts/projects-showcase.php, which reads $projects.
+	// Rendering lives in template-parts/projects-bento.php, which reads $projects.
 	ob_start();
-	include get_template_directory() . '/template-parts/projects-showcase.php';
+	include get_template_directory() . '/template-parts/projects-bento.php';
 	return ob_get_clean();
 }
 add_shortcode('projects_grid', 'projects_grid_masonry_shortcode');
@@ -304,47 +268,15 @@ function projects_grid_small_shortcode($atts) {
 	} ) );
 
 	if (empty($projects)) {
-		return '<div class="projects-grid-small"><p>No projects found.</p></div>';
-	}
-
-	// Rendering lives in template-parts/projects-grid-small.php, which reads $projects.
-	ob_start();
-	include get_template_directory() . '/template-parts/projects-grid-small.php';
-	return ob_get_clean();
-}
-add_shortcode('projects_grid_small', 'projects_grid_small_shortcode');
-
-// Special Project Feature Shortcode — its own dedicated card style
-// (template-parts/project-special.php), exclusive to a single project: the
-// first one carrying the given tag, even if more than one gets tagged by mistake.
-function project_special_shortcode($atts) {
-	$atts = shortcode_atts(array(
-		'tag' => 'special',
-	), $atts, 'project_special');
-
-	$projects = get_posts(array(
-		'post_type' => 'project',
-		'posts_per_page' => 1,
-		'post_status' => 'publish',
-		'tag' => $atts['tag'],
-	));
-
-	$projects = array_values( array_filter( $projects, function ( $project ) {
-		return (bool) get_the_post_thumbnail_url( $project->ID, 'large' );
-	} ) );
-
-	if (empty($projects)) {
 		return '';
 	}
 
-	$project = $projects[0];
-
-	// Rendering lives in template-parts/project-special.php, which reads $project.
+	// Rendering lives in template-parts/projects-list.php, which reads $projects.
 	ob_start();
-	include get_template_directory() . '/template-parts/project-special.php';
+	include get_template_directory() . '/template-parts/projects-list.php';
 	return ob_get_clean();
 }
-add_shortcode('project_special', 'project_special_shortcode');
+add_shortcode('projects_grid_small', 'projects_grid_small_shortcode');
 
 // Blog Posts Shortcode
 function blog_posts_shortcode($atts) {
