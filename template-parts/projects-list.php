@@ -3,7 +3,7 @@
  * Front-page "More projects". Renders $projects (array of WP_Post `project` posts)
  * as small vertical cards side by side: thumbnail, title + engine tag, role · summary.
  *
- * Bulma .columns.is-multiline.is-centered: up to 4 per row on desktop (2 on tablet,
+ * Bulma .columns.is-multiline.is-centered: up to 3 per row on desktop (2 on tablet,
  * 1 on mobile), and a short last row stays centered.
  *
  * Cards keep the shared .showcase-card / .showcase-media / .project-video classes so
@@ -32,7 +32,7 @@
 		$summary = implode( ' · ', array_filter( [ esc_html( $preview_role ), wp_kses_post( $preview_desc ) ] ) );
 		$tag     = $without_link ? 'div' : 'a';
 	?>
-		<div class="column is-6-tablet is-3-desktop">
+		<div class="column is-6-tablet is-4-desktop">
 			<<?= $tag ?> class="showcase-card is-block <?= $preview_video ? 'has-video' : '' ?>"<?= $without_link ? '' : ' href="' . esc_url( $external_link ) . '"' ?>>
 				<div class="showcase-media is-aspect-ratio-16by9 mb-4">
 					<img src="<?= esc_url( $thumbnail ) ?>" alt="<?= esc_attr( $project->post_title ) ?>" loading="lazy">

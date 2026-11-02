@@ -495,6 +495,15 @@ body:not(.theme-light) {
 			}
 		}
 
+		// Overscan the hover video. object-fit: cover already fills the card, but some preview
+		// clips have letterbox bars baked into the file (sorelle-preview.mp4 is 16:9 footage in a
+		// 3:2 frame), and the tall cards fit those clips by height, so the bars land on screen.
+		// 1.2x covers a 16:9-in-3:2 letterbox. `scale` (not transform) so it stacks with the
+		// hover zoom in index.scss.
+		.project-video {
+			scale: 1.2;
+		}
+
 		.title {
 			line-height: 1.05;
 		}
@@ -506,7 +515,6 @@ body:not(.theme-light) {
 		.showcase-desc {
 			color: $dk-ink;
 			opacity: 0.9;
-			max-width: 37.5rem;
 		}
 
 		.showcase-tech i[class*="devicon-"] {
