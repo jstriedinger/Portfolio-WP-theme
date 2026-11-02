@@ -457,7 +457,7 @@ body:not(.theme-light) {
 	}
 
 	// Selected work bento (template-parts/projects-bento.php). Grid/spans are Bulma's
-	// .fixed-grid/.cell; this is only the card skin: fixed height, artwork scrim, lift + glow on hover.
+	// .fixed-grid/.cell; this is only the card skin: fixed height, artwork scrim, lift + sand halo on hover.
 	.projects-bento {
 		.grid {
 			--bulma-grid-gap: 1.75rem; // artifact: 28px
@@ -469,21 +469,30 @@ body:not(.theme-light) {
 			border: 0;
 			border-radius: $dk-radius-lg;
 			background: $dk-bg-1;
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
+			transition: transform 0.35s ease, box-shadow 0.35s ease;
 
+			// Hover: lift, plus a soft sand halo. No border or ring (you ruled those out on these
+			// cards). A dark shadow can't read on the dark ground; a low-opacity touch of the accent
+			// can, and stays quiet.
 			&:hover {
-				transform: translateY(-4px);
-				box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.7); // neutral lift — the artwork carries the color
+				transform: translateY(-6px);
+				box-shadow: 0 22px 64px -16px rgba($dk-accent, 0.3);
 			}
 		}
 
 		// index.scss gives .showcase-media position:relative, which beats Bulma's .is-overlay
 		// and collapses it to 0 height — pin it to the card explicitly.
+		// clip-path, not just the card's overflow:hidden + border-radius: the image and video are
+		// scaled (hover zoom, video overscan), which puts them on their own compositing layers, and
+		// browsers don't reliably clip those to a parent's rounded corners — the square corners of
+		// the art leaked out past the radius. clip-path clips composited layers too. It sits on the
+		// media (not the card) so the card's hover shadow isn't clipped away.
 		.showcase-media {
 			position: absolute;
 			inset: 0;
 			border-radius: 0;
 			background: transparent;
+			clip-path: inset(0 round #{$dk-radius-lg});
 
 			// Bottom scrim so the copy reads over any artwork.
 			&::after {
@@ -492,7 +501,13 @@ body:not(.theme-light) {
 				inset: 0;
 				background: linear-gradient(to top, rgba($dk-bg-0, 0.92) 0%, rgba($dk-bg-0, 0.7) 30%, transparent 58%);
 				pointer-events: none;
+				transition: opacity 0.35s ease;
 			}
+		}
+
+		// On hover the scrim eases off a little so more of the artwork shows.
+		.showcase-card:hover .showcase-media::after {
+			opacity: 0.8;
 		}
 
 		// Overscan the hover video. object-fit: cover already fills the card, but some preview
