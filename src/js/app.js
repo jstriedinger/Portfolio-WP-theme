@@ -459,29 +459,8 @@ const startMainAnimations = () => {
 	initSectionScrollSpy();
 };
 
-const initArkdeWaves = () => {
-	const topPath   = 'M0,40 C360,5 1080,75 1440,40 C1800,5 2520,75 2880,40 L2880,0 L0,0 Z';
-	const bottomPath = 'M0,40 C360,75 1080,5 1440,40 C1800,75 2520,5 2880,40 L2880,80 L0,80 Z';
-
-	document.querySelectorAll('.arkde-showcase').forEach(section => {
-		if (section.querySelector('.arkde-showcase__wave')) return;
-
-		const top = document.createElement('div');
-		top.className = 'arkde-showcase__wave arkde-showcase__wave--top';
-		top.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="${topPath}"/></svg>`;
-
-		const bottom = document.createElement('div');
-		bottom.className = 'arkde-showcase__wave arkde-showcase__wave--bottom';
-		bottom.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 80" preserveAspectRatio="none"><path d="${bottomPath}"/></svg>`;
-
-		section.prepend(top);
-		section.append(bottom);
-	});
-};
-
 // Updated DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
-	initArkdeWaves();
 	initProjectTabs(); // before the loading screen lifts, so the hidden tab never flashes
 	initEmailReveal();
 	initHeroReel(); // starts the reel at page load, not after the loading screen

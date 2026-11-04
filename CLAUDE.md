@@ -35,7 +35,7 @@ Filtered by WordPress tags (not categories). All metadata comes from ACF (`get_f
 - `external_link` — overrides the card `<a>` href
 - `without_link` — renders card with no anchor at all
 
-**Single project page** (`single-project.php`) fields: `summary`, `contributions`, `links` (repeater of platform URLs — Steam/Epic/itch.io detected by URL string), `video_trailer` (oEmbed), `gif_preview`.
+**Single project page** (`single-project.php`) fields: `summary`, `links` (repeater of platform URLs — Steam/Epic/itch.io detected by URL string), `video_trailer` (oEmbed), `gif_preview`.
 
 ### Front-page project grids
 

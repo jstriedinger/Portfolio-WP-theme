@@ -144,26 +144,6 @@
                     "ui_off_text": ""
                 },
                 {
-                    "key": "field_68b4e2f1a7c30",
-                    "label": "Full-width card?",
-                    "name": "full_width_card",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "Always renders as its own full-width row in the bento grid, regardless of position among other projects.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "",
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
                     "key": "field_68c1a0b2d4e51",
                     "label": "Accolades",
                     "name": "preview_accolades",
@@ -197,26 +177,6 @@
             "key": "field_67db04a6dbfc2",
             "label": "Summary",
             "name": "summary",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
-        },
-        {
-            "key": "field_639be6bedda8d",
-            "label": "Role & contributions",
-            "name": "contributions",
             "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
@@ -469,5 +429,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1793583984
+    "modified": 1793830282
 }

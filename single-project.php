@@ -4,7 +4,6 @@
  */
 get_header();
 $meta          = get_fields();
-$contributions = $meta['contributions'];
 $summary       = $meta['summary'];
 $enlaces       = $meta['links'];
 $video_trailer = isset( $meta['video_trailer'] ) ? $meta['video_trailer'] : null;
