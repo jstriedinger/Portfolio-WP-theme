@@ -400,6 +400,24 @@ const initLoadingScreen = () => {
 
 // Hero intro: reel video fades up behind while the copy sweeps in left to right.
 // Kept subtle — short distances, one soft ease, ~1.5s total.
+// Hero background reel (front page). It is 4+ MB and a moving backdrop is wasted data and battery
+// on a phone, so it only loads from tablet width up (the markup also hides it on mobile with
+// Bulma's is-hidden-mobile). Phones get the plain navy hero. Re-checked if the width changes,
+// e.g. a phone rotated to landscape.
+const initHeroReel = () => {
+	const video = document.querySelector( '.home .intro-video video[data-src]' )
+	if ( ! video ) return
+
+	const wide = window.matchMedia( '(min-width: 769px)' )
+	const load = () => {
+		if ( ! wide.matches || video.getAttribute( 'src' ) ) return
+		video.src = video.dataset.src
+		video.play().catch( () => {} )
+	}
+	load()
+	wide.addEventListener( 'change', load )
+}
+
 const initHeroIntro = () => {
 	// Reduced motion: no intro, and hold the background reel on its first frame.
 	if ( heroReducedMotion ) {
@@ -466,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initArkdeWaves();
 	initProjectTabs(); // before the loading screen lifts, so the hidden tab never flashes
 	initEmailReveal();
+	initHeroReel(); // starts the reel at page load, not after the loading screen
 	// Initialize loading screen first
 	initLoadingScreen();
 });

@@ -144,6 +144,10 @@ body:not(.theme-light) {
 		--bulma-navbar-height: 5.5rem;
 		--bulma-navbar-background-color: transparent;
 
+		@include mixins.mobile {
+			--bulma-navbar-height: 4rem;
+		}
+
 		// Mobile dropdown still needs a solid panel behind the links.
 		@include mixins.touch {
 			.navbar-menu {
@@ -321,19 +325,22 @@ body:not(.theme-light) {
 		}
 	}
 
-	// Neutral buttons (social/utility icons): grey ring + icon, brightening to white on hover —
-	// the accent is kept for primary CTAs (below). #contact is the About page's get-in-touch row.
+	// Neutral buttons (social/utility icons): light ring + icon on a translucent navy fill, so they
+	// read over any frame of the hero reel (a bright frame made the old dark ring vanish), then
+	// full white on hover. The accent is kept for primary CTAs (below). #contact is the About
+	// page's get-in-touch row.
 	.intro .button:not(.is-link),
 	#contact .button:not(.is-link) {
-		background: transparent;
-		border-color: $dk-line;
-		color: $dk-ink-muted;
-		transition: color 0.2s ease, border-color 0.2s ease;
+		background: rgba($dk-bg-0, 0.55);
+		border-color: rgba($dk-ink, 0.4);
+		color: $dk-ink;
+		transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 
 		&:hover,
 		&:focus-visible {
+			background: rgba($dk-bg-0, 0.75);
 			border-color: $dk-ink;
-			color: $dk-ink;
+			color: #fff;
 		}
 	}
 
@@ -389,6 +396,11 @@ body:not(.theme-light) {
 		position: relative;
 		z-index: 2;
 		min-height: 38.75rem; // 620px, the artifact's hero height
+
+		// Phones: there's no reel behind the copy, so the hero is just as tall as its content.
+		@include mixins.mobile {
+			min-height: 0;
+		}
 	}
 
 	.intro-video {
@@ -397,44 +409,20 @@ body:not(.theme-light) {
 		// Reach up behind the (transparent) navbar so header + hero read as one scene. The navbar
 		// stays in header.php (shared by every page) and stacks above via Bulma's own z-index.
 		top: -5.5rem; // navbar height (set on .navbar above; Bulma's root default is shorter)
-		// Bottom fade as a mask, not a solid-colour gradient, so the hero melts into the lit ground.
-		// The bottom 12% stays fully transparent: the reel clip has a dark bar baked into its
-		// bottom edge that would otherwise show as a hard line over the background.
-		-webkit-mask-image: linear-gradient(to top, transparent 0%, transparent 12%, #000 50%);
-		mask-image: linear-gradient(to top, transparent 0%, transparent 12%, #000 50%);
+		// Elliptical fade as a mask, not a solid-colour gradient, so the hero melts into the ground.
+		// The ellipse is centred on the top edge: the video runs edge to edge up top, the bottom
+		// edge curves like a bowl, and the lower corners fade out first. It reaches fully
+		// transparent at 88% of the height, so the dark bar baked into the reel clip's bottom
+		// edge never shows as a hard line.
+		-webkit-mask-image: radial-gradient(ellipse 90% 88% at 50% 0%, #000 40%, transparent 100%);
+		mask-image: radial-gradient(ellipse 90% 88% at 50% 0%, #000 40%, transparent 100%);
 
 		video {
 			display: block;
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
-			filter: brightness(0.5); // tame bright clips so they read as a backdrop
-		}
-
-		// Scrim over the video: a huge ellipse anchored on the left edge, so the whole left side
-		// stays dark top to bottom and only the fade's edge curves. Eased stops keep the falloff
-		// gradual enough that no ring shows over bright frames.
-		&::after {
-			content: "";
-			position: absolute;
-			inset: 0;
-			pointer-events: none;
-			background:
-				radial-gradient(
-					ellipse 85% 130% at 0% 55%,
-					rgba($dk-bg-0, 0.95) 0%,
-					rgba($dk-bg-0, 0.95) 35%,
-					rgba($dk-bg-0, 0.8) 48%,
-					rgba($dk-bg-0, 0.55) 60%,
-					rgba($dk-bg-0, 0.3) 72%,
-					rgba($dk-bg-0, 0.12) 85%,
-					transparent 100%
-				);
-
-			// Copy spans the full width on mobile, so darken evenly instead of just the left.
-			@include mixins.mobile {
-				background: rgba($dk-bg-0, 0.65);
-			}
+			filter: brightness(0.75); // tame bright clips so they read as a backdrop
 		}
 	}
 
@@ -461,6 +449,10 @@ body:not(.theme-light) {
 	.projects-bento {
 		.grid {
 			--bulma-grid-gap: 1.75rem; // artifact: 28px
+
+			@include mixins.mobile {
+				--bulma-grid-gap: 1rem;
+			}
 		}
 
 		.showcase-card {
@@ -477,6 +469,12 @@ body:not(.theme-light) {
 			&:hover {
 				transform: translateY(-6px);
 				box-shadow: 0 22px 64px -16px rgba($dk-accent, 0.3);
+			}
+
+			// Phones: a 500px-tall card is a screenful. Square it instead.
+			@include mixins.mobile {
+				height: auto;
+				aspect-ratio: 1;
 			}
 		}
 
@@ -572,6 +570,13 @@ body:not(.theme-light) {
 		height: 100%;
 		object-fit: cover;
 		border-radius: $dk-radius-lg;
+	}
+
+	// Phones don't need Bulma's 3rem of air above and below every section.
+	.section {
+		@include mixins.mobile {
+			--bulma-section-padding: 1.5rem 1.5rem;
+		}
 	}
 
 	// Single project store links ("Available on"): same neutral ring as the hero social icons.

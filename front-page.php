@@ -15,26 +15,15 @@ $cv            = get_field( 'cv', $front_page_id );
 
 <section class="section intro pt-0 is-relative" id="top-section">
 	<?php if ( $reel_preview ) : ?>
-		<div class="intro-video is-overlay" aria-hidden="true">
-			<video autoplay muted loop playsinline preload="auto"<?php echo $reel_poster ? ' poster="' . esc_url( $reel_poster ) . '"' : ''; ?>>
-				<source src="<?php echo esc_url( $reel_preview ); ?>" type="video/mp4">
-			</video>
+		<?php // No src here: app.js (initHeroReel) sets it from data-src on tablet/desktop only, so phones never download the reel. ?>
+		<div class="intro-video is-overlay is-hidden-mobile" aria-hidden="true">
+			<video muted loop playsinline preload="none" data-src="<?php echo esc_url( $reel_preview ); ?>"<?php echo $reel_poster ? ' poster="' . esc_url( $reel_poster ) . '"' : ''; ?>></video>
 		</div>
 	<?php endif; ?>
 	<div class="container is-max-widescreen">
 		<div class="columns is-vcentered">
 			<div class="column is-8">
-				<div class="buttons">
-					<a class="button is-rounded" href="https://github.com/jstriedinger/CodeSamples" aria-label="GitHub">
-						<span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
-					</a>
-					<a class="button is-rounded" href="https://www.linkedin.com/in/jstriedinger/" aria-label="LinkedIn">
-						<span class="icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
-					</a>
-					<a class="button is-rounded" href="https://jstriedinger.itch.io/" aria-label="itch.io">
-						<span class="icon"><i class="fa-brands fa-itch-io" aria-hidden="true"></i></span>
-					</a>
-				</div>
+				
 				<h1 class="title is-size-0 canela-font"><span class="has-text-weight-light">Jose</span> Striedinger</h1>
 				<p class="subtitle is-size-3 is-size-4-mobile">
 					Gameplay engineer and designer.
@@ -45,6 +34,15 @@ $cv            = get_field( 'cv', $front_page_id );
 					<a class="button is-link is-rounded" href="<?php echo esc_url( $cv ); ?>">
 						<span>Download CV</span>
 						<span class="icon"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span>
+					</a>
+					<a class="button is-rounded" href="https://github.com/jstriedinger/CodeSamples" aria-label="GitHub">
+						<span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+					</a>
+					<a class="button is-rounded" href="https://www.linkedin.com/in/jstriedinger/" aria-label="LinkedIn">
+						<span class="icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
+					</a>
+					<a class="button is-rounded" href="https://jstriedinger.itch.io/" aria-label="itch.io">
+						<span class="icon"><i class="fa-brands fa-itch-io" aria-hidden="true"></i></span>
 					</a>
 					<?php endif; ?>
 				</div>
