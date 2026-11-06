@@ -87,6 +87,20 @@
 						'walker'         => new Bulma_Nav_Walker(),
 					) );
 					?>
+					<?php // Socials: always the last item on the right, after the menu. .buttons keeps them in one row, also inside the phone menu panel. ?>
+					<div class="navbar-item is-align-items-center">
+						<div class="buttons is-flex-wrap-nowrap">
+							<a class="button is-small is-rounded" href="https://github.com/jstriedinger/CodeSamples" aria-label="GitHub">
+								<span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
+							</a>
+							<a class="button is-small is-rounded" href="https://www.linkedin.com/in/jstriedinger/" aria-label="LinkedIn">
+								<span class="icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
+							</a>
+							<a class="button is-small is-rounded" href="https://jstriedinger.itch.io/" aria-label="itch.io">
+								<span class="icon"><i class="fa-brands fa-itch-io" aria-hidden="true"></i></span>
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

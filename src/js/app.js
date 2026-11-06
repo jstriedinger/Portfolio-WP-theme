@@ -10,7 +10,7 @@ gsap.set( '#projects-grid > *', { autoAlpha: 0 } )
 const heroReducedMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches
 const heroTextTargets = '.home .intro .title, .home .intro .subtitle, .home .intro .buttons > *'
 if ( ! heroReducedMotion ) {
-	gsap.set( [ heroTextTargets, '.home .intro-video', '.home .navbar .navbar-item' ], { autoAlpha: 0 } )
+	gsap.set( [ heroTextTargets, '.home .intro-video', '.home .intro-image', '.home .navbar .navbar-item' ], { autoAlpha: 0 } )
 }
 
 
@@ -431,7 +431,7 @@ const initHeroIntro = () => {
 
 	intro
 		.fromTo( '.home .navbar .navbar-item', { autoAlpha: 0, y: -8 }, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0 )
-		.fromTo( '.home .intro-video', { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 2, ease: 'power2.out' }, 0 )
+		.fromTo( '.home .intro-video, .home .intro-image', { autoAlpha: 0, scale: 1.04 }, { autoAlpha: 1, scale: 1, duration: 2, ease: 'power2.out' }, 0 )
 		// Name: wiped in from the left (clip-path) while sliding a touch — padded top/bottom so descenders aren't clipped.
 		.fromTo( '.home .intro .title',
 			{ autoAlpha: 0, x: -32, clipPath: 'inset(-10% 100% -10% 0)' },

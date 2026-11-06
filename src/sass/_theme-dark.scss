@@ -330,7 +330,8 @@ body:not(.theme-light) {
 	// full white on hover. The accent is kept for primary CTAs (below). #contact is the About
 	// page's get-in-touch row.
 	.intro .button:not(.is-link),
-	#contact .button:not(.is-link) {
+	#contact .button:not(.is-link),
+	.navbar .button:not(.is-link) {
 		background: rgba($dk-bg-0, 0.55);
 		border-color: rgba($dk-ink, 0.4);
 		color: $dk-ink;
@@ -342,6 +343,13 @@ body:not(.theme-light) {
 			border-color: $dk-ink;
 			color: #fff;
 		}
+	}
+
+	// Navbar socials (header.php): index.scss makes every icon-only round button 2.75rem, which is too
+	// big next to 14px menu links. Bulma's is-small size, via the same :has() hook, a bit tighter.
+	.navbar .button.is-small.is-rounded:has(> .icon:only-child) {
+		width: 2.25rem;
+		height: 2.25rem;
 	}
 
 	// Primary CTA: solid sand with navy text, a touch lighter on hover. No gradient, glow or lift.
@@ -359,17 +367,37 @@ body:not(.theme-light) {
 		}
 	}
 
-	// Front page grain shape: one irregular, heavily blurred warm blob hanging off the right edge
-	// behind "Selected work". z-index -2 puts it under the grain (-1), so it gets textured, and
-	// under all content.
-	&.home #projects-section {
-		position: relative;
+	// Secondary CTA (Bulma's .button.is-link.is-outlined): the same sand, as a ring + text only, so it
+	// sits next to the primary with an obvious step down. Hover only tints it, never fills it solid,
+	// so it can't be mistaken for the primary.
+	.button.is-link.is-outlined {
+		// Bulma bumps this to 2px on :hover, and the button's padding is (padding - border-width), so
+		// the hover state made the button 2px smaller. Pinned to 1px so size never changes.
+		--bulma-button-border-width: 1px;
+		border-color: $dk-accent; // full sand, so it doesn't read like the grey icon rings
+		color: $dk-accent;
+		background: transparent;
+		transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 
+		&:hover,
+		&:focus-visible {
+			border-color: $dk-accent-hover;
+			color: $dk-accent-hover;
+			background: rgba($dk-accent, 0.1);
+		}
+	}
+
+	// Front page grain shape: one irregular, heavily blurred warm blob at the top centre of the page,
+	// half above the fold so it glows down into the hero. The hero (.intro) is already
+	// position: relative (Bulma's is-relative). z-index -2 puts it under the grain (-1), so it gets
+	// textured, and under all content. In video mode the reel (z-index 0) sits over it.
+	&.home .intro {
 		&::before {
 			content: "";
 			position: absolute;
-			top: 0; // fully below the hero: the reel clip's baked-in dark bar would cut it in a hard line
-			right: -10vw;
+			top: calc(-5.5rem - 14vw); // -5.5rem = up behind the navbar to the page top; then half its size
+			left: 50%;
+			transform: translateX(-50%);
 			width: 34vw;
 			aspect-ratio: 1;
 			z-index: -2;
@@ -424,6 +452,14 @@ body:not(.theme-light) {
 			object-fit: cover;
 			filter: brightness(0.75); // tame bright clips so they read as a backdrop
 		}
+	}
+
+	// Hero, image variant (front-page.php: an <img class="intro-image"> cutout with a transparent
+	// background, in its own column). The shirt runs off the bottom of the photo, so the lower part
+	// fades out. Long and eased (extra stops) so it dissolves instead of ending in a band or a line.
+	.intro-image {
+		-webkit-mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
 	}
 
 	// Section headings — artifact's `.sh h2::after`: short bar under the title
@@ -497,7 +533,7 @@ body:not(.theme-light) {
 				content: "";
 				position: absolute;
 				inset: 0;
-				background: linear-gradient(to top, rgba($dk-bg-0, 0.92) 0%, rgba($dk-bg-0, 0.7) 30%, transparent 58%);
+				background: linear-gradient(to top, rgba($dk-bg-1, 0.9) 0%, rgba($dk-bg-1, 0.85) 30%, transparent 60%);
 				pointer-events: none;
 				transition: opacity 0.35s ease;
 			}
@@ -505,7 +541,7 @@ body:not(.theme-light) {
 
 		// On hover the scrim eases off a little so more of the artwork shows.
 		.showcase-card:hover .showcase-media::after {
-			opacity: 0.8;
+			opacity: 0.9;
 		}
 
 		// Overscan the hover video. object-fit: cover already fills the card, but some preview

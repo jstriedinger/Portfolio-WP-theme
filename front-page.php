@@ -5,12 +5,18 @@
 
 get_header();
 
-// Hero background = the front page's "Portfolio preview" ACF field (reel_preview, an .mp4).
-// The featured image doubles as the poster frame while the video loads.
+// Hero background is either the "Portfolio preview" video (reel_preview, an .mp4) or, when the
+// "Use image background" switch (hero_use_image) is on, a photo on the right (hero_image).
+// The featured image doubles as the video's poster frame while it loads.
 $front_page_id = get_queried_object_id();
-$reel_preview  = get_field( 'reel_preview', $front_page_id );
+$use_image     = (bool) get_field( 'hero_use_image', $front_page_id );
+$hero_image    = $use_image ? (int) get_field( 'hero_image', $front_page_id ) : 0;
+$reel_preview  = $use_image ? '' : get_field( 'reel_preview', $front_page_id );
 $reel_poster   = get_the_post_thumbnail_url( $front_page_id, 'full' );
 $cv            = get_field( 'cv', $front_page_id );
+// About me page, found by slug (the one page-about-me.php applies to) so the URL is never hardcoded.
+$about_page    = get_page_by_path( 'about-me' );
+$about_url     = $about_page ? get_permalink( $about_page ) : home_url( '/about-me/' );
 ?>
 
 <section class="section intro pt-0 is-relative" id="top-section">
@@ -35,18 +41,18 @@ $cv            = get_field( 'cv', $front_page_id );
 						<span>Download CV</span>
 						<span class="icon"><i class="fa-solid fa-arrow-down" aria-hidden="true"></i></span>
 					</a>
-					<a class="button is-rounded" href="https://github.com/jstriedinger/CodeSamples" aria-label="GitHub">
-						<span class="icon"><i class="fab fa-github" aria-hidden="true"></i></span>
-					</a>
-					<a class="button is-rounded" href="https://www.linkedin.com/in/jstriedinger/" aria-label="LinkedIn">
-						<span class="icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
-					</a>
-					<a class="button is-rounded" href="https://jstriedinger.itch.io/" aria-label="itch.io">
-						<span class="icon"><i class="fa-brands fa-itch-io" aria-hidden="true"></i></span>
+					<a class="button is-link is-outlined is-rounded" href="<?php echo esc_url( $about_url ); ?>">
+						<span>More about me</span>
 					</a>
 					<?php endif; ?>
 				</div>
 			</div>
+			<?php if ( $hero_image ) : ?>
+				<div class="column is-4">
+					<?php // data-no-lazy: LiteSpeed's lazy-load placeholder would collapse this layout-critical image. ?>
+					<?php echo wp_get_attachment_image( $hero_image, 'large', false, array( 'class' => 'intro-image', 'data-no-lazy' => '1', 'fetchpriority' => 'high' ) ); ?>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

@@ -23,6 +23,27 @@
             "mime_types": ""
         },
         {
+            "key": "field_6a1f0c9b2d4e1",
+            "label": "Use image instead of video",
+            "name": "hero_use_image",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Off: the hero plays the Portfolio preview video. On: the hero shows the image below in a column on the right.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bulk_edit": 0,
+            "ui": 1,
+            "ui_on_text": "Image",
+            "ui_off_text": "Video"
+        },
+        {
             "key": "field_69f1898734dd7",
             "label": "Portfolio preview",
             "name": "reel_preview",
@@ -30,7 +51,15 @@
             "type": "file",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a1f0c9b2d4e1",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -41,6 +70,39 @@
             "min_size": "",
             "max_size": "",
             "mime_types": "mp4"
+        },
+        {
+            "key": "field_6a1f0c9b2d4e2",
+            "label": "Hero image",
+            "name": "hero_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Use a cutout with a transparent background (PNG or WebP).",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a1f0c9b2d4e1",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
         }
     ],
     "location": [
@@ -61,5 +123,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1793830282
+    "modified": 1793923100
 }
