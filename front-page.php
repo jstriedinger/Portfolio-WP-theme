@@ -14,6 +14,7 @@ $hero_image    = $use_image ? (int) get_field( 'hero_image', $front_page_id ) : 
 $reel_preview  = $use_image ? '' : get_field( 'reel_preview', $front_page_id );
 $reel_poster   = get_the_post_thumbnail_url( $front_page_id, 'full' );
 $cv            = get_field( 'cv', $front_page_id );
+$hero_intro    = get_field( 'hero_intro', $front_page_id );
 // About me page, found by slug (the one page-about-me.php applies to) so the URL is never hardcoded.
 $about_page    = get_page_by_path( 'about-me' );
 $about_url     = $about_page ? get_permalink( $about_page ) : home_url( '/about-me/' );
@@ -34,6 +35,9 @@ $about_url     = $about_page ? get_permalink( $about_page ) : home_url( '/about-
 				<p class="subtitle is-size-3 is-size-4-mobile">
 					Gameplay engineer and designer.
 				</p>
+				<?php if ( $hero_intro ) : ?>
+				<p class="is-size-5 mb-5 hero-intro"><?php echo nl2br( esc_html( $hero_intro ) ); ?></p>
+				<?php endif; ?>
 
 				<div class="buttons">
 					<?php if ( $cv ) : ?>
@@ -58,13 +62,15 @@ $about_url     = $about_page ? get_permalink( $about_page ) : home_url( '/about-
 </section>
 
 <section class="section" id="projects-section">
-	<div class="container">
+	<div class="container is-max-widescreen">
 		<h2 class="title is-2 canela-font section-title">Selected work</h2>
 		<?php echo do_shortcode( '[projects_grid tag="featured"]' ); ?>
 		<?php echo do_shortcode( '[projects_grid_small tag="other"]' ); ?>
 
 	</div>
 </section>
+
+<?php get_template_part( 'template-parts/video-modal' ); ?>
 
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 <section class="section" id="page-content-section">

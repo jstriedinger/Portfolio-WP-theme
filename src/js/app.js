@@ -459,10 +459,50 @@ const startMainAnimations = () => {
 	initSectionScrollSpy();
 };
 
+// Trailer modal: a .trailer-play button (data-embed = YouTube/Vimeo embed URL, plus data-title,
+// data-role, data-url for the header) opens the shared
+// #video-modal; closing clears the iframe so the video stops.
+const initVideoModal = () => {
+	const modal = document.getElementById('video-modal');
+	const frame = document.getElementById('video-modal-frame');
+	if (!modal || !frame) return;
+	const title = document.getElementById('video-modal-title');
+	const role = document.getElementById('video-modal-role');
+	const link = document.getElementById('video-modal-link');
+
+	const close = () => {
+		modal.classList.remove('is-active');
+		document.documentElement.classList.remove('is-clipped');
+		frame.src = '';
+	};
+
+	document.addEventListener('click', (e) => {
+		const trigger = e.target.closest('.trailer-play');
+		if (!trigger) return;
+		const url = trigger.dataset.embed;
+		title.textContent = trigger.dataset.title || '';
+		role.textContent = trigger.dataset.role || '';
+		role.hidden = !trigger.dataset.role;
+		link.hidden = !trigger.dataset.url;
+		link.href = trigger.dataset.url || '#';
+		frame.src = url + (url.includes('?') ? '&' : '?') + 'autoplay=1';
+		modal.classList.add('is-active');
+		document.documentElement.classList.add('is-clipped');
+		modal.querySelector('.modal-close').focus();
+	});
+
+	modal.querySelector('.modal-background').addEventListener('click', close);
+	modal.querySelector('.modal-close').addEventListener('click', close);
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && modal.classList.contains('is-active')) close();
+	});
+};
+
 // Updated DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', () => {
 	initProjectTabs(); // before the loading screen lifts, so the hidden tab never flashes
 	initEmailReveal();
+	initVideoModal();
 	initHeroReel(); // starts the reel at page load, not after the loading screen
 	// Initialize loading screen first
 	initLoadingScreen();

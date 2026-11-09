@@ -219,7 +219,9 @@ function projects_grid_masonry_shortcode($atts) {
 	} ) );
 
 	if (empty($projects)) {
-		return '<div class="projects-showcase"><p>No projects found.</p></div>';
+		ob_start();
+		include get_template_directory() . '/template-parts/projects-empty.php';
+		return ob_get_clean();
 	}
 
 	// Rendering lives in template-parts/projects-bento.php, which reads $projects.
@@ -299,60 +301,10 @@ function blog_posts_shortcode($atts) {
         'category_name' => $atts['category']
     ));
 
-    $output = '';
-
-    if ($blog_posts->have_posts()) {
-        $output .= '<div class="' . esc_attr($atts['class']) . '">';
-        
-        while ($blog_posts->have_posts()) {
-            $blog_posts->the_post();
-            
-            $output .= '<div class="masonry-item">';
-            $output .= '<a href="' . get_the_permalink() . '" title="' . get_the_title() . '">';
-            
-            // Featured image
-            if (has_post_thumbnail()) {
-                $output .= '<img src="' . get_the_post_thumbnail_url(get_the_ID(), 'large') . '" alt="' . get_the_title() . '" loading="lazy">';
-            } else {
-                $output .= '<div style="width: 100%; height: 200px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999;">';
-                $output .= '<span>No Image</span>';
-                $output .= '</div>';
-            }
-            
-            $output .= '<div class="blog-overlay">';
-            $output .= '<div class="blog-content content">';
-            $output .= '<h3 class="title mb-2 is-size-5">' . get_the_title() . '</h3>';
-            
-            // Excerpt
-            $excerpt = get_the_excerpt();
-            if (empty($excerpt)) {
-                $excerpt = wp_trim_words(get_the_content(), 20, '...');
-            } else {
-                $excerpt = wp_trim_words($excerpt, 20, '...');
-            }
-            $output .= '<p class="excerpt subtitle is-size-6">' . esc_html($excerpt) . '</p>';
-            
-            $output .= '<div class="is-flex is-align-items-center is-justify-content-space-between">';
-            $output .= '<p class="mb-0">';
-            $output .= '<span class="datetime is-size-7">' . get_the_date('F j, Y') . '</span>';
-            $output .= '</p>';
-            $output .= '<button class="button is-rounded">Read more</button>';
-            $output .= '</div>';
-            $output .= '</div>';
-            $output .= '</div>';
-            $output .= '</a>';
-            $output .= '</div>';
-        }
-        
-        $output .= '</div>';
-        wp_reset_postdata();
-    } else {
-        $output .= '<div class="has-text-centered">';
-        $output .= '<p>No blog posts found.</p>';
-        $output .= '</div>';
-    }
-
-    return $output;
+    // Rendering lives in template-parts/blog-posts.php, which reads $blog_posts and $atts.
+    ob_start();
+    include get_template_directory() . '/template-parts/blog-posts.php';
+    return ob_get_clean();
 }
 add_shortcode('blog_posts', 'blog_posts_shortcode');
 
@@ -419,7 +371,9 @@ function projects_showcase_shortcode( $atts ) {
 	) );
 
 	if ( empty( $projects ) ) {
-		return '<div class="projects-showcase"><p>No projects found.</p></div>';
+		ob_start();
+		include get_template_directory() . '/template-parts/projects-empty.php';
+		return ob_get_clean();
 	}
 
 	ob_start();

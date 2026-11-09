@@ -30,8 +30,8 @@ Filtered by WordPress tags (not categories). All metadata comes from ACF (`get_f
 
 **`preview` group** (drives the front-page project cards):
 - `preview_video` — mp4 URL; plays on hover (`has-video`) or auto-plays (`video_only`)
-- `preview_role`, `preview_tech` — overlay text; `preview_tech` is a multi-select of devicon slugs (`unity-plain`, `unrealengine-original`, `javascript-plain`, `php-plain`)
-- `preview_accolades` — gallery of award badges, shown above the title on bento cards and the project page
+- `preview_role`, `preview_tech` — row text; `preview_tech` is a multi-select of devicon slugs (`unity-plain`, `unrealengine-original`, `javascript-plain`, `php-plain`)
+- `preview_accolades` — gallery of award badges, shown beside the title on the front-page rows and above it on the project page
 - `external_link` — overrides the card `<a>` href
 - `without_link` — renders card with no anchor at all
 
@@ -39,7 +39,7 @@ Filtered by WordPress tags (not categories). All metadata comes from ACF (`get_f
 
 ### Front-page project grids
 
-`[projects_grid]` renders `template-parts/projects-bento.php`: a Bulma `.fixed-grid.has-12-cols` bento whose rows alternate 7+5 / 5+7 columns (a lone last card spans 12). `[projects_grid_small]` renders `template-parts/projects-list.php` ("More projects", Bulma `.columns`). Both are server-rendered; there is no JS layout.
+`[projects_grid]` renders `template-parts/projects-bento.php`: a list of plain rows (`.showcase-row`): media left (links to the project, plays the preview video while the row is hovered), text right (title + award badges, role · tech, `preview_desc`, "View project" button); the row itself is not a link. `[projects_grid_small]` renders `template-parts/projects-list.php` ("More projects", Bulma `.columns`). Both are server-rendered; there is no JS layout.
 
 ### JS initialisation flow (`src/js/app.js`)
 

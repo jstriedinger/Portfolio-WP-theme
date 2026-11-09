@@ -23,6 +23,26 @@
             "mime_types": ""
         },
         {
+            "key": "field_6a2b1d3c4e5f6",
+            "label": "Hero intro",
+            "name": "hero_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "One or two plain sentences under the subtitle: what you do, where, and your main tools.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_6a1f0c9b2d4e1",
             "label": "Use image instead of video",
             "name": "hero_use_image",
