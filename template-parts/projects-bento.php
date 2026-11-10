@@ -60,7 +60,7 @@
 						<?php endif; ?>
 						<?php if ( $embed_url ) : ?>
 						<button type="button" class="trailer-play is-overlay is-flex is-align-items-center is-justify-content-center" data-embed="<?= esc_url( $embed_url ) ?>" data-title="<?= esc_attr( $project->post_title ) ?>" data-role="<?= esc_attr( $role_line ) ?>"<?= $without_link ? '' : ' data-url="' . esc_url( $external_link ) . '"' ?> aria-label="Play <?= esc_attr( $project->post_title ) ?> trailer">
-							<span class="button is-link is-rounded is-medium"><span class="icon"><i class="fa-solid fa-play" aria-hidden="true"></i></span></span>
+							<span class="icon is-large has-text-link"><i class="fa-solid fa-circle-play fa-4x" aria-hidden="true"></i></span>
 						</button>
 						<?php endif; ?>
 					</div>
@@ -76,8 +76,15 @@
 				</div>
 				<?php endif; ?>
 				<h3 class="title is-3 canela-font mb-2"><?= esc_html( $project->post_title ) ?></h3>
-				<?php if ( $role_line ) : ?>
-				<p class="role-text is-size-6 mb-3"><?= esc_html( $role_line ) ?></p>
+				<?php if ( $preview_role || ! empty( $preview_tech ) ) : ?>
+				<p class="role-text is-size-6 mb-3 is-flex is-align-items-center is-flex-wrap-wrap is-gap-2">
+					<?php if ( $preview_role ) : ?><span><?= esc_html( $preview_role ) ?></span><?php endif; ?>
+					<?php foreach ( $preview_tech as $tech ) : ?>
+						<?php if ( ! empty( $tech['value'] ) ) : ?>
+						<i class="devicon-<?= esc_attr( $tech['value'] ) ?> is-size-5" role="img" title="<?= esc_attr( $tech['label'] ?? '' ) ?>" aria-label="<?= esc_attr( $tech['label'] ?? '' ) ?>"></i>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</p>
 				<?php endif; ?>
 				<?php if ( $preview_desc ) : ?>
 				<p class="showcase-desc is-size-6 mb-4"><?= nl2br( wp_kses_post( $preview_desc ) ) ?></p>

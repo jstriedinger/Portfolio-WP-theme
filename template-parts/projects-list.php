@@ -1,7 +1,7 @@
 <?php
 /**
  * Front-page "More projects". Renders $projects (array of WP_Post `project` posts)
- * as small vertical cards side by side: thumbnail, title + engine tag, role · summary.
+ * as small vertical cards side by side: thumbnail, title + engine logo, short description.
  *
  * Bulma .columns.is-multiline.is-centered: up to 3 per row on desktop (2 on tablet,
  * 1 on mobile), and a short last row stays centered.
@@ -29,8 +29,7 @@
 			$preview_tech = ! empty( $preview_tech ) ? [ $preview_tech ] : [];
 		}
 
-		$summary = implode( ' · ', array_filter( [ esc_html( $preview_role ), wp_kses_post( $preview_desc ) ] ) );
-		$tag     = $without_link ? 'div' : 'a';
+		$tag =$without_link ? 'div' : 'a';
 	?>
 		<div class="column is-6-tablet is-4-desktop">
 			<<?= $tag ?> class="showcase-card is-block <?= $preview_video ? 'has-video' : '' ?>"<?= $without_link ? '' : ' href="' . esc_url( $external_link ) . '"' ?>>
@@ -45,13 +44,13 @@
 				<p class="title is-5 canela-font is-flex is-align-items-center is-flex-wrap-wrap mb-2">
 					<span><?= esc_html( $project->post_title ) ?></span>
 					<?php foreach ( $preview_tech as $tech ) : ?>
-						<?php if ( ! empty( $tech['label'] ) ) : ?>
-						<span class="tag is-rounded ml-2"><?= esc_html( $tech['label'] ) ?></span>
+						<?php if ( ! empty( $tech['value'] ) ) : ?>
+						<i class="devicon-<?= esc_attr( $tech['value'] ) ?> is-size-5 ml-2" role="img" title="<?= esc_attr( $tech['label'] ?? '' ) ?>" aria-label="<?= esc_attr( $tech['label'] ?? '' ) ?>"></i>
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</p>
-				<?php if ( $summary ) : ?>
-				<p class="showcase-desc is-size-7"><?= $summary ?></p>
+				<?php if ( $preview_desc ) : ?>
+				<p class="showcase-desc is-size-6"><?= nl2br( wp_kses_post( $preview_desc ) ) ?></p>
 				<?php endif; ?>
 			</<?= $tag ?>>
 		</div>
