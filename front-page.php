@@ -31,7 +31,7 @@ $about_url     = $about_page ? get_permalink( $about_page ) : home_url( '/about-
 		<div class="columns is-vcentered">
 			<div class="column is-8">
 				
-				<h1 class="title is-size-0 canela-font"><span class="has-text-weight-light">Jose</span> Striedinger</h1>
+				<h1 class="title is-size-0 canela-font has-text-weight-light">Jose Striedinger</h1>
 				<p class="subtitle is-size-3 is-size-4-mobile">
 					Gameplay engineer and designer.
 				</p>

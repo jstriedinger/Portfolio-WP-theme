@@ -32,6 +32,24 @@ $dk-scrim: rgba($dk-bg-0, 0.8);
 $dk-grain: 0.8; // grain inside colour (the front page shape, video edges)
 $dk-grain-specks: 0.0; // faint light specks on the plain background
 
+// The warm blurred grain shape (front page hero, About page). Callers set position + size.
+@mixin grain-blob {
+	border-radius: 46% 54% 60% 40% / 42% 48% 52% 58%;
+	background:
+		radial-gradient(circle at 30% 70%, #ff6a3d, transparent 55%),
+		radial-gradient(circle at 70% 60%, #ff3d7f, transparent 55%),
+		radial-gradient(circle at 55% 30%, #8b5cff, transparent 60%),
+		radial-gradient(circle at 80% 20%, #3d4dff, transparent 60%);
+	filter: blur(80px) saturate(0.9);
+	opacity: 0.35; // a quiet accent, not a focal point
+}
+
+// Bottom of a photo dissolving into the page (front page hero image, About page photo).
+@mixin fade-to-ground {
+	-webkit-mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
+	mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
+}
+
 $dk-radius-sm: 6px;
 $dk-radius-md: 14px;
 $dk-radius-lg: 24px;
@@ -327,10 +345,10 @@ body:not(.theme-light) {
 
 	// Neutral buttons (social/utility icons): light ring + icon on a translucent navy fill, so they
 	// read over any frame of the hero reel (a bright frame made the old dark ring vanish), then
-	// full white on hover. The accent is kept for primary CTAs (below). #contact is the About
-	// page's get-in-touch row.
+	// full white on hover. The accent is kept for primary CTAs (below). Add `is-social` to any
+	// .button (e.g. class="button is-rounded is-social") to get this look anywhere on the site.
 	.intro .button:not(.is-link),
-	#contact .button:not(.is-link),
+	.button.is-social,
 	.navbar .button:not(.is-link) {
 		background: rgba($dk-bg-0, 0.55);
 		border-color: rgba($dk-ink, 0.4);
@@ -402,14 +420,67 @@ body:not(.theme-light) {
 			aspect-ratio: 1;
 			z-index: -2;
 			pointer-events: none;
-			border-radius: 46% 54% 60% 40% / 42% 48% 52% 58%;
-			background:
-				radial-gradient(circle at 30% 70%, #ff6a3d, transparent 55%),
-				radial-gradient(circle at 70% 60%, #ff3d7f, transparent 55%),
-				radial-gradient(circle at 55% 30%, #8b5cff, transparent 60%),
-				radial-gradient(circle at 80% 20%, #3d4dff, transparent 60%);
-			filter: blur(80px) saturate(0.9);
-			opacity: 0.35; // a quiet accent, not a focal point
+			@include grain-blob;
+		}
+	}
+
+	// About page: the same blob twice (::before top right, ::after left). Move them by editing
+	// the top/left/right values below. overflow-x: clip (not hidden) so the blobs can't cause a
+	// sideways scroll but the section still lets them bleed up behind the navbar.
+	.about-page {
+		position: relative;
+		overflow-x: clip;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			z-index: -2;
+			pointer-events: none;
+			aspect-ratio: 1;
+			@include grain-blob;
+		}
+
+		&::before { // top right
+			top: calc(-5.5rem - 8vw);
+			right: -8vw;
+			width: 30vw;
+		}
+
+		&::after { // left
+			top: 40%;
+			left: -16vw;
+			width: 34vw;
+			transform: rotate(140deg); // so the two don't look like copies
+		}
+
+		@include mixins.mobile {
+			&::before { width: 70vw; right: -25vw; }
+			&::after { width: 80vw; left: -40vw; }
+		}
+	}
+
+	// About page: only what Bulma has no helper for. Flip the photo to the right (page-about-me.php sets .is-image-right from $image_side).
+	// Bulma stacks the columns on mobile, where the photo is just a normal image above the text.
+	.about-layout.is-image-right {
+		@include mixins.tablet {
+			flex-direction: row-reverse;
+		}
+	}
+
+	.about-photo {
+		img {
+			@include fade-to-ground; // same fade as the front-page hero photo
+		}
+	}
+
+	// Add the CSS class "about-title" to a Heading block in the page content: its bold words
+	// (Ctrl+B) turn sand, at the heading's normal weight.
+	.about-title {
+		strong,
+		b {
+			color: $dk-accent;
+			font-weight: inherit;
 		}
 	}
 
@@ -458,8 +529,7 @@ body:not(.theme-light) {
 	// background, in its own column). The shirt runs off the bottom of the photo, so the lower part
 	// fades out. Long and eased (extra stops) so it dissolves instead of ending in a band or a line.
 	.intro-image {
-		-webkit-mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
-		mask-image: linear-gradient(to bottom, #000 55%, rgba(#000, 0.85) 65%, rgba(#000, 0.55) 76%, rgba(#000, 0.25) 87%, rgba(#000, 0.07) 95%, transparent 100%);
+		@include fade-to-ground;
 	}
 
 	// Section headings — artifact's `.sh h2::after`: short bar under the title
